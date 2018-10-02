@@ -22,3 +22,9 @@ Route::get('/qrcode', function(){
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::prefix('admin')->group(function(){
+
+	Route::resource('laporan', 'LaporanController');
+
+});

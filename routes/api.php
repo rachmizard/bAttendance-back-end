@@ -104,7 +104,7 @@ Route::delete('absen/{id}/delete', 'API\APIController@deleteAbsen');
 /*
 	In this part we're using put method for edit the new pin. 
 */
-Route::put('karyawan/pin', 'API\APIController@forgotPin');
+// Route::put('karyawan/pin', 'API\APIController@forgotPin');
 
 
 /////////////////////////////////// END REAL LIFE /////////////////////////////////////////////

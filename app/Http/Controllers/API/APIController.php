@@ -316,17 +316,17 @@ class APIController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function forgotPin()
-    {
-        $getNik = Karyawan::where('nik', request('nik'))->first();
-        $newpin = Karyawan::findOrFail($getNik['id']);
-        $newpin->pin = request('pin');
-        if ($newpin->update()) {
-            $response['status'] = 'success';
-            $response['pin'] = request('pin');
-        }
-        return response()->json(['response' => $response]);
-    }
+    // public function forgotPin()
+    // {
+    //     $getNik = Karyawan::where('nik', request('nik'))->first();
+    //     $newpin = Karyawan::findOrFail($getNik['id']);
+    //     $newpin->pin = request('pin');
+    //     if ($newpin->update()) {
+    //         $response['status'] = 'success';
+    //         $response['pin'] = request('pin');
+    //     }
+    //     return response()->json(['karyawan' => $response]);
+    // }
 
     /**
      * Display a listing of the resource.
