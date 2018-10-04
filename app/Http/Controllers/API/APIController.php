@@ -354,9 +354,23 @@ class APIController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function postKaryawan(Request $request)
     {
-        //
+        // $this->validate($request, [
+        //     'nama'  => 'required|string|max:50',
+        //     'jenis_kelamin'  => 'required|string|max:50',
+        //     'nik'  => 'required|numeric|max:50', 
+        //     'divisi' => 'required|string|max:50', 
+        // ]);
+        
+        $karyawan = new Karyawan;
+        $karyawan->nama = $request->nama;
+        $karyawan->divisi = $request->divisi;
+        $karyawan->jenis_kelamin = $request->jenis_kelamin;
+        $karyawan->nik = $request->nik;
+        $karyawan->save();
+
+        return response()->json($karyawan);
     }
 
     /**

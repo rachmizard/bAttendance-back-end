@@ -13,8 +13,9 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    You are logged in!
+                    <transition>
+                        <router-view></router-view>
+                    </transition>
                 </div>
             </div>
         </div>

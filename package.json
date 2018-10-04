@@ -16,10 +16,13 @@
         "jquery": "^3.2",
         "laravel-mix": "^1.0",
         "lodash": "^4.17.4",
-        "vue": "^2.5.7"
+        "vue": "^2.5.7",
+        "vue-router": "^3.0.1"
     },
     "dependencies": {
         "laravel-echo": "^1.4.0",
-        "pusher-js": "^4.3.1"
+        "pusher-js": "^4.3.1",
+        "vue-full-loading": "^1.2.1",
+        "vue-strap": "^1.1.40"
     }
 }

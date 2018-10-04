@@ -21,10 +21,15 @@ Route::get('/qrcode', function(){
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/panel', function(){
+	return view('home');
+})->name('home');
 
-Route::prefix('admin')->group(function(){
+Route::resource('laporan', 'LaporanController');
 
-	Route::resource('laporan', 'LaporanController');
-
-});
+Route::get('karyawan', 'KaryawanController@index'); // VIEW
+Route::get('karyawan/paginate', 'KaryawanController@paginate'); //FETCHING BY PAGINATE
+Route::post('karyawan/post', 'KaryawanController@store'); // POST
+Route::get('karyawan/{id}/edit', 'KaryawanController@edit'); // PATCH (UPDATE)
+Route::put('karyawan/{id}/update', 'KaryawanController@update'); // PATCH (UPDATE)
+Route::delete('karyawan/{id}/delete', 'KaryawanController@destroy'); // PATCH (UPDATE)

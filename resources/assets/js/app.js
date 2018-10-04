@@ -16,13 +16,33 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
+// Vue.component('dashboard-component', require('./components/DashboardComponent.vue'));
+
+/**
+* Vue Router
+*
+* @link http://router.vuejs.org/en/installation.html
+*/
+import VueRouter from 'vue-router';
+Vue.use(VueRouter);
+
+// define routes for karyawans
+const routes = [
+{
+  path: '/',  name: 'index',component: require('./components/DashboardComponent.vue')
+},
+{
+  path: '/karyawan',  name: 'userIndex',component: require('./components/karyawan/index.vue')
+},
+{
+  path: '/create', name: 'userCreate', component: require('./components/karyawan/create.vue') 
+},
+{
+  path: '/edit', name: 'userEdit', component: require('./components/karyawan/edit.vue') 
+}
+]
+const router = new VueRouter({ routes });
 
 const app = new Vue({
-    el: '#app',
-    // created(){
-    // 	Echo.channel('qrcode')
-    // 	.listen('qrTrigger', (e) => {
-    // 		alert(e.pin);
-    // 	});
-    // }
-});
+	router
+}).$mount('#app');
