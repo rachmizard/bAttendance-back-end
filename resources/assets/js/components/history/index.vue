@@ -3,6 +3,7 @@
 		<router-link :to="{name: 'index'}" class="btn btn-info">
 			<i class="fa fa-home"></i> Home
 		</router-link>
+		<button class="btn btn-success" @click.prevent="refresh()"><i class="fa fa-refresh"></i> Refresh Page</button>
 		<hr>
 
         <ol class="breadcrumb">
@@ -59,9 +60,7 @@
 			}
 		},
 		mounted() {
-			 setInterval(() => {
-				this.fetch();
-			 }, 1000)
+			this.fetch();
 		},
 		methods: {
 			paginate(url) {
@@ -74,6 +73,16 @@
 				axios.get('history').then(respon => {
 					this.users = respon.data;
 				});	
+			},
+
+			refresh(){
+			 	axios.get('history').then(respon => {
+					this.users = respon.data;
+				});	
+				this.$root.loading = true;
+				 setInterval(() => {
+					this.$root.loading = false
+				 }, 2000)
 			},
 
 			deleteHistory(id){

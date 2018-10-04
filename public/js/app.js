@@ -61833,6 +61833,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
@@ -61842,27 +61843,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		};
 	},
 	mounted: function mounted() {
-		var _this = this;
-
-		setInterval(function () {
-			_this.fetch();
-		}, 1000);
+		this.fetch();
 	},
 
 	methods: {
 		paginate: function paginate(url) {
-			var _this2 = this;
+			var _this = this;
 
 			axios.get(url).then(function (response) {
-				_this2.users = response.data;
+				_this.users = response.data;
 			});
 		},
 		fetch: function fetch() {
+			var _this2 = this;
+
+			axios.get('history').then(function (respon) {
+				_this2.users = respon.data;
+			});
+		},
+		refresh: function refresh() {
 			var _this3 = this;
 
 			axios.get('history').then(function (respon) {
 				_this3.users = respon.data;
 			});
+			this.$root.loading = true;
+			setInterval(function () {
+				_this3.$root.loading = false;
+			}, 2000);
 		},
 		deleteHistory: function deleteHistory(id) {
 			var app = this;
@@ -61891,6 +61899,20 @@ var render = function() {
         "router-link",
         { staticClass: "btn btn-info", attrs: { to: { name: "index" } } },
         [_c("i", { staticClass: "fa fa-home" }), _vm._v(" Home\n\t\t")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success",
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              _vm.refresh()
+            }
+          }
+        },
+        [_c("i", { staticClass: "fa fa-refresh" }), _vm._v(" Refresh Page")]
       ),
       _vm._v(" "),
       _c("hr"),
