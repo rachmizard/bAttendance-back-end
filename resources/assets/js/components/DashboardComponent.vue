@@ -1,22 +1,19 @@
 <template>
-    <div>
+    <div class="btn btn-group">
 		<router-link :to="{ name: 'userIndex' }">
-			<button class="btn btn-info">Karyawan</button>
+			<button class="btn btn-info">Master Karyawan</button>
 		</router-link>
 
-        <!-- <div class="progress">
-          <progressbar now="100" label type="warning" striped></progressbar>
-        </div> -->
+        <router-link :to="{ name: 'historyIndex' }">
+            <button class="btn btn-danger">History Absen</button>
+        </router-link>
+
     </div>
 </template>
 
 <script>
-    // import progressbar from 'vue-strap/src/progressbar'
 
     export default {
-        // components:{
-        //     progressbar
-        // },
         mounted() {
             console.log('Component mounted.')
         },

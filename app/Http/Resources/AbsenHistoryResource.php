@@ -22,7 +22,8 @@ class AbsenHistoryResource extends Resource
             'divisi' => $this->karyawan->divisi,
             'action' => $this->status,
             'jam' => $this->verifikasi->created_at->format('H:i:s A'),
-            'tanggal' => $this->verifikasi->created_at->diffForHumans()
+            'tanggal' => $this->verifikasi->created_at->format('d-m-Y'),
+            'telah_masuk' => $this->verifikasi->created_at->diffForHumans()
         ];
     }
 }

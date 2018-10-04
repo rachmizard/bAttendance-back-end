@@ -40,6 +40,7 @@
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
+                        <loading v-if="$root.loading"></loading>
                     </a>
                 </div>
 
@@ -85,6 +86,9 @@
     </div>
 
     <!-- Scripts -->
+    <script src="https://unpkg.com/nprogress"></script>
+    <!-- <script src="https://unpkg.com/vue/dist/vue.js"></script> -->
+    <!-- <script src="https://unpkg.com/vue-router/dist/vue-router.js"> -->
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

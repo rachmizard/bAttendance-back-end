@@ -16,6 +16,7 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('loading', require('./components/LoadingComponent.vue'));
 // Vue.component('dashboard-component', require('./components/DashboardComponent.vue'));
 
 /**
@@ -39,10 +40,23 @@ const routes = [
 },
 {
   path: '/edit', name: 'userEdit', component: require('./components/karyawan/edit.vue') 
+},
+{
+  path: '/history', name: 'historyIndex', component: require('./components/history/index.vue') 
 }
 ]
 const router = new VueRouter({ routes });
 
 const app = new Vue({
+	data: { loading: false },
 	router
 }).$mount('#app');
+
+router.beforeEach((to, from, next) => {
+  app.loading = true
+	next()
+})
+
+router.afterEach((to, from, next) => {
+  setTimeout(() => app.loading = false, 1500) // timeout for demo purposes
+})

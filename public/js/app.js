@@ -12066,6 +12066,7 @@ window.Vue = __webpack_require__(4);
  */
 
 Vue.component('example-component', __webpack_require__(41));
+Vue.component('loading', __webpack_require__(68));
 // Vue.component('dashboard-component', require('./components/DashboardComponent.vue'));
 
 /**
@@ -12085,12 +12086,26 @@ var routes = [{
   path: '/create', name: 'userCreate', component: __webpack_require__(51)
 }, {
   path: '/edit', name: 'userEdit', component: __webpack_require__(54)
+}, {
+  path: '/history', name: 'historyIndex', component: __webpack_require__(191)
 }];
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({ routes: routes });
 
 var app = new Vue({
+  data: { loading: false },
   router: router
 }).$mount('#app');
+
+router.beforeEach(function (to, from, next) {
+  app.loading = true;
+  next();
+});
+
+router.afterEach(function (to, from, next) {
+  setTimeout(function () {
+    return app.loading = false;
+  }, 1500); // timeout for demo purposes
+});
 
 /***/ }),
 /* 13 */
@@ -55953,13 +55968,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
-// import progressbar from 'vue-strap/src/progressbar'
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    // components:{
-    //     progressbar
-    // },
     mounted: function mounted() {
         console.log('Component mounted.');
     },
@@ -55983,9 +55995,18 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "btn btn-group" },
     [
       _c("router-link", { attrs: { to: { name: "userIndex" } } }, [
-        _c("button", { staticClass: "btn btn-info" }, [_vm._v("Karyawan")])
+        _c("button", { staticClass: "btn btn-info" }, [
+          _vm._v("Master Karyawan")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("router-link", { attrs: { to: { name: "historyIndex" } } }, [
+        _c("button", { staticClass: "btn btn-danger" }, [
+          _vm._v("History Absen")
+        ])
       ])
     ],
     1
@@ -57198,6 +57219,4810 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 58 */,
+/* 59 */,
+/* 60 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(69)
+/* template */
+var __vue_template__ = __webpack_require__(78)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/LoadingComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0254f0d8", Component.options)
+  } else {
+    hotAPI.reload("data-v-0254f0d8", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 69 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_epic_spinners__ = __webpack_require__(90);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    HalfCircleSpinner: __WEBPACK_IMPORTED_MODULE_0_epic_spinners__["a" /* HalfCircleSpinner */]
+  }
+});
+
+/***/ }),
+/* 70 */,
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+var listToStyles = __webpack_require__(75)
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+var options = null
+var ssrIdKey = 'data-vue-ssr-id'
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+module.exports = function (parentId, list, _isProduction, _options) {
+  isProduction = _isProduction
+
+  options = _options || {}
+
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[' + ssrIdKey + '~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+  if (options.ssrId) {
+    styleElement.setAttribute(ssrIdKey, obj.id)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
+
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports) {
+
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+module.exports = function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
+
+/***/ }),
+/* 76 */,
+/* 77 */,
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticStyle: { "margin-top": "100px" }, attrs: { id: "app" } },
+    [
+      _c("half-circle-spinner", {
+        attrs: { "animation-duration": 1000, size: 60, color: "#91aee0" }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0254f0d8", module.exports)
+  }
+}
+
+/***/ }),
+/* 79 */,
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */,
+/* 84 */,
+/* 85 */,
+/* 86 */,
+/* 87 */,
+/* 88 */,
+/* 89 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+  appendKeyframes: function (name, frames) {
+    var idx = document.styleSheets[0].cssRules.length
+    document.styleSheets[0].insertRule('@keyframes ' + name + ' { ' + frames + ' }', idx)
+  }
+});
+
+
+/***/ }),
+/* 90 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_lib_HollowDotsSpinner_vue__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_lib_HollowDotsSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_lib_HollowDotsSpinner_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_lib_PixelSpinner_vue__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_lib_PixelSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_lib_PixelSpinner_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_lib_FlowerSpinner_vue__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_lib_FlowerSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_lib_FlowerSpinner_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_lib_IntersectingCirclesSpinner_vue__ = __webpack_require__(106);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_lib_IntersectingCirclesSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_lib_IntersectingCirclesSpinner_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_lib_OrbitSpinner_vue__ = __webpack_require__(111);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_lib_OrbitSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_lib_OrbitSpinner_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_lib_FingerprintSpinner_vue__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_lib_FingerprintSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_lib_FingerprintSpinner_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_lib_TrinityRingsSpinner_vue__ = __webpack_require__(121);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_lib_TrinityRingsSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_lib_TrinityRingsSpinner_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_lib_FulfillingSquareSpinner_vue__ = __webpack_require__(126);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_lib_FulfillingSquareSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_lib_FulfillingSquareSpinner_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_lib_CirclesToRhombusesSpinner_vue__ = __webpack_require__(131);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_lib_CirclesToRhombusesSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_lib_CirclesToRhombusesSpinner_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_lib_SemipolarSpinner_vue__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_lib_SemipolarSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_lib_SemipolarSpinner_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_lib_BreedingRhombusSpinner_vue__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_lib_BreedingRhombusSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_lib_BreedingRhombusSpinner_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_lib_SwappingSquaresSpinner_vue__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_lib_SwappingSquaresSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_lib_SwappingSquaresSpinner_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_lib_ScalingSquaresSpinner_vue__ = __webpack_require__(151);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_lib_ScalingSquaresSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_lib_ScalingSquaresSpinner_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_lib_FulfillingBouncingCircleSpinner_vue__ = __webpack_require__(156);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_lib_FulfillingBouncingCircleSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_lib_FulfillingBouncingCircleSpinner_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_lib_RadarSpinner_vue__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_lib_RadarSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__components_lib_RadarSpinner_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_lib_SelfBuildingSquareSpinner_vue__ = __webpack_require__(166);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_lib_SelfBuildingSquareSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__components_lib_SelfBuildingSquareSpinner_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_lib_SpringSpinner_vue__ = __webpack_require__(171);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_lib_SpringSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__components_lib_SpringSpinner_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_lib_LoopingRhombusesSpinner_vue__ = __webpack_require__(176);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_lib_LoopingRhombusesSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__components_lib_LoopingRhombusesSpinner_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_lib_HalfCircleSpinner_vue__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_lib_HalfCircleSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__components_lib_HalfCircleSpinner_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_lib_AtomSpinner_vue__ = __webpack_require__(186);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_lib_AtomSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19__components_lib_AtomSpinner_vue__);
+/* unused harmony reexport HollowDotsSpinner */
+/* unused harmony reexport PixelSpinner */
+/* unused harmony reexport FlowerSpinner */
+/* unused harmony reexport IntersectingCirclesSpinner */
+/* unused harmony reexport OrbitSpinner */
+/* unused harmony reexport FingerprintSpinner */
+/* unused harmony reexport TrinityRingsSpinner */
+/* unused harmony reexport FulfillingSquareSpinner */
+/* unused harmony reexport CirclesToRhombusesSpinner */
+/* unused harmony reexport SemipolarSpinner */
+/* unused harmony reexport BreedingRhombusSpinner */
+/* unused harmony reexport SwappingSquaresSpinner */
+/* unused harmony reexport ScalingSquaresSpinner */
+/* unused harmony reexport FulfillingBouncingCircleSpinner */
+/* unused harmony reexport RadarSpinner */
+/* unused harmony reexport SelfBuildingSquareSpinner */
+/* unused harmony reexport SpringSpinner */
+/* unused harmony reexport LoopingRhombusesSpinner */
+/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_18__components_lib_HalfCircleSpinner_vue___default.a; });
+/* unused harmony reexport AtomSpinner */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+/* 91 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(92)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(94)
+/* template */
+var __vue_template__ = __webpack_require__(95)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-6a8af1dc"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/epic-spinners/src/components/lib/HollowDotsSpinner.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6a8af1dc", Component.options)
+  } else {
+    hotAPI.reload("data-v-6a8af1dc", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 92 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(93);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(74)("d2e60e4a", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6a8af1dc\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./HollowDotsSpinner.vue", function() {
+     var newContent = require("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6a8af1dc\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./HollowDotsSpinner.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 93 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.hollow-dots-spinner[data-v-6a8af1dc], .hollow-dots-spinner *[data-v-6a8af1dc] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.hollow-dots-spinner[data-v-6a8af1dc] {\n  height: 15px;\n  width: calc(30px * 3);\n}\n.hollow-dots-spinner .dot[data-v-6a8af1dc] {\n  width: 15px;\n  height: 15px;\n  margin: 0 calc(15px / 2);\n  border: calc(15px / 5) solid #ff1d5e;\n  border-radius: 50%;\n  float: left;\n  -webkit-transform: scale(0);\n          transform: scale(0);\n  -webkit-animation: hollow-dots-spinner-animation-data-v-6a8af1dc 1000ms ease infinite 0ms;\n          animation: hollow-dots-spinner-animation-data-v-6a8af1dc 1000ms ease infinite 0ms;\n}\n.hollow-dots-spinner .dot[data-v-6a8af1dc]:nth-child(1) {\n  -webkit-animation-delay: calc(300ms * 1);\n          animation-delay: calc(300ms * 1);\n}\n.hollow-dots-spinner .dot[data-v-6a8af1dc]:nth-child(2) {\n  -webkit-animation-delay: calc(300ms * 2);\n          animation-delay: calc(300ms * 2);\n}\n.hollow-dots-spinner .dot[data-v-6a8af1dc]:nth-child(3) {\n  -webkit-animation-delay: calc(300ms * 3);\n          animation-delay: calc(300ms * 3);\n}\n@-webkit-keyframes hollow-dots-spinner-animation-data-v-6a8af1dc {\n50% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n    opacity: 1;\n}\n100% {\n    opacity: 0;\n}\n}\n@keyframes hollow-dots-spinner-animation-data-v-6a8af1dc {\n50% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n    opacity: 1;\n}\n100% {\n    opacity: 0;\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 94 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'HollowDotsSpinner',
+
+  props: {
+    animationDuration: {
+      type: Number,
+      default: 1000
+    },
+    dotSize: {
+      type: Number,
+      default: 15
+    },
+    dotsNum: {
+      type: Number,
+      default: 3
+    },
+    color: {
+      type: String,
+      default: '#fff'
+    }
+  },
+
+  computed: {
+    horizontalMargin: function horizontalMargin() {
+      return this.dotSize / 2;
+    },
+    spinnerStyle: function spinnerStyle() {
+      return {
+        height: this.dotSize + 'px',
+        width: (this.dotSize + this.horizontalMargin * 2) * this.dotsNum + 'px'
+      };
+    },
+    dotStyle: function dotStyle() {
+      return {
+        animationDuration: this.animationDuration + 'ms',
+        width: this.dotSize + 'px',
+        height: this.dotSize + 'px',
+        margin: '0 ' + this.horizontalMargin + 'px',
+        borderWidth: this.dotSize / 5 + 'px',
+        borderColor: this.color
+      };
+    },
+    dotsStyles: function dotsStyles() {
+      var dotsStyles = [];
+      var delayModifier = 0.3;
+      var basicDelay = 1000;
+
+      for (var i = 1; i <= this.dotsNum; i++) {
+        var style = Object.assign({
+          animationDelay: basicDelay * i * delayModifier + 'ms'
+        }, this.dotStyle);
+
+        dotsStyles.push(style);
+      }
+
+      return dotsStyles;
+    }
+  }
+});
+
+/***/ }),
+/* 95 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "hollow-dots-spinner", style: _vm.spinnerStyle },
+    _vm._l(_vm.dotsStyles, function(ds, index) {
+      return _c("div", { key: index, staticClass: "dot", style: ds })
+    })
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6a8af1dc", module.exports)
+  }
+}
+
+/***/ }),
+/* 96 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(97)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(99)
+/* template */
+var __vue_template__ = __webpack_require__(100)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-51b91a07"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/epic-spinners/src/components/lib/PixelSpinner.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-51b91a07", Component.options)
+  } else {
+    hotAPI.reload("data-v-51b91a07", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 97 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(98);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(74)("3c8a32be", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-51b91a07\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./PixelSpinner.vue", function() {
+     var newContent = require("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-51b91a07\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./PixelSpinner.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 98 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.pixel-spinner[data-v-51b91a07], .pixel-spinner *[data-v-51b91a07] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.pixel-spinner[data-v-51b91a07] {\n  height: 70px;\n  width: 70px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.pixel-spinner .pixel-spinner-inner[data-v-51b91a07] {\n  width: calc(70px / 7);\n  height: calc(70px / 7);\n  background-color: #ff1d5e;\n  color: #ff1d5e;\n  -webkit-box-shadow: 15px 15px  0 0,\n  -15px -15px  0 0,\n  15px -15px  0 0,\n  -15px 15px  0 0,\n  0 15px  0 0,\n  15px 0  0 0,\n  -15px 0  0 0,\n  0 -15px 0 0;\n          box-shadow: 15px 15px  0 0,\n  -15px -15px  0 0,\n  15px -15px  0 0,\n  -15px 15px  0 0,\n  0 15px  0 0,\n  15px 0  0 0,\n  -15px 0  0 0,\n  0 -15px 0 0;\n  -webkit-animation: pixel-spinner-animation-data-v-51b91a07 2000ms linear infinite;\n          animation: pixel-spinner-animation-data-v-51b91a07 2000ms linear infinite;\n}\n@-webkit-keyframes pixel-spinner-animation-data-v-51b91a07 {\n50% {\n    -webkit-box-shadow: 20px 20px 0px 0px,\n    -20px -20px 0px 0px,\n    20px -20px 0px 0px,\n    -20px 20px 0px 0px,\n    0px 10px 0px 0px,\n    10px 0px 0px 0px,\n    -10px 0px 0px 0px,\n    0px -10px 0px 0px;\n            box-shadow: 20px 20px 0px 0px,\n    -20px -20px 0px 0px,\n    20px -20px 0px 0px,\n    -20px 20px 0px 0px,\n    0px 10px 0px 0px,\n    10px 0px 0px 0px,\n    -10px 0px 0px 0px,\n    0px -10px 0px 0px;\n}\n75% {\n    -webkit-box-shadow: 20px 20px 0px 0px,\n    -20px -20px 0px 0px,\n    20px -20px 0px 0px,\n    -20px 20px 0px 0px,\n    0px 10px 0px 0px,\n    10px 0px 0px 0px,\n    -10px 0px 0px 0px,\n    0px -10px 0px 0px;\n            box-shadow: 20px 20px 0px 0px,\n    -20px -20px 0px 0px,\n    20px -20px 0px 0px,\n    -20px 20px 0px 0px,\n    0px 10px 0px 0px,\n    10px 0px 0px 0px,\n    -10px 0px 0px 0px,\n    0px -10px 0px 0px;\n}\n100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n@keyframes pixel-spinner-animation-data-v-51b91a07 {\n50% {\n    -webkit-box-shadow: 20px 20px 0px 0px,\n    -20px -20px 0px 0px,\n    20px -20px 0px 0px,\n    -20px 20px 0px 0px,\n    0px 10px 0px 0px,\n    10px 0px 0px 0px,\n    -10px 0px 0px 0px,\n    0px -10px 0px 0px;\n            box-shadow: 20px 20px 0px 0px,\n    -20px -20px 0px 0px,\n    20px -20px 0px 0px,\n    -20px 20px 0px 0px,\n    0px 10px 0px 0px,\n    10px 0px 0px 0px,\n    -10px 0px 0px 0px,\n    0px -10px 0px 0px;\n}\n75% {\n    -webkit-box-shadow: 20px 20px 0px 0px,\n    -20px -20px 0px 0px,\n    20px -20px 0px 0px,\n    -20px 20px 0px 0px,\n    0px 10px 0px 0px,\n    10px 0px 0px 0px,\n    -10px 0px 0px 0px,\n    0px -10px 0px 0px;\n            box-shadow: 20px 20px 0px 0px,\n    -20px -20px 0px 0px,\n    20px -20px 0px 0px,\n    -20px 20px 0px 0px,\n    0px 10px 0px 0px,\n    10px 0px 0px 0px,\n    -10px 0px 0px 0px,\n    0px -10px 0px 0px;\n}\n100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 99 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_utils__ = __webpack_require__(89);
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'PixelSpinner',
+
+  props: {
+    animationDuration: {
+      type: Number,
+      default: 1500
+    },
+    size: {
+      type: Number,
+      default: 70
+    },
+    color: {
+      type: String,
+      default: '#fff'
+    }
+  },
+
+  data: function data() {
+    return {
+      animationBaseName: 'pixel-spinner-animation',
+      currentAnimationName: ''
+    };
+  },
+
+
+  computed: {
+    pixelSize: function pixelSize() {
+      return this.size / 7;
+    },
+    spinnerStyle: function spinnerStyle() {
+      return {
+        width: this.size + 'px',
+        height: this.size + 'px'
+      };
+    },
+    spinnerInnerStyle: function spinnerInnerStyle() {
+      return {
+        animationDuration: this.animationDuration + 'ms',
+        animationName: this.currentAnimationName,
+        width: this.pixelSize + 'px',
+        height: this.pixelSize + 'px',
+        backgroundColor: this.color,
+        color: this.color,
+        boxShadow: '\n                      ' + this.pixelSize * 1.5 + 'px ' + this.pixelSize * 1.5 + 'px 0 0,\n                      ' + this.pixelSize * -1.5 + 'px ' + this.pixelSize * -1.5 + 'px 0 0,\n                      ' + this.pixelSize * 1.5 + 'px ' + this.pixelSize * -1.5 + 'px 0 0,\n                      ' + this.pixelSize * -1.5 + 'px ' + this.pixelSize * 1.5 + 'px 0 0,\n                      0 ' + this.pixelSize * 1.5 + 'px 0 0,\n                      ' + this.pixelSize * 1.5 + 'px 0 0 0,\n                      ' + this.pixelSize * -1.5 + 'px 0 0 0,\n                      0 ' + this.pixelSize * -1.5 + 'px 0 0\n                    '
+      };
+    }
+  },
+
+  watch: {
+    '$props': {
+      handler: function handler() {
+        this.updateAnimation();
+      },
+
+      deep: true
+    }
+  },
+
+  mounted: function mounted() {
+    this.updateAnimation();
+  },
+
+
+  methods: {
+    updateAnimation: function updateAnimation() {
+      this.updateAnimationName();
+      __WEBPACK_IMPORTED_MODULE_0__services_utils__["a" /* default */].appendKeyframes(this.currentAnimationName, this.generateKeyframes());
+    },
+    updateAnimationName: function updateAnimationName() {
+      this.currentAnimationName = this.animationBaseName + '-' + Date.now();
+    },
+    generateKeyframes: function generateKeyframes() {
+      return '\n      50% {\n        box-shadow:  ' + this.pixelSize * 2 + 'px ' + this.pixelSize * 2 + 'px 0 0,\n                     ' + this.pixelSize * -2 + 'px ' + this.pixelSize * -2 + 'px 0 0,\n                     ' + this.pixelSize * 2 + 'px ' + this.pixelSize * -2 + 'px 0 0,\n                     ' + this.pixelSize * -2 + 'px ' + this.pixelSize * 2 + 'px 0 0,\n                     0 ' + this.pixelSize + 'px 0 0,\n                     ' + this.pixelSize + 'px 0 0 0,\n                     ' + this.pixelSize * -1 + 'px 0 0 0,\n                     0 ' + this.pixelSize * -1 + 'px 0 0;\n      }\n\n\n      75% {\n        box-shadow:  ' + this.pixelSize * 2 + 'px ' + this.pixelSize * 2 + 'px 0 0,\n                     ' + this.pixelSize * -2 + 'px ' + this.pixelSize * -2 + 'px 0 0,\n                     ' + this.pixelSize * 2 + 'px ' + this.pixelSize * -2 + 'px 0 0,\n                     ' + this.pixelSize * -2 + 'px ' + this.pixelSize * 2 + 'px 0 0,\n                     0 ' + this.pixelSize + 'px 0 0,\n                     ' + this.pixelSize + 'px 0 0 0,\n                     ' + this.pixelSize * -1 + 'px 0 0 0,\n                     0 ' + this.pixelSize * -1 + 'px 0 0;\n      }\n\n      100% {\n        transform: rotate(360deg);\n      }';
+    }
+  }
+});
+
+/***/ }),
+/* 100 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "pixel-spinner", style: _vm.spinnerStyle }, [
+    _c("div", {
+      staticClass: "pixel-spinner-inner",
+      style: _vm.spinnerInnerStyle
+    })
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-51b91a07", module.exports)
+  }
+}
+
+/***/ }),
+/* 101 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(102)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(104)
+/* template */
+var __vue_template__ = __webpack_require__(105)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-3996aa1a"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/epic-spinners/src/components/lib/FlowerSpinner.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3996aa1a", Component.options)
+  } else {
+    hotAPI.reload("data-v-3996aa1a", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 102 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(103);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(74)("cb6fb4bc", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3996aa1a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./FlowerSpinner.vue", function() {
+     var newContent = require("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3996aa1a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./FlowerSpinner.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 103 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.flower-spinner[data-v-3996aa1a],  .flower-spinner *[data-v-3996aa1a] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.flower-spinner[data-v-3996aa1a] {\n  height: 70px;\n  width: 70px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.flower-spinner .dots-container[data-v-3996aa1a] {\n  height: calc(70px / 7);\n  width: calc(70px / 7);\n}\n.flower-spinner .smaller-dot[data-v-3996aa1a] {\n  background: #ff1d5e;\n  height: 100%;\n  width: 100%;\n  border-radius: 50%;\n  -webkit-animation: flower-spinner-smaller-dot-animation-data-v-3996aa1a 2.5s 0s infinite both;\n          animation: flower-spinner-smaller-dot-animation-data-v-3996aa1a 2.5s 0s infinite both;\n}\n.flower-spinner .bigger-dot[data-v-3996aa1a] {\n  background: #ff1d5e;\n  height: 100%;\n  width: 100%;\n  padding: 10%;\n  border-radius: 50%;\n  -webkit-animation: flower-spinner-bigger-dot-animation-data-v-3996aa1a 2.5s 0s infinite both;\n          animation: flower-spinner-bigger-dot-animation-data-v-3996aa1a 2.5s 0s infinite both;\n}\n@-webkit-keyframes flower-spinner-bigger-dot-animation-data-v-3996aa1a {\n0%, 100% {\n    -webkit-box-shadow: rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px;\n            box-shadow: rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px;\n}\n50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n}\n25%, 75% {\n    -webkit-box-shadow: rgb(255, 29, 94) 26px 0px 0px,\n    rgb(255, 29, 94) -26px 0px 0px,\n    rgb(255, 29, 94) 0px 26px 0px,\n    rgb(255, 29, 94) 0px -26px 0px,\n    rgb(255, 29, 94) 19px -19px 0px,\n    rgb(255, 29, 94) 19px 19px 0px,\n    rgb(255, 29, 94) -19px -19px 0px,\n    rgb(255, 29, 94) -19px 19px 0px;\n            box-shadow: rgb(255, 29, 94) 26px 0px 0px,\n    rgb(255, 29, 94) -26px 0px 0px,\n    rgb(255, 29, 94) 0px 26px 0px,\n    rgb(255, 29, 94) 0px -26px 0px,\n    rgb(255, 29, 94) 19px -19px 0px,\n    rgb(255, 29, 94) 19px 19px 0px,\n    rgb(255, 29, 94) -19px -19px 0px,\n    rgb(255, 29, 94) -19px 19px 0px;\n}\n100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n    -webkit-box-shadow: rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px;\n            box-shadow: rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px;\n}\n}\n@keyframes flower-spinner-bigger-dot-animation-data-v-3996aa1a {\n0%, 100% {\n    -webkit-box-shadow: rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px;\n            box-shadow: rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px;\n}\n50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n}\n25%, 75% {\n    -webkit-box-shadow: rgb(255, 29, 94) 26px 0px 0px,\n    rgb(255, 29, 94) -26px 0px 0px,\n    rgb(255, 29, 94) 0px 26px 0px,\n    rgb(255, 29, 94) 0px -26px 0px,\n    rgb(255, 29, 94) 19px -19px 0px,\n    rgb(255, 29, 94) 19px 19px 0px,\n    rgb(255, 29, 94) -19px -19px 0px,\n    rgb(255, 29, 94) -19px 19px 0px;\n            box-shadow: rgb(255, 29, 94) 26px 0px 0px,\n    rgb(255, 29, 94) -26px 0px 0px,\n    rgb(255, 29, 94) 0px 26px 0px,\n    rgb(255, 29, 94) 0px -26px 0px,\n    rgb(255, 29, 94) 19px -19px 0px,\n    rgb(255, 29, 94) 19px 19px 0px,\n    rgb(255, 29, 94) -19px -19px 0px,\n    rgb(255, 29, 94) -19px 19px 0px;\n}\n100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n    -webkit-box-shadow: rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px;\n            box-shadow: rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px;\n}\n}\n@-webkit-keyframes flower-spinner-smaller-dot-animation-data-v-3996aa1a {\n0%, 100% {\n    -webkit-box-shadow: rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px;\n            box-shadow: rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px;\n}\n25%, 75% {\n    -webkit-box-shadow: rgb(255, 29, 94) 14px 0px 0px,\n    rgb(255, 29, 94) -14px 0px 0px,\n    rgb(255, 29, 94) 0px 14px 0px,\n    rgb(255, 29, 94) 0px -14px 0px,\n    rgb(255, 29, 94) 10px -10px 0px,\n    rgb(255, 29, 94) 10px 10px 0px,\n    rgb(255, 29, 94) -10px -10px 0px,\n    rgb(255, 29, 94) -10px 10px 0px;\n            box-shadow: rgb(255, 29, 94) 14px 0px 0px,\n    rgb(255, 29, 94) -14px 0px 0px,\n    rgb(255, 29, 94) 0px 14px 0px,\n    rgb(255, 29, 94) 0px -14px 0px,\n    rgb(255, 29, 94) 10px -10px 0px,\n    rgb(255, 29, 94) 10px 10px 0px,\n    rgb(255, 29, 94) -10px -10px 0px,\n    rgb(255, 29, 94) -10px 10px 0px;\n}\n100% {\n    -webkit-box-shadow: rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px;\n            box-shadow: rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px;\n}\n}\n@keyframes flower-spinner-smaller-dot-animation-data-v-3996aa1a {\n0%, 100% {\n    -webkit-box-shadow: rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px;\n            box-shadow: rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px;\n}\n25%, 75% {\n    -webkit-box-shadow: rgb(255, 29, 94) 14px 0px 0px,\n    rgb(255, 29, 94) -14px 0px 0px,\n    rgb(255, 29, 94) 0px 14px 0px,\n    rgb(255, 29, 94) 0px -14px 0px,\n    rgb(255, 29, 94) 10px -10px 0px,\n    rgb(255, 29, 94) 10px 10px 0px,\n    rgb(255, 29, 94) -10px -10px 0px,\n    rgb(255, 29, 94) -10px 10px 0px;\n            box-shadow: rgb(255, 29, 94) 14px 0px 0px,\n    rgb(255, 29, 94) -14px 0px 0px,\n    rgb(255, 29, 94) 0px 14px 0px,\n    rgb(255, 29, 94) 0px -14px 0px,\n    rgb(255, 29, 94) 10px -10px 0px,\n    rgb(255, 29, 94) 10px 10px 0px,\n    rgb(255, 29, 94) -10px -10px 0px,\n    rgb(255, 29, 94) -10px 10px 0px;\n}\n100% {\n    -webkit-box-shadow: rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px;\n            box-shadow: rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px,\n    rgb(255, 29, 94) 0px 0px 0px;\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 104 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_utils__ = __webpack_require__(89);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'FlowerSpinner',
+
+  props: {
+    animationDuration: {
+      type: Number,
+      default: 2500
+    },
+    size: {
+      type: Number,
+      default: 70
+    },
+    color: {
+      type: String,
+      default: '#fff'
+    }
+  },
+
+  data: function data() {
+    return {
+      smallerDotAnimationBaseName: 'flower-spinner-smaller-dot-animation',
+      biggerDotAnimationBaseName: 'flower-spinner-bigger-dot-animation',
+      currentSmallerDotAnimationBaseName: '',
+      currentBiggerDotAnimationBaseName: ''
+    };
+  },
+
+
+  computed: {
+    dotSize: function dotSize() {
+      return this.size / 7;
+    },
+    spinnerStyle: function spinnerStyle() {
+      return {
+        width: this.size + 'px',
+        height: this.size + 'px'
+      };
+    },
+    dotsContainerStyle: function dotsContainerStyle() {
+      return {
+        width: this.dotSize + 'px',
+        height: this.dotSize + 'px'
+      };
+    },
+    smallerDotStyle: function smallerDotStyle() {
+      return {
+        background: this.color,
+        animationDuration: this.animationDuration + 'ms',
+        animationName: this.currentSmallerDotAnimationBaseName
+      };
+    },
+    biggerDotStyle: function biggerDotStyle() {
+      return {
+        background: this.color,
+        animationDuration: this.animationDuration + 'ms',
+        animationName: this.currentBiggerDotAnimationBaseName
+      };
+    }
+  },
+
+  watch: {
+    '$props': {
+      handler: function handler() {
+        this.updateAnimation();
+      },
+
+      deep: true
+    }
+  },
+
+  mounted: function mounted() {
+    this.updateAnimation();
+  },
+
+
+  methods: {
+    updateAnimation: function updateAnimation() {
+      this.updateAnimationName();
+      __WEBPACK_IMPORTED_MODULE_0__services_utils__["a" /* default */].appendKeyframes(this.currentSmallerDotAnimationBaseName, this.generateSmallerDotKeyframes());
+      __WEBPACK_IMPORTED_MODULE_0__services_utils__["a" /* default */].appendKeyframes(this.currentBiggerDotAnimationBaseName, this.generateBiggerDotKeyframes());
+    },
+    updateAnimationName: function updateAnimationName() {
+      this.currentSmallerDotAnimationBaseName = this.smallerDotAnimationBaseName + '-' + Date.now();
+      this.currentBiggerDotAnimationBaseName = this.biggerDotAnimationBaseName + '-' + Date.now();
+    },
+    generateSmallerDotKeyframes: function generateSmallerDotKeyframes() {
+      return '0%, 100% {\n                  box-shadow: 0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ';\n                }\n                25%, 75% {\n                  box-shadow: ' + this.dotSize * 1.4 + 'px 0 0 ' + this.color + ',\n                              -' + this.dotSize * 1.4 + 'px 0 0 ' + this.color + ',\n                              0 ' + this.dotSize * 1.4 + 'px 0 ' + this.color + ',\n                              0 -' + this.dotSize * 1.4 + 'px 0 ' + this.color + ',\n                              ' + this.dotSize + 'px -' + this.dotSize + 'px 0 ' + this.color + ',\n                              ' + this.dotSize + 'px ' + this.dotSize + 'px 0 ' + this.color + ',\n                              -' + this.dotSize + 'px -' + this.dotSize + 'px 0 ' + this.color + ',\n                              -' + this.dotSize + 'px ' + this.dotSize + 'px 0 ' + this.color + ';\n\n                }\n                100% {\n                  box-shadow: 0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ';\n                }';
+    },
+    generateBiggerDotKeyframes: function generateBiggerDotKeyframes() {
+      return '0%, 100% {\n                  box-shadow: 0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ';\n                }\n                50% {\n                  transform: rotate(180deg);\n                }\n                25%, 75% {\n                  box-shadow: ' + this.dotSize * 2.6 + 'px 0 0 ' + this.color + ',\n                              -' + this.dotSize * 2.6 + 'px 0 0 ' + this.color + ',\n                              0 ' + this.dotSize * 2.6 + 'px 0 ' + this.color + ',\n                              0 -' + this.dotSize * 2.6 + 'px 0 ' + this.color + ',\n                              ' + this.dotSize * 1.9 + 'px -' + this.dotSize * 1.9 + 'px 0 ' + this.color + ',\n                              ' + this.dotSize * 1.9 + 'px ' + this.dotSize * 1.9 + 'px 0 ' + this.color + ',\n                              -' + this.dotSize * 1.9 + 'px -' + this.dotSize * 1.9 + 'px 0 ' + this.color + ',\n                              -' + this.dotSize * 1.9 + 'px ' + this.dotSize * 1.9 + 'px 0 ' + this.color + ';\n\n                }\n                100% {\n                  transform: rotate(360deg);\n                  box-shadow: 0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ',\n                              0 0 0 ' + this.color + ';\n                }';
+    }
+  }
+});
+
+/***/ }),
+/* 105 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "flower-spinner", style: _vm.spinnerStyle }, [
+    _c(
+      "div",
+      { staticClass: "dots-container", style: _vm.dotsContainerStyle },
+      [
+        _c("div", { staticClass: "bigger-dot", style: _vm.biggerDotStyle }, [
+          _c("div", { staticClass: "smaller-dot", style: _vm.smallerDotStyle })
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3996aa1a", module.exports)
+  }
+}
+
+/***/ }),
+/* 106 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(107)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(109)
+/* template */
+var __vue_template__ = __webpack_require__(110)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-3b0bf4e6"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/epic-spinners/src/components/lib/IntersectingCirclesSpinner.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3b0bf4e6", Component.options)
+  } else {
+    hotAPI.reload("data-v-3b0bf4e6", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 107 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(108);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(74)("559fa12b", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3b0bf4e6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./IntersectingCirclesSpinner.vue", function() {
+     var newContent = require("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3b0bf4e6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./IntersectingCirclesSpinner.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 108 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.intersecting-circles-spinner[data-v-3b0bf4e6], .intersecting-circles-spinner *[data-v-3b0bf4e6] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.intersecting-circles-spinner[data-v-3b0bf4e6] {\n  height: 70px;\n  width: 70px;\n  position: relative;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.intersecting-circles-spinner .spinnerBlock[data-v-3b0bf4e6] {\n  -webkit-animation: intersecting-circles-spinners-animation-data-v-3b0bf4e6 1200ms linear infinite;\n          animation: intersecting-circles-spinners-animation-data-v-3b0bf4e6 1200ms linear infinite;\n  -webkit-transform-origin: center;\n          transform-origin: center;\n  display: block;\n  height: 35px;\n  width: 35px;\n}\n.intersecting-circles-spinner .circle[data-v-3b0bf4e6] {\n  display: block;\n  border: 2px solid #ff1d5e;\n  border-radius: 50%;\n  height: 100%;\n  width: 100%;\n  position: absolute;\n  left: 0;\n  top: 0;\n}\n.intersecting-circles-spinner .circle[data-v-3b0bf4e6]:nth-child(1) {\n  left: 0;\n  top: 0;\n}\n.intersecting-circles-spinner .circle[data-v-3b0bf4e6]:nth-child(2) {\n  left: calc(35px * -0.36);\n  top: calc(35px * 0.2);\n}\n.intersecting-circles-spinner .circle[data-v-3b0bf4e6]:nth-child(3) {\n  left: calc(35px * -0.36);\n  top: calc(35px * -0.2);\n}\n.intersecting-circles-spinner .circle[data-v-3b0bf4e6]:nth-child(4) {\n  left: 0;\n  top: calc(35px * -0.36);\n}\n.intersecting-circles-spinner .circle[data-v-3b0bf4e6]:nth-child(5) {\n  left: calc(35px * 0.36);\n  top: calc(35px * -0.2);\n}\n.intersecting-circles-spinner .circle[data-v-3b0bf4e6]:nth-child(6) {\n  left: calc(35px * 0.36);\n  top: calc(35px * 0.2);\n}\n.intersecting-circles-spinner .circle[data-v-3b0bf4e6]:nth-child(7) {\n  left: 0;\n  top: calc(35px * 0.36);\n}\n@-webkit-keyframes intersecting-circles-spinners-animation-data-v-3b0bf4e6 {\nfrom { -webkit-transform: rotate(0deg); transform: rotate(0deg);\n}\nto { -webkit-transform: rotate(360deg); transform: rotate(360deg);\n}\n}\n@keyframes intersecting-circles-spinners-animation-data-v-3b0bf4e6 {\nfrom { -webkit-transform: rotate(0deg); transform: rotate(0deg);\n}\nto { -webkit-transform: rotate(360deg); transform: rotate(360deg);\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 109 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'IntersectingCirclesSpinner',
+
+  props: {
+    animationDuration: {
+      type: Number,
+      default: 1200
+    },
+    size: {
+      type: Number,
+      default: 70
+    },
+    color: {
+      type: String,
+      default: '#fff'
+    }
+  },
+
+  computed: {
+    circleSize: function circleSize() {
+      return this.size / 2;
+    },
+    spinnerStyle: function spinnerStyle() {
+      return {
+        width: this.size + 'px',
+        height: this.size + 'px'
+      };
+    },
+    spinnerBlockStyle: function spinnerBlockStyle() {
+      return {
+        animationDuration: this.animationDuration + 'ms',
+        width: this.circleSize + 'px',
+        height: this.circleSize + 'px'
+      };
+    },
+    circleStyle: function circleStyle() {
+      return {
+        borderColor: this.color
+      };
+    },
+    circleStyles: function circleStyles() {
+      var _this = this;
+
+      var circlesPositions = [{ top: 0, left: 0 }, { left: this.circleSize * -0.36 + 'px', top: this.circleSize * 0.2 + 'px' }, { left: this.circleSize * -0.36 + 'px', top: this.circleSize * -0.2 + 'px' }, { left: 0, top: this.circleSize * -0.36 + 'px' }, { left: this.circleSize * 0.36 + 'px', top: this.circleSize * -0.2 + 'px' }, { left: this.circleSize * 0.36 + 'px', top: this.circleSize * 0.2 + 'px' }, { left: 0, top: this.circleSize * 0.36 + 'px' }];
+
+      return circlesPositions.map(function (cp) {
+        return Object.assign(cp, _this.circleStyle);
+      });
+    }
+  }
+});
+
+/***/ }),
+/* 110 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "intersecting-circles-spinner", style: _vm.spinnerStyle },
+    [
+      _c(
+        "div",
+        { staticClass: "spinnerBlock", style: _vm.spinnerBlockStyle },
+        _vm._l(_vm.circleStyles, function(cs, index) {
+          return _c("span", { key: index, staticClass: "circle", style: cs })
+        })
+      )
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3b0bf4e6", module.exports)
+  }
+}
+
+/***/ }),
+/* 111 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(112)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(114)
+/* template */
+var __vue_template__ = __webpack_require__(115)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-2767e9c3"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/epic-spinners/src/components/lib/OrbitSpinner.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2767e9c3", Component.options)
+  } else {
+    hotAPI.reload("data-v-2767e9c3", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 112 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(113);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(74)("71ecc241", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2767e9c3\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./OrbitSpinner.vue", function() {
+     var newContent = require("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2767e9c3\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./OrbitSpinner.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 113 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.orbit-spinner[data-v-2767e9c3], .orbit-spinner *[data-v-2767e9c3] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.orbit-spinner[data-v-2767e9c3] {\n  height: 55px;\n  width: 55px;\n  border-radius: 50%;\n  -webkit-perspective: 800px;\n          perspective: 800px;\n}\n.orbit-spinner .orbit[data-v-2767e9c3] {\n  position: absolute;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  width: 100%;\n  height: 100%;\n  border-radius: 50%;\n}\n.orbit-spinner .orbit[data-v-2767e9c3]:nth-child(1) {\n  left: 0%;\n  top: 0%;\n  -webkit-animation: orbit-spinner-orbit-one-animation-data-v-2767e9c3 1200ms linear infinite;\n          animation: orbit-spinner-orbit-one-animation-data-v-2767e9c3 1200ms linear infinite;\n  border-bottom: 3px solid #ff1d5e;\n}\n.orbit-spinner .orbit[data-v-2767e9c3]:nth-child(2) {\n  right: 0%;\n  top: 0%;\n  -webkit-animation: orbit-spinner-orbit-two-animation-data-v-2767e9c3 1200ms linear infinite;\n          animation: orbit-spinner-orbit-two-animation-data-v-2767e9c3 1200ms linear infinite;\n  border-right: 3px solid #ff1d5e;\n}\n.orbit-spinner .orbit[data-v-2767e9c3]:nth-child(3) {\n  right: 0%;\n  bottom: 0%;\n  -webkit-animation: orbit-spinner-orbit-three-animation-data-v-2767e9c3 1200ms linear infinite;\n          animation: orbit-spinner-orbit-three-animation-data-v-2767e9c3 1200ms linear infinite;\n  border-top: 3px solid #ff1d5e;\n}\n@-webkit-keyframes orbit-spinner-orbit-one-animation-data-v-2767e9c3 {\n0% {\n    -webkit-transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);\n            transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);\n}\n100% {\n    -webkit-transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);\n            transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);\n}\n}\n@keyframes orbit-spinner-orbit-one-animation-data-v-2767e9c3 {\n0% {\n    -webkit-transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);\n            transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);\n}\n100% {\n    -webkit-transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);\n            transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);\n}\n}\n@-webkit-keyframes orbit-spinner-orbit-two-animation-data-v-2767e9c3 {\n0% {\n    -webkit-transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);\n            transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);\n}\n100% {\n    -webkit-transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);\n            transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);\n}\n}\n@keyframes orbit-spinner-orbit-two-animation-data-v-2767e9c3 {\n0% {\n    -webkit-transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);\n            transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);\n}\n100% {\n    -webkit-transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);\n            transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);\n}\n}\n@-webkit-keyframes orbit-spinner-orbit-three-animation-data-v-2767e9c3 {\n0% {\n    -webkit-transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);\n            transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);\n}\n100% {\n    -webkit-transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);\n            transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);\n}\n}\n@keyframes orbit-spinner-orbit-three-animation-data-v-2767e9c3 {\n0% {\n    -webkit-transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);\n            transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);\n}\n100% {\n    -webkit-transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);\n            transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 114 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'OrbitSpinner',
+
+  props: {
+    animationDuration: {
+      type: Number,
+      default: 1000
+    },
+    size: {
+      type: Number,
+      default: 50
+    },
+    color: {
+      type: String,
+      default: '#fff'
+    }
+  },
+
+  computed: {
+    spinnerStyle: function spinnerStyle() {
+      return {
+        height: this.size + 'px',
+        width: this.size + 'px'
+      };
+    },
+    orbitStyle: function orbitStyle() {
+      return {
+        borderColor: this.color,
+        animationDuration: this.animationDuration + 'ms'
+      };
+    }
+  }
+});
+
+/***/ }),
+/* 115 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "orbit-spinner", style: _vm.spinnerStyle }, [
+    _c("div", { staticClass: "orbit one", style: _vm.orbitStyle }),
+    _vm._v(" "),
+    _c("div", { staticClass: "orbit two", style: _vm.orbitStyle }),
+    _vm._v(" "),
+    _c("div", { staticClass: "orbit three", style: _vm.orbitStyle })
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2767e9c3", module.exports)
+  }
+}
+
+/***/ }),
+/* 116 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(117)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(119)
+/* template */
+var __vue_template__ = __webpack_require__(120)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-3fdbdfe9"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/epic-spinners/src/components/lib/FingerprintSpinner.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3fdbdfe9", Component.options)
+  } else {
+    hotAPI.reload("data-v-3fdbdfe9", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 117 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(118);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(74)("4878a304", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3fdbdfe9\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./FingerprintSpinner.vue", function() {
+     var newContent = require("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3fdbdfe9\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./FingerprintSpinner.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 118 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.fingerprint-spinner[data-v-3fdbdfe9], .fingerprint-spinner *[data-v-3fdbdfe9] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.fingerprint-spinner[data-v-3fdbdfe9] {\n  height: 64px;\n  width: 64px;\n  padding: 2px;\n  overflow: hidden;\n  position: relative;\n}\n.fingerprint-spinner .spinner-ring[data-v-3fdbdfe9] {\n  position: absolute;\n  border-radius: 50%;\n  border: 2px solid transparent;\n  border-top-color: #ff1d5e;\n  -webkit-animation: fingerprint-spinner-animation-data-v-3fdbdfe9 1500ms cubic-bezier(0.680, -0.750, 0.265, 1.750) infinite forwards;\n          animation: fingerprint-spinner-animation-data-v-3fdbdfe9 1500ms cubic-bezier(0.680, -0.750, 0.265, 1.750) infinite forwards;\n  margin: auto;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  top: 0;\n}\n.fingerprint-spinner .spinner-ring[data-v-3fdbdfe9]:nth-child(1) {\n  height: calc(60px / 9 + 0 * 60px / 9);\n  width: calc(60px / 9 + 0 * 60px / 9);\n  -webkit-animation-delay: calc(50ms * 1);\n          animation-delay: calc(50ms * 1);\n}\n.fingerprint-spinner .spinner-ring[data-v-3fdbdfe9]:nth-child(2) {\n  height: calc(60px / 9 + 1 * 60px / 9);\n  width: calc(60px / 9 + 1 * 60px / 9);\n  -webkit-animation-delay: calc(50ms * 2);\n          animation-delay: calc(50ms * 2);\n}\n.fingerprint-spinner .spinner-ring[data-v-3fdbdfe9]:nth-child(3) {\n  height: calc(60px / 9 + 2 * 60px / 9);\n  width: calc(60px / 9 + 2 * 60px / 9);\n  -webkit-animation-delay: calc(50ms * 3);\n          animation-delay: calc(50ms * 3);\n}\n.fingerprint-spinner .spinner-ring[data-v-3fdbdfe9]:nth-child(4) {\n  height: calc(60px / 9 + 3 * 60px / 9);\n  width: calc(60px / 9 + 3 * 60px / 9);\n  -webkit-animation-delay: calc(50ms * 4);\n          animation-delay: calc(50ms * 4);\n}\n.fingerprint-spinner .spinner-ring[data-v-3fdbdfe9]:nth-child(5) {\n  height: calc(60px / 9 + 4 * 60px / 9);\n  width: calc(60px / 9 + 4 * 60px / 9);\n  -webkit-animation-delay: calc(50ms * 5);\n          animation-delay: calc(50ms * 5);\n}\n.fingerprint-spinner .spinner-ring[data-v-3fdbdfe9]:nth-child(6) {\n  height: calc(60px / 9 + 5 * 60px / 9);\n  width: calc(60px / 9 + 5 * 60px / 9);\n  -webkit-animation-delay: calc(50ms * 6);\n          animation-delay: calc(50ms * 6);\n}\n.fingerprint-spinner .spinner-ring[data-v-3fdbdfe9]:nth-child(7) {\n  height: calc(60px / 9 + 6 * 60px / 9);\n  width: calc(60px / 9 + 6 * 60px / 9);\n  -webkit-animation-delay: calc(50ms * 7);\n          animation-delay: calc(50ms * 7);\n}\n.fingerprint-spinner .spinner-ring[data-v-3fdbdfe9]:nth-child(8) {\n  height: calc(60px / 9 + 7 * 60px / 9);\n  width: calc(60px / 9 + 7 * 60px / 9);\n  -webkit-animation-delay: calc(50ms * 8);\n          animation-delay: calc(50ms * 8);\n}\n.fingerprint-spinner .spinner-ring[data-v-3fdbdfe9]:nth-child(9) {\n  height: calc(60px / 9 + 8 * 60px / 9);\n  width: calc(60px / 9 + 8 * 60px / 9);\n  -webkit-animation-delay: calc(50ms * 9);\n          animation-delay: calc(50ms * 9);\n}\n@-webkit-keyframes fingerprint-spinner-animation-data-v-3fdbdfe9 {\n100% {\n    -webkit-transform: rotate( 360deg );\n            transform: rotate( 360deg );\n}\n}\n@keyframes fingerprint-spinner-animation-data-v-3fdbdfe9 {\n100% {\n    -webkit-transform: rotate( 360deg );\n            transform: rotate( 360deg );\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 119 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'FingerprintSpinner',
+
+  props: {
+    animationDuration: {
+      type: Number,
+      default: 1500
+    },
+    size: {
+      type: Number,
+      default: 60
+    },
+    color: {
+      type: String,
+      default: '#fff'
+    }
+  },
+
+  data: function data() {
+    return {
+      ringsNum: 9,
+      containerPadding: 2
+    };
+  },
+
+
+  computed: {
+    outerRingSize: function outerRingSize() {
+      return this.size - this.containerPadding * 2;
+    },
+    spinnerStyle: function spinnerStyle() {
+      return {
+        height: this.size + 'px',
+        width: this.size + 'px',
+        padding: this.containerPadding + 'px'
+      };
+    },
+    ringStyle: function ringStyle() {
+      return {
+        borderTopColor: this.color,
+        animationDuration: this.animationDuration + 'ms'
+      };
+    },
+    ringsStyles: function ringsStyles() {
+      var ringsStyles = [];
+      var ringBase = this.outerRingSize / this.ringsNum;
+      var ringInc = ringBase;
+
+      for (var i = 1; i <= this.ringsNum; i++) {
+        var style = Object.assign({
+          animationDelay: i * 50 + 'ms',
+          height: ringBase + (i - 1) * ringInc + 'px',
+          width: ringBase + (i - 1) * ringInc + 'px'
+        }, this.ringStyle);
+        ringsStyles.push(style);
+      }
+
+      return ringsStyles;
+    }
+  }
+});
+
+/***/ }),
+/* 120 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "fingerprint-spinner", style: _vm.spinnerStyle },
+    _vm._l(_vm.ringsStyles, function(rs, index) {
+      return _c("div", { key: index, staticClass: "spinner-ring", style: rs })
+    })
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3fdbdfe9", module.exports)
+  }
+}
+
+/***/ }),
+/* 121 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(122)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(124)
+/* template */
+var __vue_template__ = __webpack_require__(125)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-e647c006"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/epic-spinners/src/components/lib/TrinityRingsSpinner.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-e647c006", Component.options)
+  } else {
+    hotAPI.reload("data-v-e647c006", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 122 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(123);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(74)("5a8c7718", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e647c006\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./TrinityRingsSpinner.vue", function() {
+     var newContent = require("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e647c006\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./TrinityRingsSpinner.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 123 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.trinity-rings-spinner[data-v-e647c006], .trinity-rings-spinner *[data-v-e647c006] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.trinity-rings-spinner[data-v-e647c006] {\n  height: 66px;\n  width: 66px;\n  padding: 3px;\n  position: relative;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  overflow: hidden;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.trinity-rings-spinner .circle[data-v-e647c006] {\n  position:absolute;\n  display:block;\n  border-radius:50%;\n  border: 3px solid #ff1d5e;\n  opacity: 1;\n}\n.trinity-rings-spinner .circle[data-v-e647c006]:nth-child(1) {\n  height: 60px;\n  width: 60px;\n  -webkit-animation : trinity-rings-spinner-circle1-animation-data-v-e647c006 1.5s infinite linear;\n          animation : trinity-rings-spinner-circle1-animation-data-v-e647c006 1.5s infinite linear;\n  border-width: 3px;\n}\n.trinity-rings-spinner .circle[data-v-e647c006]:nth-child(2) {\n  height: calc(60px * 0.65);\n  width: calc(60px * 0.65);\n  -webkit-animation : trinity-rings-spinner-circle2-animation-data-v-e647c006 1.5s infinite linear;\n          animation : trinity-rings-spinner-circle2-animation-data-v-e647c006 1.5s infinite linear;\n  border-width: 2px;\n}\n.trinity-rings-spinner .circle[data-v-e647c006]:nth-child(3) {\n  height: calc(60px * 0.1);\n  width: calc(60px * 0.1);\n  -webkit-animation:trinity-rings-spinner-circle3-animation-data-v-e647c006 1.5s infinite linear;\n          animation:trinity-rings-spinner-circle3-animation-data-v-e647c006 1.5s infinite linear;\n  border-width: 1px;\n}\n@-webkit-keyframes trinity-rings-spinner-circle1-animation-data-v-e647c006{\n0% {\n    -webkit-transform: rotateZ(20deg) rotateY(0deg);\n            transform: rotateZ(20deg) rotateY(0deg);\n}\n100% {\n    -webkit-transform: rotateZ(100deg) rotateY(360deg);\n            transform: rotateZ(100deg) rotateY(360deg);\n}\n}\n@keyframes trinity-rings-spinner-circle1-animation-data-v-e647c006{\n0% {\n    -webkit-transform: rotateZ(20deg) rotateY(0deg);\n            transform: rotateZ(20deg) rotateY(0deg);\n}\n100% {\n    -webkit-transform: rotateZ(100deg) rotateY(360deg);\n            transform: rotateZ(100deg) rotateY(360deg);\n}\n}\n@-webkit-keyframes trinity-rings-spinner-circle2-animation-data-v-e647c006{\n0% {\n    -webkit-transform: rotateZ(100deg) rotateX(0deg);\n            transform: rotateZ(100deg) rotateX(0deg);\n}\n100% {\n    -webkit-transform: rotateZ(0deg) rotateX(360deg);\n            transform: rotateZ(0deg) rotateX(360deg);\n}\n}\n@keyframes trinity-rings-spinner-circle2-animation-data-v-e647c006{\n0% {\n    -webkit-transform: rotateZ(100deg) rotateX(0deg);\n            transform: rotateZ(100deg) rotateX(0deg);\n}\n100% {\n    -webkit-transform: rotateZ(0deg) rotateX(360deg);\n            transform: rotateZ(0deg) rotateX(360deg);\n}\n}\n@-webkit-keyframes trinity-rings-spinner-circle3-animation-data-v-e647c006{\n0% {\n    -webkit-transform: rotateZ(100deg) rotateX(-360deg);\n            transform: rotateZ(100deg) rotateX(-360deg);\n}\n100% {\n    -webkit-transform: rotateZ(-360deg) rotateX(360deg);\n            transform: rotateZ(-360deg) rotateX(360deg);\n}\n}\n@keyframes trinity-rings-spinner-circle3-animation-data-v-e647c006{\n0% {\n    -webkit-transform: rotateZ(100deg) rotateX(-360deg);\n            transform: rotateZ(100deg) rotateX(-360deg);\n}\n100% {\n    -webkit-transform: rotateZ(-360deg) rotateX(360deg);\n            transform: rotateZ(-360deg) rotateX(360deg);\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 124 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'TrinityRingsSpinner',
+
+  props: {
+    animationDuration: {
+      type: Number,
+      default: 1500
+    },
+    size: {
+      type: Number,
+      default: 60
+    },
+    color: {
+      type: String,
+      default: '#fff'
+    }
+  },
+
+  data: function data() {
+    return {
+      containerPadding: 3
+    };
+  },
+
+
+  computed: {
+    outerRingSize: function outerRingSize() {
+      return this.size - this.containerPadding * 2;
+    },
+    spinnerStyle: function spinnerStyle() {
+      return {
+        height: this.size + 'px',
+        width: this.size + 'px',
+        padding: this.containerPadding + 'px'
+      };
+    },
+    ring1Style: function ring1Style() {
+      return {
+        height: this.outerRingSize + 'px',
+        width: this.outerRingSize + 'px',
+        borderColor: this.color,
+        animationDuration: this.animationDuration + 'ms'
+      };
+    },
+    ring2Style: function ring2Style() {
+      return {
+        height: this.outerRingSize * 0.65 + 'px',
+        width: this.outerRingSize * 0.65 + 'px',
+        borderColor: this.color,
+        animationDuration: this.animationDuration + 'ms'
+      };
+    },
+    ring3Style: function ring3Style() {
+      return {
+        height: this.outerRingSize * 0.1 + 'px',
+        width: this.outerRingSize * 0.1 + 'px',
+        borderColor: this.color,
+        animationDuration: this.animationDuration + 'ms'
+      };
+    }
+  }
+});
+
+/***/ }),
+/* 125 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "trinity-rings-spinner", style: _vm.spinnerStyle },
+    [
+      _c("div", { staticClass: "circle circle1", style: _vm.ring1Style }),
+      _vm._v(" "),
+      _c("div", { staticClass: "circle circle2", style: _vm.ring2Style }),
+      _vm._v(" "),
+      _c("div", { staticClass: "circle circle3", style: _vm.ring3Style })
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-e647c006", module.exports)
+  }
+}
+
+/***/ }),
+/* 126 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(127)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(129)
+/* template */
+var __vue_template__ = __webpack_require__(130)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-38857dd6"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/epic-spinners/src/components/lib/FulfillingSquareSpinner.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-38857dd6", Component.options)
+  } else {
+    hotAPI.reload("data-v-38857dd6", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 127 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(128);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(74)("433bf468", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-38857dd6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./FulfillingSquareSpinner.vue", function() {
+     var newContent = require("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-38857dd6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./FulfillingSquareSpinner.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 128 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.fulfilling-square-spinner[data-v-38857dd6], .fulfilling-square-spinner *[data-v-38857dd6] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.fulfilling-square-spinner[data-v-38857dd6] {\n  height: 50px;\n  width: 50px;\n  position: relative;\n  border: 4px solid #ff1d5e;\n  -webkit-animation: fulfilling-square-spinner-animation-data-v-38857dd6 4s infinite ease;\n          animation: fulfilling-square-spinner-animation-data-v-38857dd6 4s infinite ease;\n}\n.fulfilling-square-spinner .spinner-inner[data-v-38857dd6] {\n  vertical-align: top;\n  display: inline-block;\n  background-color: #ff1d5e;\n  width: 100%;\n  opacity: 1;\n  -webkit-animation: fulfilling-square-spinner-inner-animation-data-v-38857dd6 4s infinite ease-in;\n          animation: fulfilling-square-spinner-inner-animation-data-v-38857dd6 4s infinite ease-in;\n}\n@-webkit-keyframes fulfilling-square-spinner-animation-data-v-38857dd6 {\n0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\n25% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n}\n50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n}\n75% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n@keyframes fulfilling-square-spinner-animation-data-v-38857dd6 {\n0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\n25% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n}\n50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n}\n75% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n@-webkit-keyframes fulfilling-square-spinner-inner-animation-data-v-38857dd6 {\n0% {\n    height: 0%;\n}\n25% {\n    height: 0%;\n}\n50% {\n    height: 100%;\n}\n75% {\n    height: 100%;\n}\n100% {\n    height: 0%;\n}\n}\n@keyframes fulfilling-square-spinner-inner-animation-data-v-38857dd6 {\n0% {\n    height: 0%;\n}\n25% {\n    height: 0%;\n}\n50% {\n    height: 100%;\n}\n75% {\n    height: 100%;\n}\n100% {\n    height: 0%;\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 129 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'FulfillingSquareSpinner',
+
+  props: {
+    animationDuration: {
+      type: Number,
+      default: 4000
+    },
+    size: {
+      type: Number,
+      default: 50
+    },
+    color: {
+      type: String,
+      default: '#fff'
+    }
+  },
+
+  computed: {
+    spinnerStyle: function spinnerStyle() {
+      return {
+        height: this.size + 'px',
+        width: this.size + 'px',
+        borderColor: this.color
+      };
+    },
+    spinnerInnerStyle: function spinnerInnerStyle() {
+      return {
+        backgroundColor: this.color
+      };
+    }
+  }
+});
+
+/***/ }),
+/* 130 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "fulfilling-square-spinner", style: _vm.spinnerStyle },
+    [_c("div", { staticClass: "spinner-inner", style: _vm.spinnerInnerStyle })]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-38857dd6", module.exports)
+  }
+}
+
+/***/ }),
+/* 131 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(132)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(134)
+/* template */
+var __vue_template__ = __webpack_require__(135)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-690fd6ce"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/epic-spinners/src/components/lib/CirclesToRhombusesSpinner.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-690fd6ce", Component.options)
+  } else {
+    hotAPI.reload("data-v-690fd6ce", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 132 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(133);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(74)("45778ca6", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-690fd6ce\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./CirclesToRhombusesSpinner.vue", function() {
+     var newContent = require("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-690fd6ce\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./CirclesToRhombusesSpinner.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 133 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.circles-to-rhombuses-spinner[data-v-690fd6ce], .circles-to-rhombuses-spinner *[data-v-690fd6ce] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.circles-to-rhombuses-spinner[data-v-690fd6ce] {\n  height: 15px;\n  width: calc( (15px + 15px * 1.125) * 3);\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center\n}\n.circles-to-rhombuses-spinner .circle[data-v-690fd6ce] {\n  height: 15px;\n  width: 15px;\n  margin-left: calc(15px * 1.125);\n  -webkit-transform: rotate(45deg);\n          transform: rotate(45deg);\n  border-radius: 10%;\n  border: 3px solid #ff1d5e;\n  overflow: hidden;\n  background: transparent;\n\n  -webkit-animation: circles-to-rhombuses-animation-data-v-690fd6ce 1200ms linear infinite;\n\n          animation: circles-to-rhombuses-animation-data-v-690fd6ce 1200ms linear infinite;\n}\n.circles-to-rhombuses-spinner .circle[data-v-690fd6ce]:nth-child(1) {\n  -webkit-animation-delay: calc(150ms * 1);\n          animation-delay: calc(150ms * 1);\n  margin-left: 0\n}\n.circles-to-rhombuses-spinner .circle[data-v-690fd6ce]:nth-child(2) {\n  -webkit-animation-delay: calc(150ms * 2);\n          animation-delay: calc(150ms * 2);\n}\n.circles-to-rhombuses-spinner .circle[data-v-690fd6ce]:nth-child(3) {\n  -webkit-animation-delay: calc(150ms * 3);\n          animation-delay: calc(150ms * 3);\n}\n@-webkit-keyframes circles-to-rhombuses-animation-data-v-690fd6ce {\n0% {\n    border-radius: 10%;\n}\n17.5% {\n    border-radius: 10%;\n}\n50% {\n    border-radius: 100%;\n}\n93.5% {\n    border-radius: 10%;\n}\n100% {\n    border-radius: 10%;\n}\n}\n@keyframes circles-to-rhombuses-animation-data-v-690fd6ce {\n0% {\n    border-radius: 10%;\n}\n17.5% {\n    border-radius: 10%;\n}\n50% {\n    border-radius: 100%;\n}\n93.5% {\n    border-radius: 10%;\n}\n100% {\n    border-radius: 10%;\n}\n}\n@-webkit-keyframes circles-to-rhombuses-background-animation-data-v-690fd6ce {\n50% {\n    opacity: 0.4;\n}\n}\n@keyframes circles-to-rhombuses-background-animation-data-v-690fd6ce {\n50% {\n    opacity: 0.4;\n}\n}\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 134 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'CirclesToRhombusesSpinner',
+
+  props: {
+    animationDuration: {
+      type: Number,
+      default: 1200
+    },
+    circleSize: {
+      type: Number,
+      default: 15
+    },
+    color: {
+      type: String,
+      default: '#fff'
+    },
+    circlesNum: {
+      type: Number,
+      default: 3
+    }
+  },
+
+  computed: {
+    circleMarginLeft: function circleMarginLeft() {
+      return this.circleSize * 1.125;
+    },
+    spinnertStyle: function spinnertStyle() {
+      return {
+        height: this.circleSize + 'px',
+        width: (this.circleSize + this.circleMarginLeft) * this.circlesNum + 'px'
+      };
+    },
+    circleStyle: function circleStyle() {
+      return {
+        borderColor: this.color,
+        animationDuration: this.animationDuration + 'ms',
+        height: this.circleSize + 'px',
+        width: this.circleSize + 'px',
+        marginLeft: this.circleMarginLeft + 'px'
+      };
+    },
+    circlesStyles: function circlesStyles() {
+      var circlesStyles = [];
+      var delay = 150;
+
+      for (var i = 1; i <= this.circlesNum; i++) {
+        var style = Object.assign({
+          animationDelay: i * delay + 'ms'
+        }, this.circleStyle);
+
+        if (i === 1) {
+          style.marginLeft = 0;
+        }
+
+        circlesStyles.push(style);
+      }
+
+      return circlesStyles;
+    }
+  }
+});
+
+/***/ }),
+/* 135 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "circles-to-rhombuses-spinner", style: _vm.spinnertStyle },
+    _vm._l(_vm.circlesStyles, function(cs, index) {
+      return _c("div", { key: index, staticClass: "circle", style: cs })
+    })
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-690fd6ce", module.exports)
+  }
+}
+
+/***/ }),
+/* 136 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(137)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(139)
+/* template */
+var __vue_template__ = __webpack_require__(140)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-5552c086"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/epic-spinners/src/components/lib/SemipolarSpinner.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5552c086", Component.options)
+  } else {
+    hotAPI.reload("data-v-5552c086", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 137 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(138);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(74)("591a6283", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5552c086\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./SemipolarSpinner.vue", function() {
+     var newContent = require("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5552c086\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./SemipolarSpinner.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 138 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.semipolar-spinner[data-v-5552c086], .semipolar-spinner *[data-v-5552c086] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.semipolar-spinner[data-v-5552c086] {\n  height: 65px;\n  width: 65px;\n  position: relative;\n}\n.semipolar-spinner .ring[data-v-5552c086] {\n  border-radius: 50%;\n  position: absolute;\n  border: calc(65px * 0.05) solid transparent;\n  border-top-color: #ff1d5e;\n  border-left-color: #ff1d5e;\n  -webkit-animation: semipolar-spinner-animation-data-v-5552c086 2s infinite;\n          animation: semipolar-spinner-animation-data-v-5552c086 2s infinite;\n}\n.semipolar-spinner .ring[data-v-5552c086]:nth-child(1) {\n  height: calc(65px - 65px * 0.2 * 0);\n  width: calc(65px - 65px * 0.2 * 0);\n  top: calc(65px * 0.1 * 0);\n  left: calc(65px * 0.1 * 0);\n  -webkit-animation-delay: calc(2000ms * 0.1 * 4);\n          animation-delay: calc(2000ms * 0.1 * 4);\n  z-index: 5;\n}\n.semipolar-spinner .ring[data-v-5552c086]:nth-child(2) {\n  height: calc(65px - 65px * 0.2 * 1);\n  width: calc(65px - 65px * 0.2 * 1);\n  top: calc(65px * 0.1 * 1);\n  left: calc(65px * 0.1 * 1);\n  -webkit-animation-delay: calc(2000ms * 0.1 * 3);\n          animation-delay: calc(2000ms * 0.1 * 3);\n  z-index: 4;\n}\n.semipolar-spinner .ring[data-v-5552c086]:nth-child(3) {\n  height: calc(65px - 65px * 0.2 * 2);\n  width: calc(65px - 65px * 0.2 * 2);\n  top: calc(65px * 0.1 * 2);\n  left: calc(65px * 0.1 * 2);\n  -webkit-animation-delay: calc(2000ms * 0.1 * 2);\n          animation-delay: calc(2000ms * 0.1 * 2);\n  z-index: 3;\n}\n.semipolar-spinner .ring[data-v-5552c086]:nth-child(4) {\n  height: calc(65px - 65px * 0.2 * 3);\n  width: calc(65px - 65px * 0.2 * 3);\n  top: calc(65px * 0.1 * 3);\n  left: calc(65px * 0.1 * 3);\n  -webkit-animation-delay: calc(2000ms * 0.1 * 1);\n          animation-delay: calc(2000ms * 0.1 * 1);\n  z-index: 2;\n}\n.semipolar-spinner .ring[data-v-5552c086]:nth-child(5) {\n  height: calc(65px - 65px * 0.2 * 4);\n  width: calc(65px - 65px * 0.2 * 4);\n  top: calc(65px * 0.1 * 4);\n  left: calc(65px * 0.1 * 4);\n  -webkit-animation-delay: calc(2000ms * 0.1 * 0);\n          animation-delay: calc(2000ms * 0.1 * 0);\n  z-index: 1;\n}\n@-webkit-keyframes semipolar-spinner-animation-data-v-5552c086 {\n50% {\n    -webkit-transform: rotate(360deg) scale(0.7);\n            transform: rotate(360deg) scale(0.7);\n}\n}\n@keyframes semipolar-spinner-animation-data-v-5552c086 {\n50% {\n    -webkit-transform: rotate(360deg) scale(0.7);\n            transform: rotate(360deg) scale(0.7);\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 139 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'SemipolarSpinner',
+
+  props: {
+    animationDuration: {
+      type: Number,
+      default: 2000
+    },
+    size: {
+      type: Number,
+      default: 65
+    },
+    color: {
+      type: String,
+      default: '#fff'
+    }
+  },
+
+  data: function data() {
+    return {
+      ringsNum: 5
+    };
+  },
+
+
+  computed: {
+    spinnerStyle: function spinnerStyle() {
+      return {
+        height: this.size + 'px',
+        width: this.size + 'px'
+      };
+    },
+    ringStyle: function ringStyle() {
+      return {
+        animationDuration: this.animationDuration + 'ms',
+        borderTopColor: this.color,
+        borderLeftColor: this.color
+      };
+    },
+    ringsStyles: function ringsStyles() {
+      var ringsStyles = [];
+      var delayModifier = 0.1;
+      var ringWidth = this.size * 0.05;
+      var positionIncrement = ringWidth * 2;
+      var sizeDecrement = this.size * 0.2;
+
+      for (var i = 0; i < this.ringsNum; i++) {
+        var computedSize = this.size - sizeDecrement * i + 'px';
+        var computedPosition = positionIncrement * i + 'px';
+        var style = Object.assign({
+          animationDelay: this.animationDuration * delayModifier * (this.ringsNum - i - 1) + 'ms',
+          height: computedSize,
+          width: computedSize,
+          left: computedPosition,
+          top: computedPosition,
+          borderWidth: ringWidth + 'px'
+        }, this.ringStyle);
+        ringsStyles.push(style);
+      }
+
+      return ringsStyles;
+    }
+  }
+});
+
+/***/ }),
+/* 140 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "semipolar-spinner", style: _vm.spinnerStyle },
+    _vm._l(_vm.ringsStyles, function(rs, index) {
+      return _c("div", { key: index, staticClass: "ring", style: rs })
+    })
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5552c086", module.exports)
+  }
+}
+
+/***/ }),
+/* 141 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(142)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(144)
+/* template */
+var __vue_template__ = __webpack_require__(145)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-a1d20622"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/epic-spinners/src/components/lib/BreedingRhombusSpinner.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-a1d20622", Component.options)
+  } else {
+    hotAPI.reload("data-v-a1d20622", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 142 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(143);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(74)("f3b01b32", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a1d20622\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./BreedingRhombusSpinner.vue", function() {
+     var newContent = require("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a1d20622\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./BreedingRhombusSpinner.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 143 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.breeding-rhombus-spinner[data-v-a1d20622] {\n  height: 65px;\n  width: 65px;\n  position: relative;\n  -webkit-transform: rotate(45deg);\n          transform: rotate(45deg);\n}\n.breeding-rhombus-spinner[data-v-a1d20622], .breeding-rhombus-spinner *[data-v-a1d20622] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.breeding-rhombus-spinner .rhombus[data-v-a1d20622] {\n  height: calc(65px / 7.5);\n  width: calc(65px / 7.5);\n  -webkit-animation-duration: 2000ms;\n          animation-duration: 2000ms;\n  top: calc(65px / 2.3077);\n  left: calc(65px / 2.3077);\n  background-color: #ff1d5e;\n  position: absolute;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite;\n}\n.breeding-rhombus-spinner .rhombus[data-v-a1d20622]:nth-child(2n+0) {\n  margin-right: 0;\n}\n.breeding-rhombus-spinner .rhombus.child-1[data-v-a1d20622] {\n  -webkit-animation-name: breeding-rhombus-spinner-animation-child-1-data-v-a1d20622;\n          animation-name: breeding-rhombus-spinner-animation-child-1-data-v-a1d20622;\n  -webkit-animation-delay: calc(100ms * 1);\n          animation-delay: calc(100ms * 1);\n}\n.breeding-rhombus-spinner .rhombus.child-2[data-v-a1d20622] {\n  -webkit-animation-name: breeding-rhombus-spinner-animation-child-2-data-v-a1d20622;\n          animation-name: breeding-rhombus-spinner-animation-child-2-data-v-a1d20622;\n  -webkit-animation-delay: calc(100ms * 2);\n          animation-delay: calc(100ms * 2);\n}\n.breeding-rhombus-spinner .rhombus.child-3[data-v-a1d20622] {\n  -webkit-animation-name: breeding-rhombus-spinner-animation-child-3-data-v-a1d20622;\n          animation-name: breeding-rhombus-spinner-animation-child-3-data-v-a1d20622;\n  -webkit-animation-delay: calc(100ms * 3);\n          animation-delay: calc(100ms * 3);\n}\n.breeding-rhombus-spinner .rhombus.child-4[data-v-a1d20622] {\n  -webkit-animation-name: breeding-rhombus-spinner-animation-child-4-data-v-a1d20622;\n          animation-name: breeding-rhombus-spinner-animation-child-4-data-v-a1d20622;\n  -webkit-animation-delay: calc(100ms * 4);\n          animation-delay: calc(100ms * 4);\n}\n.breeding-rhombus-spinner .rhombus.child-5[data-v-a1d20622] {\n  -webkit-animation-name: breeding-rhombus-spinner-animation-child-5-data-v-a1d20622;\n          animation-name: breeding-rhombus-spinner-animation-child-5-data-v-a1d20622;\n  -webkit-animation-delay: calc(100ms * 5);\n          animation-delay: calc(100ms * 5);\n}\n.breeding-rhombus-spinner .rhombus.child-6[data-v-a1d20622] {\n  -webkit-animation-name: breeding-rhombus-spinner-animation-child-6-data-v-a1d20622;\n          animation-name: breeding-rhombus-spinner-animation-child-6-data-v-a1d20622;\n  -webkit-animation-delay: calc(100ms * 6);\n          animation-delay: calc(100ms * 6);\n}\n.breeding-rhombus-spinner .rhombus.child-7[data-v-a1d20622] {\n  -webkit-animation-name: breeding-rhombus-spinner-animation-child-7-data-v-a1d20622;\n          animation-name: breeding-rhombus-spinner-animation-child-7-data-v-a1d20622;\n  -webkit-animation-delay: calc(100ms * 7);\n          animation-delay: calc(100ms * 7);\n}\n.breeding-rhombus-spinner .rhombus.child-8[data-v-a1d20622] {\n  -webkit-animation-name: breeding-rhombus-spinner-animation-child-8-data-v-a1d20622;\n          animation-name: breeding-rhombus-spinner-animation-child-8-data-v-a1d20622;\n  -webkit-animation-delay: calc(100ms * 8);\n          animation-delay: calc(100ms * 8);\n}\n.breeding-rhombus-spinner .rhombus.big[data-v-a1d20622] {\n  height: calc(65px / 3);\n  width: calc(65px / 3);\n  -webkit-animation-duration: 2000ms;\n          animation-duration: 2000ms;\n  top: calc(65px / 3);\n  left: calc(65px / 3);\n  background-color: #ff1d5e;\n  -webkit-animation: breeding-rhombus-spinner-animation-child-big-data-v-a1d20622 2s infinite;\n          animation: breeding-rhombus-spinner-animation-child-big-data-v-a1d20622 2s infinite;\n  -webkit-animation-delay: 0.5s;\n          animation-delay: 0.5s;\n}\n@-webkit-keyframes breeding-rhombus-spinner-animation-child-1-data-v-a1d20622 {\n50% {\n    -webkit-transform: translate(-325%, -325%);\n            transform: translate(-325%, -325%);\n}\n}\n@keyframes breeding-rhombus-spinner-animation-child-1-data-v-a1d20622 {\n50% {\n    -webkit-transform: translate(-325%, -325%);\n            transform: translate(-325%, -325%);\n}\n}\n@-webkit-keyframes breeding-rhombus-spinner-animation-child-2-data-v-a1d20622 {\n50% {\n    -webkit-transform: translate(0, -325%);\n            transform: translate(0, -325%);\n}\n}\n@keyframes breeding-rhombus-spinner-animation-child-2-data-v-a1d20622 {\n50% {\n    -webkit-transform: translate(0, -325%);\n            transform: translate(0, -325%);\n}\n}\n@-webkit-keyframes breeding-rhombus-spinner-animation-child-3-data-v-a1d20622 {\n50% {\n    -webkit-transform: translate(325%, -325%);\n            transform: translate(325%, -325%);\n}\n}\n@keyframes breeding-rhombus-spinner-animation-child-3-data-v-a1d20622 {\n50% {\n    -webkit-transform: translate(325%, -325%);\n            transform: translate(325%, -325%);\n}\n}\n@-webkit-keyframes breeding-rhombus-spinner-animation-child-4-data-v-a1d20622 {\n50% {\n    -webkit-transform: translate(325%, 0);\n            transform: translate(325%, 0);\n}\n}\n@keyframes breeding-rhombus-spinner-animation-child-4-data-v-a1d20622 {\n50% {\n    -webkit-transform: translate(325%, 0);\n            transform: translate(325%, 0);\n}\n}\n@-webkit-keyframes breeding-rhombus-spinner-animation-child-5-data-v-a1d20622 {\n50% {\n    -webkit-transform: translate(325%, 325%);\n            transform: translate(325%, 325%);\n}\n}\n@keyframes breeding-rhombus-spinner-animation-child-5-data-v-a1d20622 {\n50% {\n    -webkit-transform: translate(325%, 325%);\n            transform: translate(325%, 325%);\n}\n}\n@-webkit-keyframes breeding-rhombus-spinner-animation-child-6-data-v-a1d20622 {\n50% {\n    -webkit-transform: translate(0, 325%);\n            transform: translate(0, 325%);\n}\n}\n@keyframes breeding-rhombus-spinner-animation-child-6-data-v-a1d20622 {\n50% {\n    -webkit-transform: translate(0, 325%);\n            transform: translate(0, 325%);\n}\n}\n@-webkit-keyframes breeding-rhombus-spinner-animation-child-7-data-v-a1d20622 {\n50% {\n    -webkit-transform: translate(-325%, 325%);\n            transform: translate(-325%, 325%);\n}\n}\n@keyframes breeding-rhombus-spinner-animation-child-7-data-v-a1d20622 {\n50% {\n    -webkit-transform: translate(-325%, 325%);\n            transform: translate(-325%, 325%);\n}\n}\n@-webkit-keyframes breeding-rhombus-spinner-animation-child-8-data-v-a1d20622 {\n50% {\n    -webkit-transform: translate(-325%, 0);\n            transform: translate(-325%, 0);\n}\n}\n@keyframes breeding-rhombus-spinner-animation-child-8-data-v-a1d20622 {\n50% {\n    -webkit-transform: translate(-325%, 0);\n            transform: translate(-325%, 0);\n}\n}\n@-webkit-keyframes breeding-rhombus-spinner-animation-child-big-data-v-a1d20622 {\n50% {\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n}\n}\n@keyframes breeding-rhombus-spinner-animation-child-big-data-v-a1d20622 {\n50% {\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 144 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'BreedingRhombusSpinner',
+
+  props: {
+    animationDuration: {
+      type: Number,
+      default: 2000
+    },
+    size: {
+      type: Number,
+      default: 150
+    },
+    color: {
+      type: String,
+      default: '#fff'
+    }
+  },
+
+  data: function data() {
+    return {
+      animationBaseName: 'breeding-rhombus-spinner-animation-child',
+      rhombusesNum: 8
+    };
+  },
+
+
+  computed: {
+    spinnerStyle: function spinnerStyle() {
+      return {
+        height: this.size + 'px',
+        width: this.size + 'px'
+      };
+    },
+    rhombusStyle: function rhombusStyle() {
+      return {
+        height: this.size / 7.5 + 'px',
+        width: this.size / 7.5 + 'px',
+        animationDuration: this.animationDuration + 'ms',
+        top: this.size / 2.3077 + 'px',
+        left: this.size / 2.3077 + 'px',
+        backgroundColor: this.color
+      };
+    },
+    rhombusesStyles: function rhombusesStyles() {
+      var rhombusesStyles = [];
+      var delayModifier = this.animationDuration * 0.05;
+
+      for (var i = 1; i <= this.rhombusesNum; i++) {
+        rhombusesStyles.push(Object.assign({
+          animationDelay: delayModifier * (i + 1) + 'ms'
+        }, this.rhombusStyle));
+      }
+
+      return rhombusesStyles;
+    },
+    bigRhombusStyle: function bigRhombusStyle() {
+      return {
+        height: this.size / 3 + 'px',
+        width: this.size / 3 + 'px',
+        animationDuration: '' + this.animationDuration,
+        top: this.size / 3 + 'px',
+        left: this.size / 3 + 'px',
+        backgroundColor: this.color
+      };
+    }
+  }
+
+});
+
+/***/ }),
+/* 145 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "breeding-rhombus-spinner", style: _vm.spinnerStyle },
+    [
+      _vm._l(_vm.rhombusesStyles, function(rs, index) {
+        return _c("div", {
+          key: index,
+          staticClass: "rhombus",
+          class: "child-" + (index + 1),
+          style: rs
+        })
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "rhombus big", style: _vm.bigRhombusStyle })
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-a1d20622", module.exports)
+  }
+}
+
+/***/ }),
+/* 146 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(147)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(149)
+/* template */
+var __vue_template__ = __webpack_require__(150)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-559f9208"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/epic-spinners/src/components/lib/SwappingSquaresSpinner.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-559f9208", Component.options)
+  } else {
+    hotAPI.reload("data-v-559f9208", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 147 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(148);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(74)("05c2963d", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-559f9208\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./SwappingSquaresSpinner.vue", function() {
+     var newContent = require("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-559f9208\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./SwappingSquaresSpinner.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 148 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.swapping-squares-spinner[data-v-559f9208], .swapping-squares-spinner *[data-v-559f9208] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.swapping-squares-spinner[data-v-559f9208] {\n  height: 65px;\n  width: 65px;\n  position: relative;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.swapping-squares-spinner .square[data-v-559f9208] {\n  height: calc(65px * 0.25 / 1.3);\n  width:  calc(65px * 0.25 / 1.3);\n  -webkit-animation-duration: 1000ms;\n          animation-duration: 1000ms;\n  border: calc(65px * 0.04 / 1.3) solid #ff1d5e;\n  margin-right: auto;\n  margin-left: auto;\n  position: absolute;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite;\n}\n.swapping-squares-spinner .square[data-v-559f9208]:nth-child(1) {\n  -webkit-animation-name: swapping-squares-animation-child-1-data-v-559f9208;\n          animation-name: swapping-squares-animation-child-1-data-v-559f9208;\n  -webkit-animation-delay: 500ms;\n          animation-delay: 500ms;\n}\n.swapping-squares-spinner .square[data-v-559f9208]:nth-child(2) {\n  -webkit-animation-name: swapping-squares-animation-child-2-data-v-559f9208;\n          animation-name: swapping-squares-animation-child-2-data-v-559f9208;\n  -webkit-animation-delay: 0ms;\n          animation-delay: 0ms;\n}\n.swapping-squares-spinner .square[data-v-559f9208]:nth-child(3) {\n  -webkit-animation-name: swapping-squares-animation-child-3-data-v-559f9208;\n          animation-name: swapping-squares-animation-child-3-data-v-559f9208;\n  -webkit-animation-delay: 500ms;\n          animation-delay: 500ms;\n}\n.swapping-squares-spinner .square[data-v-559f9208]:nth-child(4) {\n  -webkit-animation-name: swapping-squares-animation-child-4-data-v-559f9208;\n          animation-name: swapping-squares-animation-child-4-data-v-559f9208;\n  -webkit-animation-delay: 0ms;\n          animation-delay: 0ms;\n}\n@-webkit-keyframes swapping-squares-animation-child-1-data-v-559f9208 {\n50% {\n    -webkit-transform: translate(150%,150%) scale(2,2);\n            transform: translate(150%,150%) scale(2,2);\n}\n}\n@keyframes swapping-squares-animation-child-1-data-v-559f9208 {\n50% {\n    -webkit-transform: translate(150%,150%) scale(2,2);\n            transform: translate(150%,150%) scale(2,2);\n}\n}\n@-webkit-keyframes swapping-squares-animation-child-2-data-v-559f9208 {\n50% {\n    -webkit-transform: translate(-150%,150%) scale(2,2);\n            transform: translate(-150%,150%) scale(2,2);\n}\n}\n@keyframes swapping-squares-animation-child-2-data-v-559f9208 {\n50% {\n    -webkit-transform: translate(-150%,150%) scale(2,2);\n            transform: translate(-150%,150%) scale(2,2);\n}\n}\n@-webkit-keyframes swapping-squares-animation-child-3-data-v-559f9208 {\n50% {\n    -webkit-transform: translate(-150%,-150%) scale(2,2);\n            transform: translate(-150%,-150%) scale(2,2);\n}\n}\n@keyframes swapping-squares-animation-child-3-data-v-559f9208 {\n50% {\n    -webkit-transform: translate(-150%,-150%) scale(2,2);\n            transform: translate(-150%,-150%) scale(2,2);\n}\n}\n@-webkit-keyframes swapping-squares-animation-child-4-data-v-559f9208 {\n50% {\n    -webkit-transform: translate(150%,-150%) scale(2,2);\n            transform: translate(150%,-150%) scale(2,2);\n}\n}\n@keyframes swapping-squares-animation-child-4-data-v-559f9208 {\n50% {\n    -webkit-transform: translate(150%,-150%) scale(2,2);\n            transform: translate(150%,-150%) scale(2,2);\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 149 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'SwappingSquaresSpinner',
+
+  props: {
+    animationDuration: {
+      type: Number,
+      default: 1000
+    },
+    size: {
+      type: Number,
+      default: 65
+    },
+    color: {
+      type: String,
+      default: '#fff'
+    }
+  },
+
+  data: function data() {
+    return {
+      animationBaseName: 'swapping-squares-animation-child',
+      squaresNum: 4
+    };
+  },
+
+
+  computed: {
+    spinnerStyle: function spinnerStyle() {
+      return {
+        height: this.size + 'px',
+        width: this.size + 'px'
+      };
+    },
+    squareStyle: function squareStyle() {
+      return {
+        height: this.size * 0.25 / 1.3 + 'px',
+        width: this.size * 0.25 / 1.3 + 'px',
+        animationDuration: this.animationDuration + 'ms',
+        borderWidth: this.size * 0.04 / 1.3 + 'px',
+        borderColor: this.color
+      };
+    },
+    squaresStyles: function squaresStyles() {
+      var squaresStyles = [];
+      var delay = this.animationDuration * 0.5;
+
+      for (var i = 1; i <= this.squaresNum; i++) {
+        squaresStyles.push(Object.assign({
+          animationDelay: (i % 2 === 0 ? delay : 0) + 'ms'
+        }, this.squareStyle));
+      }
+
+      return squaresStyles;
+    }
+  }
+});
+
+/***/ }),
+/* 150 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "swapping-squares-spinner", style: _vm.spinnerStyle },
+    _vm._l(_vm.squaresStyles, function(ss, index) {
+      return _c("div", {
+        key: index,
+        staticClass: "square",
+        class: "square-" + (index + 1),
+        style: ss
+      })
+    })
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-559f9208", module.exports)
+  }
+}
+
+/***/ }),
+/* 151 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(152)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(154)
+/* template */
+var __vue_template__ = __webpack_require__(155)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-0f830af4"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/epic-spinners/src/components/lib/ScalingSquaresSpinner.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0f830af4", Component.options)
+  } else {
+    hotAPI.reload("data-v-0f830af4", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 152 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(153);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(74)("7877015d", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0f830af4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./ScalingSquaresSpinner.vue", function() {
+     var newContent = require("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0f830af4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./ScalingSquaresSpinner.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 153 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.scaling-squares-spinner[data-v-0f830af4], .scaling-squares-spinner *[data-v-0f830af4] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.scaling-squares-spinner[data-v-0f830af4] {\n  height: 65px;\n  width: 65px;\n  position: relative;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-animation: scaling-squares-animation-data-v-0f830af4 1250ms;\n          animation: scaling-squares-animation-data-v-0f830af4 1250ms;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite;\n  -webkit-transform: rotate(0deg);\n          transform: rotate(0deg);\n}\n.scaling-squares-spinner .square[data-v-0f830af4] {\n  height: calc(65px * 0.25 / 1.3);\n  width: calc(65px * 0.25 / 1.3);\n  margin-right: auto;\n  margin-left: auto;\n  border: calc(65px * 0.04 / 1.3) solid #ff1d5e;\n  position: absolute;\n  -webkit-animation-duration: 1250ms;\n          animation-duration: 1250ms;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite;\n}\n.scaling-squares-spinner .square[data-v-0f830af4]:nth-child(1) {\n  -webkit-animation-name: scaling-squares-spinner-animation-child-1-data-v-0f830af4;\n          animation-name: scaling-squares-spinner-animation-child-1-data-v-0f830af4;\n}\n.scaling-squares-spinner .square[data-v-0f830af4]:nth-child(2) {\n  -webkit-animation-name: scaling-squares-spinner-animation-child-2-data-v-0f830af4;\n          animation-name: scaling-squares-spinner-animation-child-2-data-v-0f830af4;\n}\n.scaling-squares-spinner .square[data-v-0f830af4]:nth-child(3) {\n  -webkit-animation-name: scaling-squares-spinner-animation-child-3-data-v-0f830af4;\n          animation-name: scaling-squares-spinner-animation-child-3-data-v-0f830af4;\n}\n.scaling-squares-spinner .square[data-v-0f830af4]:nth-child(4) {\n  -webkit-animation-name: scaling-squares-spinner-animation-child-4-data-v-0f830af4;\n          animation-name: scaling-squares-spinner-animation-child-4-data-v-0f830af4;\n}\n@-webkit-keyframes scaling-squares-animation-data-v-0f830af4 {\n50% {\n    -webkit-transform: rotate(90deg);\n            transform: rotate(90deg);\n}\n100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n}\n}\n@keyframes scaling-squares-animation-data-v-0f830af4 {\n50% {\n    -webkit-transform: rotate(90deg);\n            transform: rotate(90deg);\n}\n100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n}\n}\n@-webkit-keyframes scaling-squares-spinner-animation-child-1-data-v-0f830af4 {\n50% {\n    -webkit-transform: translate(150%,150%) scale(2,2);\n            transform: translate(150%,150%) scale(2,2);\n}\n}\n@keyframes scaling-squares-spinner-animation-child-1-data-v-0f830af4 {\n50% {\n    -webkit-transform: translate(150%,150%) scale(2,2);\n            transform: translate(150%,150%) scale(2,2);\n}\n}\n@-webkit-keyframes scaling-squares-spinner-animation-child-2-data-v-0f830af4 {\n50% {\n    -webkit-transform: translate(-150%,150%) scale(2,2);\n            transform: translate(-150%,150%) scale(2,2);\n}\n}\n@keyframes scaling-squares-spinner-animation-child-2-data-v-0f830af4 {\n50% {\n    -webkit-transform: translate(-150%,150%) scale(2,2);\n            transform: translate(-150%,150%) scale(2,2);\n}\n}\n@-webkit-keyframes scaling-squares-spinner-animation-child-3-data-v-0f830af4 {\n50% {\n    -webkit-transform: translate(-150%,-150%) scale(2,2);\n            transform: translate(-150%,-150%) scale(2,2);\n}\n}\n@keyframes scaling-squares-spinner-animation-child-3-data-v-0f830af4 {\n50% {\n    -webkit-transform: translate(-150%,-150%) scale(2,2);\n            transform: translate(-150%,-150%) scale(2,2);\n}\n}\n@-webkit-keyframes scaling-squares-spinner-animation-child-4-data-v-0f830af4 {\n50% {\n    -webkit-transform: translate(150%,-150%) scale(2,2);\n            transform: translate(150%,-150%) scale(2,2);\n}\n}\n@keyframes scaling-squares-spinner-animation-child-4-data-v-0f830af4 {\n50% {\n    -webkit-transform: translate(150%,-150%) scale(2,2);\n            transform: translate(150%,-150%) scale(2,2);\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 154 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'ScalingSquaresSpinner',
+
+  props: {
+    animationDuration: {
+      type: Number,
+      default: 1250
+    },
+    size: {
+      type: Number,
+      default: 65
+    },
+    color: {
+      type: String,
+      default: '#fff'
+    }
+  },
+
+  data: function data() {
+    return {
+      squaresNum: 4
+    };
+  },
+
+
+  computed: {
+    spinnerStyle: function spinnerStyle() {
+      return {
+        height: this.size + 'px',
+        width: this.size + 'px',
+        animationDuration: this.animationDuration + 'ms'
+      };
+    },
+    squareStyle: function squareStyle() {
+      return {
+        height: this.size * 0.25 / 1.3 + 'px',
+        width: this.size * 0.25 / 1.3 + 'px',
+        animationDuration: this.animationDuration + 'ms',
+        borderWidth: this.size * 0.04 / 1.3 + 'px',
+        borderColor: this.color
+      };
+    },
+    squaresStyles: function squaresStyles() {
+      var squaresStyles = [];
+
+      for (var i = 1; i <= this.squaresNum; i++) {
+        squaresStyles.push(Object.assign({}, this.squareStyle));
+      }
+
+      return squaresStyles;
+    }
+  }
+});
+
+/***/ }),
+/* 155 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "scaling-squares-spinner", style: _vm.spinnerStyle },
+    _vm._l(_vm.squaresStyles, function(ss, index) {
+      return _c("div", {
+        key: index,
+        staticClass: "square",
+        class: "square-" + (index + 1),
+        style: ss
+      })
+    })
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0f830af4", module.exports)
+  }
+}
+
+/***/ }),
+/* 156 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(157)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(159)
+/* template */
+var __vue_template__ = __webpack_require__(160)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-dd350904"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/epic-spinners/src/components/lib/FulfillingBouncingCircleSpinner.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-dd350904", Component.options)
+  } else {
+    hotAPI.reload("data-v-dd350904", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 157 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(158);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(74)("da84ab24", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-dd350904\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./FulfillingBouncingCircleSpinner.vue", function() {
+     var newContent = require("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-dd350904\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./FulfillingBouncingCircleSpinner.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 158 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.fulfilling-bouncing-circle-spinner[data-v-dd350904], .fulfilling-bouncing-circle-spinner *[data-v-dd350904] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.fulfilling-bouncing-circle-spinner[data-v-dd350904] {\n  height: 60px;\n  width: 60px;\n  position: relative;\n  -webkit-animation: fulfilling-bouncing-circle-spinner-animation-data-v-dd350904 infinite 4000ms ease;\n          animation: fulfilling-bouncing-circle-spinner-animation-data-v-dd350904 infinite 4000ms ease;\n}\n.fulfilling-bouncing-circle-spinner .orbit[data-v-dd350904] {\n  height: 60px;\n  width: 60px;\n  position: absolute;\n  top: 0;\n  left: 0;\n  border-radius: 50%;\n  border: calc(60px * 0.03) solid #ff1d5e;\n  -webkit-animation: fulfilling-bouncing-circle-spinner-orbit-animation-data-v-dd350904 infinite 4000ms ease;\n          animation: fulfilling-bouncing-circle-spinner-orbit-animation-data-v-dd350904 infinite 4000ms ease;\n}\n.fulfilling-bouncing-circle-spinner .circle[data-v-dd350904] {\n  height: 60px;\n  width: 60px;\n  color: #ff1d5e;\n  display: block;\n  border-radius: 50%;\n  position: relative;\n  border: calc(60px * 0.1) solid #ff1d5e;\n  -webkit-animation: fulfilling-bouncing-circle-spinner-circle-animation-data-v-dd350904 infinite 4000ms ease;\n          animation: fulfilling-bouncing-circle-spinner-circle-animation-data-v-dd350904 infinite 4000ms ease;\n  -webkit-transform: rotate(0deg) scale(1);\n          transform: rotate(0deg) scale(1);\n}\n@-webkit-keyframes fulfilling-bouncing-circle-spinner-animation-data-v-dd350904 {\n0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\n100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n@keyframes fulfilling-bouncing-circle-spinner-animation-data-v-dd350904 {\n0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\n100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n@-webkit-keyframes fulfilling-bouncing-circle-spinner-orbit-animation-data-v-dd350904 {\n0% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n}\n50% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n}\n62.5% {\n    -webkit-transform: scale(0.8);\n            transform: scale(0.8);\n}\n75% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n}\n87.5% {\n    -webkit-transform: scale(0.8);\n            transform: scale(0.8);\n}\n100% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n}\n}\n@keyframes fulfilling-bouncing-circle-spinner-orbit-animation-data-v-dd350904 {\n0% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n}\n50% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n}\n62.5% {\n    -webkit-transform: scale(0.8);\n            transform: scale(0.8);\n}\n75% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n}\n87.5% {\n    -webkit-transform: scale(0.8);\n            transform: scale(0.8);\n}\n100% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n}\n}\n@-webkit-keyframes fulfilling-bouncing-circle-spinner-circle-animation-data-v-dd350904 {\n0% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n    border-color: transparent;\n    border-top-color: inherit;\n}\n16.7% {\n    border-color: transparent;\n    border-top-color: initial;\n    border-right-color: initial;\n}\n33.4% {\n    border-color: transparent;\n    border-top-color: inherit;\n    border-right-color: inherit;\n    border-bottom-color: inherit;\n}\n50% {\n    border-color: inherit;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n}\n62.5% {\n    border-color: inherit;\n    -webkit-transform: scale(1.4);\n            transform: scale(1.4);\n}\n75% {\n    border-color: inherit;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n    opacity: 1;\n}\n87.5% {\n    border-color: inherit;\n    -webkit-transform: scale(1.4);\n            transform: scale(1.4);\n}\n100% {\n    border-color: transparent;\n    border-top-color: inherit;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n}\n}\n@keyframes fulfilling-bouncing-circle-spinner-circle-animation-data-v-dd350904 {\n0% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n    border-color: transparent;\n    border-top-color: inherit;\n}\n16.7% {\n    border-color: transparent;\n    border-top-color: initial;\n    border-right-color: initial;\n}\n33.4% {\n    border-color: transparent;\n    border-top-color: inherit;\n    border-right-color: inherit;\n    border-bottom-color: inherit;\n}\n50% {\n    border-color: inherit;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n}\n62.5% {\n    border-color: inherit;\n    -webkit-transform: scale(1.4);\n            transform: scale(1.4);\n}\n75% {\n    border-color: inherit;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n    opacity: 1;\n}\n87.5% {\n    border-color: inherit;\n    -webkit-transform: scale(1.4);\n            transform: scale(1.4);\n}\n100% {\n    border-color: transparent;\n    border-top-color: inherit;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 159 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'FulfillingBouncingCircleSpinner',
+
+  props: {
+    animationDuration: {
+      type: Number,
+      default: 4000
+    },
+    size: {
+      type: Number,
+      default: 60
+    },
+    color: {
+      type: String,
+      default: '#fff'
+    }
+  },
+
+  computed: {
+    spinnerStyle: function spinnerStyle() {
+      return {
+        height: this.size + 'px',
+        width: this.size + 'px',
+        animationDuration: this.animationDuration + 'ms'
+      };
+    },
+    orbitStyle: function orbitStyle() {
+      return {
+        height: this.size + 'px',
+        width: this.size + 'px',
+        borderColor: this.color,
+        borderWidth: this.size * 0.03 + 'px',
+        animationDuration: this.animationDuration + 'ms'
+      };
+    },
+    circleStyle: function circleStyle() {
+      return {
+        height: this.size + 'px',
+        width: this.size + 'px',
+        borderColor: this.color,
+        color: this.color,
+        borderWidth: this.size * 0.1 + 'px',
+        animationDuration: this.animationDuration + 'ms'
+      };
+    }
+  }
+});
+
+/***/ }),
+/* 160 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "fulfilling-bouncing-circle-spinner",
+      style: _vm.spinnerStyle
+    },
+    [
+      _c("div", { staticClass: "circle", style: _vm.circleStyle }),
+      _vm._v(" "),
+      _c("div", { staticClass: "orbit", style: _vm.orbitStyle })
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-dd350904", module.exports)
+  }
+}
+
+/***/ }),
+/* 161 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(162)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(164)
+/* template */
+var __vue_template__ = __webpack_require__(165)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-14cb8987"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/epic-spinners/src/components/lib/RadarSpinner.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-14cb8987", Component.options)
+  } else {
+    hotAPI.reload("data-v-14cb8987", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 162 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(163);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(74)("df6358ae", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-14cb8987\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./RadarSpinner.vue", function() {
+     var newContent = require("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-14cb8987\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./RadarSpinner.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 163 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.radar-spinner[data-v-14cb8987], .radar-spinner *[data-v-14cb8987] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.radar-spinner[data-v-14cb8987] {\n  height: 60px;\n  width: 60px;\n  position: relative;\n}\n.radar-spinner .circle[data-v-14cb8987] {\n  position: absolute;\n  height: 100%;\n  width: 100%;\n  top: 0;\n  left: 0;\n  -webkit-animation: radar-spinner-animation-data-v-14cb8987 2s infinite;\n          animation: radar-spinner-animation-data-v-14cb8987 2s infinite;\n}\n.radar-spinner .circle[data-v-14cb8987]:nth-child(1) {\n  padding: calc(60px * 5 * 2 * 0 / 110);\n  -webkit-animation-delay: 300ms;\n          animation-delay: 300ms;\n}\n.radar-spinner .circle[data-v-14cb8987]:nth-child(2) {\n  padding: calc(60px * 5 * 2 * 1 / 110);\n  -webkit-animation-delay: 300ms;\n          animation-delay: 300ms;\n}\n.radar-spinner .circle[data-v-14cb8987]:nth-child(3) {\n  padding: calc(60px * 5 * 2 * 2 / 110);\n  -webkit-animation-delay: 300ms;\n          animation-delay: 300ms;\n}\n.radar-spinner .circle[data-v-14cb8987]:nth-child(4) {\n  padding: calc(60px * 5 * 2 * 3 / 110);\n  -webkit-animation-delay: 0ms;\n          animation-delay: 0ms;\n}\n.radar-spinner .circle-inner[data-v-14cb8987], .radar-spinner .circle-inner-container[data-v-14cb8987] {\n  height: 100%;\n  width: 100%;\n  border-radius: 50%;\n  border: calc(60px * 5 / 110) solid transparent;\n}\n.radar-spinner .circle-inner[data-v-14cb8987] {\n  border-left-color: #ff1d5e;\n  border-right-color: #ff1d5e;\n}\n@-webkit-keyframes radar-spinner-animation-data-v-14cb8987 {\n50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n}\n100% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\n}\n@keyframes radar-spinner-animation-data-v-14cb8987 {\n50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n}\n100% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 164 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'RadarSpinner',
+
+  props: {
+    animationDuration: {
+      type: Number,
+      default: 2000
+    },
+    size: {
+      type: Number,
+      default: 110
+    },
+    color: {
+      type: String,
+      default: '#fff'
+    }
+  },
+
+  data: function data() {
+    return {
+      circlesNum: 4
+    };
+  },
+
+
+  computed: {
+    borderWidth: function borderWidth() {
+      return this.size * 5 / 110;
+    },
+    spinnerStyle: function spinnerStyle() {
+      return {
+        height: this.size + 'px',
+        width: this.size + 'px'
+      };
+    },
+    circleStyle: function circleStyle() {
+      return {
+        animationDuration: this.animationDuration + 'ms'
+      };
+    },
+    circleInnerContainerStyle: function circleInnerContainerStyle() {
+      return {
+        borderWidth: this.borderWidth + 'px'
+      };
+    },
+    circleInnerStyle: function circleInnerStyle() {
+      return {
+        borderLeftColor: this.color,
+        borderRightColor: this.color,
+        borderWidth: this.borderWidth + 'px'
+      };
+    },
+    circlesStyles: function circlesStyles() {
+      var circlesStyles = [];
+      var delay = this.animationDuration * 0.15;
+
+      for (var i = 0; i < this.circlesNum; i++) {
+        circlesStyles.push(Object.assign({
+          padding: this.borderWidth * 2 * i + 'px',
+          animationDelay: (i === this.circlesNum - 1 ? 0 : delay) + 'ms'
+        }, this.circleStyle));
+      }
+
+      return circlesStyles;
+    }
+  }
+});
+
+/***/ }),
+/* 165 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "radar-spinner", style: _vm.spinnerStyle },
+    _vm._l(_vm.circlesStyles, function(cs, index) {
+      return _c("div", { key: index, staticClass: "circle", style: cs }, [
+        _c(
+          "div",
+          {
+            staticClass: "circle-inner-container",
+            style: _vm.circleInnerContainerStyle
+          },
+          [
+            _c("div", {
+              staticClass: "circle-inner",
+              style: _vm.circleInnerStyle
+            })
+          ]
+        )
+      ])
+    })
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-14cb8987", module.exports)
+  }
+}
+
+/***/ }),
+/* 166 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(167)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(169)
+/* template */
+var __vue_template__ = __webpack_require__(170)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-4cafbc50"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/epic-spinners/src/components/lib/SelfBuildingSquareSpinner.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4cafbc50", Component.options)
+  } else {
+    hotAPI.reload("data-v-4cafbc50", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 167 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(168);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(74)("573d1f01", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4cafbc50\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./SelfBuildingSquareSpinner.vue", function() {
+     var newContent = require("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4cafbc50\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./SelfBuildingSquareSpinner.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 168 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.self-building-square-spinner[data-v-4cafbc50], .self-building-square-spinner *[data-v-4cafbc50] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.self-building-square-spinner[data-v-4cafbc50] {\n  height: 40px;\n  width: 40px;\n  top: calc( -10px * 2 / 3);\n}\n.self-building-square-spinner .square[data-v-4cafbc50] {\n  height: 10px;\n  width: 10px;\n  top: calc( -10px * 2 / 3);\n  margin-right: calc(10px / 3);\n  margin-top: calc(10px / 3);\n  background: #ff1d5e;\n  float: left;\n  position:relative;\n  opacity: 0;\n  -webkit-animation: self-building-square-spinner-data-v-4cafbc50 6s infinite;\n          animation: self-building-square-spinner-data-v-4cafbc50 6s infinite;\n}\n.self-building-square-spinner .square[data-v-4cafbc50]:nth-child(1) {\n  -webkit-animation-delay: calc(300ms * 6);\n          animation-delay: calc(300ms * 6);\n}\n.self-building-square-spinner .square[data-v-4cafbc50]:nth-child(2) {\n  -webkit-animation-delay: calc(300ms * 7);\n          animation-delay: calc(300ms * 7);\n}\n.self-building-square-spinner .square[data-v-4cafbc50]:nth-child(3) {\n  -webkit-animation-delay: calc(300ms * 8);\n          animation-delay: calc(300ms * 8);\n}\n.self-building-square-spinner .square[data-v-4cafbc50]:nth-child(4) {\n  -webkit-animation-delay: calc(300ms * 3);\n          animation-delay: calc(300ms * 3);\n}\n.self-building-square-spinner .square[data-v-4cafbc50]:nth-child(5) {\n  -webkit-animation-delay: calc(300ms * 4);\n          animation-delay: calc(300ms * 4);\n}\n.self-building-square-spinner .square[data-v-4cafbc50]:nth-child(6) {\n  -webkit-animation-delay: calc(300ms * 5);\n          animation-delay: calc(300ms * 5);\n}\n.self-building-square-spinner .square[data-v-4cafbc50]:nth-child(7) {\n  -webkit-animation-delay: calc(300ms * 0);\n          animation-delay: calc(300ms * 0);\n}\n.self-building-square-spinner .square[data-v-4cafbc50]:nth-child(8) {\n  -webkit-animation-delay: calc(300ms * 1);\n          animation-delay: calc(300ms * 1);\n}\n.self-building-square-spinner .square[data-v-4cafbc50]:nth-child(9) {\n  -webkit-animation-delay: calc(300ms * 2);\n          animation-delay: calc(300ms * 2);\n}\n.self-building-square-spinner .clear[data-v-4cafbc50]{\n  clear: both;\n}\n@-webkit-keyframes self-building-square-spinner-data-v-4cafbc50 {\n0% {\n    opacity: 0;\n}\n5% {\n    opacity: 1;\n    top: 0;\n}\n50.9% {\n    opacity: 1;\n    top: 0;\n}\n55.9% {\n    opacity: 0;\n    top: inherit;\n}\n}\n@keyframes self-building-square-spinner-data-v-4cafbc50 {\n0% {\n    opacity: 0;\n}\n5% {\n    opacity: 1;\n    top: 0;\n}\n50.9% {\n    opacity: 1;\n    top: 0;\n}\n55.9% {\n    opacity: 0;\n    top: inherit;\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 169 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'SelfBuildingSquareSpinner',
+
+  props: {
+    animationDuration: {
+      type: Number,
+      default: 6000
+    },
+    size: {
+      type: Number,
+      default: 40
+    },
+    color: {
+      type: String,
+      default: '#fff'
+    }
+  },
+
+  data: function data() {
+    return {
+      squaresNum: 9
+    };
+  },
+
+
+  computed: {
+    squareSize: function squareSize() {
+      return this.size / 4;
+    },
+    initialTopPosition: function initialTopPosition() {
+      return -this.squareSize * 2 / 3;
+    },
+    spinnerStyle: function spinnerStyle() {
+      return {
+        top: -this.initialTopPosition + 'px',
+        height: this.size + 'px',
+        width: this.size + 'px'
+      };
+    },
+    squareStyle: function squareStyle() {
+      return {
+        height: this.squareSize + 'px',
+        width: this.squareSize + 'px',
+        top: this.initialTopPosition + 'px',
+        marginRight: this.squareSize / 3 + 'px',
+        marginTop: this.squareSize / 3 + 'px',
+        animationDuration: this.animationDuration + 'ms',
+        background: this.color
+      };
+    },
+    squaresStyles: function squaresStyles() {
+      var squaresStyles = [];
+      var delaysMultipliers = [6, 7, 8, 3, 4, 5, 0, 1, 2];
+      var delayModifier = this.animationDuration * 0.05;
+
+      for (var i = 0; i < this.squaresNum; i++) {
+        squaresStyles.push(Object.assign({
+          animationDelay: delayModifier * delaysMultipliers[i] + 'ms'
+        }, this.squareStyle));
+      }
+
+      return squaresStyles;
+    }
+  }
+});
+
+/***/ }),
+/* 170 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "self-building-square-spinner", style: _vm.spinnerStyle },
+    _vm._l(_vm.squaresStyles, function(ss, index) {
+      return _c("div", {
+        key: index,
+        staticClass: "square",
+        class: { clear: index && index % 3 === 0 },
+        style: ss
+      })
+    })
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4cafbc50", module.exports)
+  }
+}
+
+/***/ }),
+/* 171 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(172)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(174)
+/* template */
+var __vue_template__ = __webpack_require__(175)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-cc2e81b0"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/epic-spinners/src/components/lib/SpringSpinner.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-cc2e81b0", Component.options)
+  } else {
+    hotAPI.reload("data-v-cc2e81b0", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 172 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(173);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(74)("15ff3a12", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-cc2e81b0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./SpringSpinner.vue", function() {
+     var newContent = require("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-cc2e81b0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./SpringSpinner.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 173 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.spring-spinner[data-v-cc2e81b0], .spring-spinner *[data-v-cc2e81b0] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.spring-spinner[data-v-cc2e81b0] {\n  height: 60px;\n  width: 60px;\n}\n.spring-spinner .spring-spinner-part[data-v-cc2e81b0] {\n  overflow: hidden;\n  height: calc(60px / 2);\n  width: 60px;\n}\n.spring-spinner  .spring-spinner-part.bottom[data-v-cc2e81b0] {\n  -webkit-transform: rotate(180deg) scale(-1, 1);\n          transform: rotate(180deg) scale(-1, 1);\n}\n.spring-spinner .spring-spinner-rotator[data-v-cc2e81b0] {\n  width: 60px;\n  height: 60px;\n  border: calc(60px / 7) solid transparent;\n  border-right-color: #ff1d5e;\n  border-top-color: #ff1d5e;\n  border-radius: 50%;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-animation: spring-spinner-animation-data-v-cc2e81b0 3s ease-in-out infinite;\n          animation: spring-spinner-animation-data-v-cc2e81b0 3s ease-in-out infinite;\n  -webkit-transform: rotate(-200deg);\n          transform: rotate(-200deg);\n}\n@-webkit-keyframes spring-spinner-animation-data-v-cc2e81b0 {\n0% {\n    border-width: calc(60px / 7);\n}\n25% {\n    border-width: calc(60px / 23.33);\n}\n50% {\n    -webkit-transform: rotate(115deg);\n            transform: rotate(115deg);\n    border-width: calc(60px / 7);\n}\n75% {\n    border-width: calc(60px / 23.33);\n}\n100% {\n    border-width: calc(60px / 7);\n}\n}\n@keyframes spring-spinner-animation-data-v-cc2e81b0 {\n0% {\n    border-width: calc(60px / 7);\n}\n25% {\n    border-width: calc(60px / 23.33);\n}\n50% {\n    -webkit-transform: rotate(115deg);\n            transform: rotate(115deg);\n    border-width: calc(60px / 7);\n}\n75% {\n    border-width: calc(60px / 23.33);\n}\n100% {\n    border-width: calc(60px / 7);\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 174 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_utils__ = __webpack_require__(89);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'SpringSpinner',
+
+  props: {
+    animationDuration: {
+      type: Number,
+      default: 3000
+    },
+    size: {
+      type: Number,
+      default: 70
+    },
+    color: {
+      type: String,
+      default: '#fff'
+    }
+  },
+
+  data: function data() {
+    return {
+      animationBaseName: 'spring-spinner-animation',
+      currentAnimationName: ''
+    };
+  },
+
+
+  computed: {
+    spinnerStyle: function spinnerStyle() {
+      return {
+        height: this.size + 'px',
+        width: this.size + 'px'
+      };
+    },
+    spinnerPartStyle: function spinnerPartStyle() {
+      return {
+        height: this.size / 2 + 'px',
+        width: this.size + 'px'
+      };
+    },
+    rotatorStyle: function rotatorStyle() {
+      return {
+        height: this.size + 'px',
+        width: this.size + 'px',
+        borderRightColor: this.color,
+        borderTopColor: this.color,
+        borderWidth: this.size / 7 + 'px',
+        animationDuration: this.animationDuration + 'ms',
+        animationName: this.currentAnimationName
+      };
+    }
+  },
+
+  watch: {
+    '$props': {
+      handler: function handler() {
+        this.updateAnimation();
+      },
+
+      deep: true
+    }
+  },
+
+  mounted: function mounted() {
+    this.updateAnimation();
+  },
+
+
+  methods: {
+    updateAnimation: function updateAnimation() {
+      this.updateAnimationName();
+      __WEBPACK_IMPORTED_MODULE_0__services_utils__["a" /* default */].appendKeyframes(this.currentAnimationName, this.generateKeyframes());
+    },
+    updateAnimationName: function updateAnimationName() {
+      this.currentAnimationName = this.animationBaseName + '-' + Date.now();
+    },
+    generateKeyframes: function generateKeyframes() {
+      return '\n        0% {\n          border-width: ' + this.size / 7 + 'px;\n        }\n        25% {\n          border-width: ' + this.size / 23.33 + 'px;\n        }\n        50% {\n          transform: rotate(115deg);\n          border-width: ' + this.size / 7 + 'px;\n        }\n        75% {\n          border-width: ' + this.size / 23.33 + 'px;\n         }\n        100% {\n         border-width: ' + this.size / 7 + 'px;\n        }';
+    }
+  }
+});
+
+/***/ }),
+/* 175 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "spring-spinner", style: _vm.spinnerStyle }, [
+    _c(
+      "div",
+      { staticClass: "spring-spinner-part top", style: _vm.spinnerPartStyle },
+      [
+        _c("div", {
+          staticClass: "spring-spinner-rotator",
+          style: _vm.rotatorStyle
+        })
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "spring-spinner-part bottom",
+        style: _vm.spinnerPartStyle
+      },
+      [
+        _c("div", {
+          staticClass: "spring-spinner-rotator",
+          style: _vm.rotatorStyle
+        })
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-cc2e81b0", module.exports)
+  }
+}
+
+/***/ }),
+/* 176 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(177)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(179)
+/* template */
+var __vue_template__ = __webpack_require__(180)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-656608d9"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/epic-spinners/src/components/lib/LoopingRhombusesSpinner.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-656608d9", Component.options)
+  } else {
+    hotAPI.reload("data-v-656608d9", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 177 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(178);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(74)("f144f552", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-656608d9\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./LoopingRhombusesSpinner.vue", function() {
+     var newContent = require("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-656608d9\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./LoopingRhombusesSpinner.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 178 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.looping-rhombuses-spinner[data-v-656608d9], .looping-rhombuses-spinner *[data-v-656608d9] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.looping-rhombuses-spinner[data-v-656608d9] {\n  width: calc(15px * 4);\n  height: 15px;\n  position: relative;\n}\n.looping-rhombuses-spinner .rhombus[data-v-656608d9] {\n  height: 15px;\n  width: 15px;\n  background-color: #ff1d5e;\n  left: calc(15px * 4);\n  position: absolute;\n  margin: 0 auto;\n  border-radius: 2px;\n  -webkit-transform: translateY(0) rotate(45deg) scale(0);\n          transform: translateY(0) rotate(45deg) scale(0);\n  -webkit-animation: looping-rhombuses-spinner-animation-data-v-656608d9 2500ms linear infinite;\n          animation: looping-rhombuses-spinner-animation-data-v-656608d9 2500ms linear infinite;\n}\n.looping-rhombuses-spinner .rhombus[data-v-656608d9]:nth-child(1) {\n  -webkit-animation-delay: calc(2500ms * 1 / -1.5);\n          animation-delay: calc(2500ms * 1 / -1.5);\n}\n.looping-rhombuses-spinner .rhombus[data-v-656608d9]:nth-child(2) {\n  -webkit-animation-delay: calc(2500ms * 2 / -1.5);\n          animation-delay: calc(2500ms * 2 / -1.5);\n}\n.looping-rhombuses-spinner .rhombus[data-v-656608d9]:nth-child(3) {\n  -webkit-animation-delay: calc(2500ms * 3 / -1.5);\n          animation-delay: calc(2500ms * 3 / -1.5);\n}\n@-webkit-keyframes looping-rhombuses-spinner-animation-data-v-656608d9 {\n0% {\n    -webkit-transform: translateX(0) rotate(45deg) scale(0);\n            transform: translateX(0) rotate(45deg) scale(0);\n}\n50% {\n    -webkit-transform: translateX(-233%) rotate(45deg) scale(1);\n            transform: translateX(-233%) rotate(45deg) scale(1);\n}\n100% {\n    -webkit-transform: translateX(-466%) rotate(45deg) scale(0);\n            transform: translateX(-466%) rotate(45deg) scale(0);\n}\n}\n@keyframes looping-rhombuses-spinner-animation-data-v-656608d9 {\n0% {\n    -webkit-transform: translateX(0) rotate(45deg) scale(0);\n            transform: translateX(0) rotate(45deg) scale(0);\n}\n50% {\n    -webkit-transform: translateX(-233%) rotate(45deg) scale(1);\n            transform: translateX(-233%) rotate(45deg) scale(1);\n}\n100% {\n    -webkit-transform: translateX(-466%) rotate(45deg) scale(0);\n            transform: translateX(-466%) rotate(45deg) scale(0);\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 179 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'LoopingRhombusesSpinner',
+
+  props: {
+    animationDuration: {
+      type: Number,
+      default: 2500
+    },
+    rhombusSize: {
+      type: Number,
+      default: 15
+    },
+    color: {
+      type: String,
+      default: '#fff'
+    }
+  },
+
+  data: function data() {
+    return {
+      rhombusesNum: 3
+    };
+  },
+
+
+  computed: {
+    spinnerStyle: function spinnerStyle() {
+      return {
+        height: this.rhombusSize + 'px',
+        width: this.rhombusSize * 4 + 'px'
+      };
+    },
+    rhombusStyle: function rhombusStyle() {
+      return {
+        height: this.rhombusSize + 'px',
+        width: this.rhombusSize + 'px',
+        backgroundColor: this.color,
+        animationDuration: this.animationDuration + 'ms',
+        left: this.rhombusSize * 4 + 'px'
+      };
+    },
+    rhombusesStyles: function rhombusesStyles() {
+      var rhombusesStyles = [];
+      var delay = -this.animationDuration / 1.5;
+
+      for (var i = 1; i <= this.rhombusesNum; i++) {
+        var style = Object.assign({
+          animationDelay: i * delay + 'ms'
+        }, this.rhombusStyle);
+
+        rhombusesStyles.push(style);
+      }
+
+      return rhombusesStyles;
+    }
+  }
+});
+
+/***/ }),
+/* 180 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "looping-rhombuses-spinner", style: _vm.spinnerStyle },
+    _vm._l(_vm.rhombusesStyles, function(rs, index) {
+      return _c("div", {
+        staticClass: "rhombus",
+        style: rs,
+        attrs: { ikey: index }
+      })
+    })
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-656608d9", module.exports)
+  }
+}
+
+/***/ }),
+/* 181 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(182)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(184)
+/* template */
+var __vue_template__ = __webpack_require__(185)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-bf5bf2dc"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/epic-spinners/src/components/lib/HalfCircleSpinner.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-bf5bf2dc", Component.options)
+  } else {
+    hotAPI.reload("data-v-bf5bf2dc", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 182 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(183);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(74)("749cf489", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-bf5bf2dc\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./HalfCircleSpinner.vue", function() {
+     var newContent = require("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-bf5bf2dc\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./HalfCircleSpinner.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 183 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.half-circle-spinner[data-v-bf5bf2dc], .half-circle-spinner *[data-v-bf5bf2dc] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.half-circle-spinner[data-v-bf5bf2dc] {\n  width: 60px;\n  height: 60px;\n  border-radius: 100%;\n  position: relative;\n}\n.half-circle-spinner .circle[data-v-bf5bf2dc] {\n  content: \"\";\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border-radius: 100%;\n  border: calc(60px / 10) solid transparent;\n}\n.half-circle-spinner .circle.circle-1[data-v-bf5bf2dc] {\n  border-top-color: #ff1d5e;\n  -webkit-animation: half-circle-spinner-animation-data-v-bf5bf2dc 1s infinite;\n          animation: half-circle-spinner-animation-data-v-bf5bf2dc 1s infinite;\n}\n.half-circle-spinner .circle.circle-2[data-v-bf5bf2dc] {\n  border-bottom-color: #ff1d5e;\n  -webkit-animation: half-circle-spinner-animation-data-v-bf5bf2dc 1s infinite alternate;\n          animation: half-circle-spinner-animation-data-v-bf5bf2dc 1s infinite alternate;\n}\n@-webkit-keyframes half-circle-spinner-animation-data-v-bf5bf2dc {\n0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\n100%{\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n@keyframes half-circle-spinner-animation-data-v-bf5bf2dc {\n0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\n100%{\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 184 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'HalfCircleSpinner',
+
+  props: {
+    animationDuration: {
+      type: Number,
+      default: 1000
+    },
+    size: {
+      type: Number,
+      default: 60
+    },
+    color: {
+      type: String,
+      default: '#fff'
+    }
+  },
+
+  computed: {
+    spinnerStyle: function spinnerStyle() {
+      return {
+        height: this.size + 'px',
+        width: this.size + 'px'
+      };
+    },
+    circleStyle: function circleStyle() {
+      return {
+        borderWidth: this.size / 10 + 'px',
+        animationDuration: this.animationDuration + 'ms'
+      };
+    },
+    circle1Style: function circle1Style() {
+      return Object.assign({
+        borderTopColor: this.color
+      }, this.circleStyle);
+    },
+    circle2Style: function circle2Style() {
+      return Object.assign({
+        borderBottomColor: this.color
+      }, this.circleStyle);
+    }
+  }
+});
+
+/***/ }),
+/* 185 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "half-circle-spinner", style: _vm.spinnerStyle },
+    [
+      _c("div", { staticClass: "circle circle-1", style: _vm.circle1Style }),
+      _vm._v(" "),
+      _c("div", { staticClass: "circle circle-2", style: _vm.circle2Style })
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-bf5bf2dc", module.exports)
+  }
+}
+
+/***/ }),
+/* 186 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(187)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(189)
+/* template */
+var __vue_template__ = __webpack_require__(190)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-002b7664"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/epic-spinners/src/components/lib/AtomSpinner.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-002b7664", Component.options)
+  } else {
+    hotAPI.reload("data-v-002b7664", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 187 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(188);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(74)("3c94ecdc", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-002b7664\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./AtomSpinner.vue", function() {
+     var newContent = require("!!../../../../css-loader/index.js!../../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-002b7664\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../vue-loader/lib/selector.js?type=styles&index=0!./AtomSpinner.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 188 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.atom-spinner[data-v-002b7664], .atom-spinner *[data-v-002b7664] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.atom-spinner[data-v-002b7664] {\n  height: 60px;\n  width: 60px;\n  overflow: hidden;\n}\n.atom-spinner .spinner-inner[data-v-002b7664] {\n  position: relative;\n  display: block;\n  height: 100%;\n  width: 100%;\n}\n.atom-spinner .spinner-circle[data-v-002b7664] {\n  display: block;\n  position: absolute;\n  color: #ff1d5e;\n  font-size: calc(60px * 0.24);\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n}\n.atom-spinner .spinner-line[data-v-002b7664] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border-radius: 50%;\n  -webkit-animation-duration: 1s;\n          animation-duration: 1s;\n  border-left-width: calc(60px / 25);\n  border-top-width: calc(60px / 25);\n  border-left-color: #ff1d5e;\n  border-left-style: solid;\n  border-top-style: solid;\n  border-top-color: transparent;\n}\n.atom-spinner .spinner-line[data-v-002b7664]:nth-child(1) {\n  -webkit-animation: atom-spinner-animation-1-data-v-002b7664 1s linear infinite;\n          animation: atom-spinner-animation-1-data-v-002b7664 1s linear infinite;\n  -webkit-transform: rotateZ(120deg) rotateX(66deg) rotateZ(0deg);\n          transform: rotateZ(120deg) rotateX(66deg) rotateZ(0deg);\n}\n.atom-spinner .spinner-line[data-v-002b7664]:nth-child(2) {\n  -webkit-animation: atom-spinner-animation-2-data-v-002b7664 1s linear infinite;\n          animation: atom-spinner-animation-2-data-v-002b7664 1s linear infinite;\n  -webkit-transform: rotateZ(240deg) rotateX(66deg) rotateZ(0deg);\n          transform: rotateZ(240deg) rotateX(66deg) rotateZ(0deg);\n}\n.atom-spinner .spinner-line[data-v-002b7664]:nth-child(3) {\n  -webkit-animation: atom-spinner-animation-3-data-v-002b7664 1s linear infinite;\n          animation: atom-spinner-animation-3-data-v-002b7664 1s linear infinite;\n  -webkit-transform: rotateZ(360deg) rotateX(66deg) rotateZ(0deg);\n          transform: rotateZ(360deg) rotateX(66deg) rotateZ(0deg);\n}\n@-webkit-keyframes atom-spinner-animation-1-data-v-002b7664 {\n100% {\n    -webkit-transform: rotateZ(120deg) rotateX(66deg) rotateZ(360deg);\n            transform: rotateZ(120deg) rotateX(66deg) rotateZ(360deg);\n}\n}\n@keyframes atom-spinner-animation-1-data-v-002b7664 {\n100% {\n    -webkit-transform: rotateZ(120deg) rotateX(66deg) rotateZ(360deg);\n            transform: rotateZ(120deg) rotateX(66deg) rotateZ(360deg);\n}\n}\n@-webkit-keyframes atom-spinner-animation-2-data-v-002b7664 {\n100% {\n    -webkit-transform: rotateZ(240deg) rotateX(66deg) rotateZ(360deg);\n            transform: rotateZ(240deg) rotateX(66deg) rotateZ(360deg);\n}\n}\n@keyframes atom-spinner-animation-2-data-v-002b7664 {\n100% {\n    -webkit-transform: rotateZ(240deg) rotateX(66deg) rotateZ(360deg);\n            transform: rotateZ(240deg) rotateX(66deg) rotateZ(360deg);\n}\n}\n@-webkit-keyframes atom-spinner-animation-3-data-v-002b7664 {\n100% {\n    -webkit-transform: rotateZ(360deg) rotateX(66deg) rotateZ(360deg);\n            transform: rotateZ(360deg) rotateX(66deg) rotateZ(360deg);\n}\n}\n@keyframes atom-spinner-animation-3-data-v-002b7664 {\n100% {\n    -webkit-transform: rotateZ(360deg) rotateX(66deg) rotateZ(360deg);\n            transform: rotateZ(360deg) rotateX(66deg) rotateZ(360deg);\n}\n}\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 189 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'AtomSpinner',
+
+  props: {
+    animationDuration: {
+      type: Number,
+      default: 1000
+    },
+    size: {
+      type: Number,
+      default: 60
+    },
+    color: {
+      type: String,
+      default: 'red'
+    }
+  },
+
+  computed: {
+    spinnerStyle: function spinnerStyle() {
+      return {
+        height: this.size + 'px',
+        width: this.size + 'px'
+      };
+    },
+    circleStyle: function circleStyle() {
+      return {
+        color: this.color,
+        fontSize: this.size * 0.24 + 'px'
+      };
+    },
+    lineStyle: function lineStyle() {
+      return {
+        animationDuration: this.animationDuration + 'ms',
+        borderLeftWidth: this.size / 25 + 'px',
+        borderTopWidth: this.size / 25 + 'px',
+        borderLeftColor: this.color
+      };
+    }
+  }
+});
+
+/***/ }),
+/* 190 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "atom-spinner", style: _vm.spinnerStyle }, [
+    _c("div", { staticClass: "spinner-inner" }, [
+      _c("div", { staticClass: "spinner-line", style: _vm.lineStyle }),
+      _vm._v(" "),
+      _c("div", { staticClass: "spinner-line", style: _vm.lineStyle }),
+      _vm._v(" "),
+      _c("div", { staticClass: "spinner-line", style: _vm.lineStyle }),
+      _vm._v(" "),
+      _c("div", { staticClass: "spinner-circle", style: _vm.circleStyle }, [
+        _vm._v("\n      ●\n    ")
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-002b7664", module.exports)
+  }
+}
+
+/***/ }),
+/* 191 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(192)
+/* template */
+var __vue_template__ = __webpack_require__(193)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/history/index.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-9e5130e0", Component.options)
+  } else {
+    hotAPI.reload("data-v-9e5130e0", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 192 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	data: function data() {
+		return {
+			users: [],
+			alertShow: false
+		};
+	},
+	mounted: function mounted() {
+		var _this = this;
+
+		setInterval(function () {
+			_this.fetch();
+		}, 1000);
+	},
+
+	methods: {
+		paginate: function paginate(url) {
+			var _this2 = this;
+
+			axios.get(url).then(function (response) {
+				_this2.users = response.data;
+			});
+		},
+		fetch: function fetch() {
+			var _this3 = this;
+
+			axios.get('history').then(function (respon) {
+				_this3.users = respon.data;
+			});
+		},
+		deleteHistory: function deleteHistory(id) {
+			var app = this;
+			if (confirm('Anda Yakin?')) {
+				axios.delete('history/' + id + '/delete').then(function (resp) {
+					app.fetch(); // redirect to url "/"
+				});
+			}
+		}
+	}
+});
+
+/***/ }),
+/* 193 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "table-responsive" },
+    [
+      _c(
+        "router-link",
+        { staticClass: "btn btn-info", attrs: { to: { name: "index" } } },
+        [_c("i", { staticClass: "fa fa-home" }), _vm._v(" Home\n\t\t")]
+      ),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c("ol", { staticClass: "breadcrumb" }, [
+        _c(
+          "li",
+          [
+            _c("router-link", { attrs: { to: { name: "index" } } }, [
+              _vm._v("Home")
+            ])
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("li", { staticClass: "active" }, [_vm._v("History Absensi")])
+      ]),
+      _vm._v(" "),
+      _c("table", { staticClass: "table" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.users.data, function(user, index) {
+            return _c("tr", [
+              _c("td", [_vm._v(_vm._s(user.id))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(user.nama) + " ")]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(user.divisi) + " ")]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(user.jam) + " ")]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(user.tanggal) + " ")]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(user.telah_masuk) + " ")]),
+              _vm._v(" "),
+              _c("td", { staticClass: "text-right" }, [
+                _c("div", { staticClass: "btn btn-group" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger text-danger",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.deleteHistory(user.id)
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fa fa-trash" })]
+                  )
+                ])
+              ])
+            ])
+          })
+        )
+      ]),
+      _vm._v(" "),
+      _c("ul", { staticClass: "pagination" }, [
+        _vm.users.prev_page_url
+          ? _c("li", [
+              _c(
+                "a",
+                {
+                  attrs: { href: _vm.users.prev_page_url },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      _vm.paginate(_vm.users.prev_page_url)
+                    }
+                  }
+                },
+                [_vm._v("« Previous")]
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.users.next_page_url
+          ? _c("li", [
+              _c(
+                "a",
+                {
+                  attrs: { href: _vm.users.next_page_url },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      _vm.paginate(_vm.users.next_page_url)
+                    }
+                  }
+                },
+                [_vm._v("Next »")]
+              )
+            ])
+          : _vm._e()
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("No.")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Nama Karyawan")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Divisi")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Jam Masuk")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tanggal")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Telah Masuk")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-right" }, [_vm._v("Actions")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-9e5130e0", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
