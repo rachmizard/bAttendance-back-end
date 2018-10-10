@@ -22741,7 +22741,9 @@ module.exports = __webpack_require__(171);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_router__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_strap_src_alert__ = __webpack_require__(186);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_strap_src_alert___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_strap_src_alert__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(155);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -22770,6 +22772,14 @@ Vue.component('example-component', __webpack_require__(44));
 Vue.component('loading', __webpack_require__(47));
 Vue.component('history-component', __webpack_require__(152));
 // Vue.component('dashboard-component', require('./components/DashboardComponent.vue'));
+Vue.component('alert-box', __webpack_require__(183), { props: ['title', 'message', 'type'] });
+
+/*
+Import Package
+*/
+
+
+// Vue.use(alert);
 
 /**
 * Vue Router
@@ -22777,7 +22787,7 @@ Vue.component('history-component', __webpack_require__(152));
 * @link http://router.vuejs.org/en/installation.html
 */
 
-Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]);
+Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 
 // define routes for karyawans
 var routes = [{
@@ -22791,14 +22801,62 @@ var routes = [{
 }, {
   path: '/history', name: 'historyIndex', component: __webpack_require__(168), props: { title: 'History Absensi' }
 }];
-var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
+var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
   routes: routes
 });
 
 var app = new Vue({
-  data: { loading: false },
+  components: {
+    alert: __WEBPACK_IMPORTED_MODULE_0_vue_strap_src_alert___default.a
+  },
+
+  data: {
+    loading: false,
+    expired: false,
+    title: '',
+    message: '',
+    type: '',
+    image: ''
+  },
+
   router: router
 }).$mount('#app');
+
+/*
+  *
+  *
+  It'll be sent broadcast alert
+  *
+  *
+*/
+Echo.channel('expired-session').listen('ExpiredSession', function (e) {
+  app.expired = true;
+  setTimeout(function () {
+    return app.expired = false;
+  }, 10000);
+  app.title = e.title;
+  app.message = e.message;
+  app.type = e.type; // get danger alert (danger is using bootstrap css)
+});
+
+/*
+  *
+  *
+  It'll be sent absen broadcast alert to admin
+  *
+  *
+*/
+
+Echo.channel('absen').listen('Absen', function (e) {
+  app.expired = true; // triger for launch an alert!
+  setTimeout(function () {
+    return app.expired = false;
+  }, 10000);
+  app.title = e.title;
+  app.message = e.message;
+  app.type = e.type; // get danger alert (danger is using bootstrap css)
+  app.image = e.image; // get image from listener broadcast
+});
 
 router.beforeEach(function (to, from, next) {
   app.loading = true;
@@ -22867,13 +22925,13 @@ window.axios.defaults.headers.common = {
  * a simple convenience so we don't have to attach every token manually.
  */
 
-// let token = document.head.querySelector('meta[name="csrf-token"]');
+var token = document.head.querySelector('meta[name="csrf-token"]');
 
-// if (token) {
-//     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-// } else {
-//     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-// }
+if (token) {
+  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+} else {
+  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+}
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -62544,6 +62602,519 @@ exports.push([module.i, "\n.fade-enter {\n  opacity: 0;\n}\n.fade-enter-active {
 
 // exports
 
+
+/***/ }),
+/* 183 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(184)
+/* template */
+var __vue_template__ = __webpack_require__(185)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/AlertComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-059dd878", Component.options)
+  } else {
+    hotAPI.reload("data-v-059dd878", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 184 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_strap_src_alert__ = __webpack_require__(186);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_strap_src_alert___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_strap_src_alert__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['title', 'message', 'type', 'image'],
+  components: {
+    alert: __WEBPACK_IMPORTED_MODULE_0_vue_strap_src_alert___default.a
+  },
+  data: function data() {
+    return {};
+  }
+});
+
+/***/ }),
+/* 185 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "alert",
+    {
+      attrs: {
+        placement: "top-right",
+        type: _vm.type,
+        width: "400px",
+        dismissable: ""
+      }
+    },
+    [
+      _vm.image != null
+        ? _c("img", {
+            attrs: { src: _vm.image, width: "80", height: "80", alt: "" }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _c("span", { staticClass: "icon-ok-circled alert-icon-float-left" }),
+      _vm._v(" "),
+      _c("strong", [_vm._v(_vm._s(_vm.title))]),
+      _vm._v(" "),
+      _c("p", [_vm._v(_vm._s(_vm.message))])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-059dd878", module.exports)
+  }
+}
+
+/***/ }),
+/* 186 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(187)
+}
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(189)
+/* template */
+var __vue_template__ = __webpack_require__(191)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/vue-strap/src/alert.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-caa1e978", Component.options)
+  } else {
+    hotAPI.reload("data-v-caa1e978", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 187 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(188);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("5894a7d5", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../css-loader/index.js!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-caa1e978\",\"scoped\":false,\"hasInlineConfig\":true}!../../vue-loader/lib/selector.js?type=styles&index=0!./alert.vue", function() {
+     var newContent = require("!!../../css-loader/index.js!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-caa1e978\",\"scoped\":false,\"hasInlineConfig\":true}!../../vue-loader/lib/selector.js?type=styles&index=0!./alert.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 188 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.fade-transition {\n  -webkit-transition: opacity .3s ease;\n  transition: opacity .3s ease;\n}\n.fade-enter,\n.fade-leave {\n  height: 0;\n  opacity: 0;\n}\n.alert.top {\n  position: fixed;\n  top: 30px;\n  margin: 0 auto;\n  left: 0;\n  right: 0;\n  z-index: 1050;\n}\n.alert.top-right {\n  position: fixed;\n  top: 30px;\n  right: 50px;\n  z-index: 1050;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 189 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_utils_js__ = __webpack_require__(190);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    type: {
+      type: String
+    },
+    dismissable: {
+      type: Boolean,
+      coerce: __WEBPACK_IMPORTED_MODULE_0__utils_utils_js__["a" /* coerce */].boolean,
+      default: false
+    },
+    show: {
+      type: Boolean,
+      coerce: __WEBPACK_IMPORTED_MODULE_0__utils_utils_js__["a" /* coerce */].boolean,
+      default: true,
+      twoWay: true
+    },
+    duration: {
+      type: Number,
+      coerce: __WEBPACK_IMPORTED_MODULE_0__utils_utils_js__["a" /* coerce */].number,
+      default: 0
+    },
+    width: {
+      type: String
+    },
+    placement: {
+      type: String
+    }
+  },
+  watch: {
+    show: function show(val) {
+      var _this = this;
+
+      if (this._timeout) clearTimeout(this._timeout);
+      if (val && Boolean(this.duration)) {
+        this._timeout = setTimeout(function () {
+          _this.show = false;
+        }, this.duration);
+      }
+    }
+  }
+});
+
+/***/ }),
+/* 190 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export getJSON */
+/* unused harmony export getScrollBarWidth */
+/* unused harmony export translations */
+/* unused harmony export delayer */
+/* unused harmony export VueFixer */
+// coerce convert som types of data into another type
+const coerce = {
+  // Convert a string to booleam. Otherwise, return the value without modification, so if is not boolean, Vue throw a warning.
+  boolean: val => (typeof val === 'string' ? val === '' || val === 'true' ? true : (val === 'false' || val === 'null' || val === 'undefined' ? false : val) : val),
+  // Attempt to convert a string value to a Number. Otherwise, return 0.
+  number: (val, alt = null) => (typeof val === 'number' ? val : val === undefined || val === null || isNaN(Number(val)) ? alt : Number(val)),
+  // Attempt to convert to string any value, except for null or undefined.
+  string: val => (val === undefined || val === null ? '' : val + ''),
+  // Pattern accept RegExp, function, or string (converted to RegExp). Otherwise return null.
+  pattern: val => (val instanceof Function || val instanceof RegExp ? val : typeof val === 'string' ? new RegExp(val) : null)
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = coerce;
+
+
+function getJSON (url) {
+  var request = new window.XMLHttpRequest()
+  var data = {}
+  // p (-simulated- promise)
+  var p = {
+    then (fn1, fn2) { return p.done(fn1).fail(fn2) },
+    catch (fn) { return p.fail(fn) },
+    always (fn) { return p.done(fn).fail(fn) }
+  };
+  ['done', 'fail'].forEach(name => {
+    data[name] = []
+    p[name] = (fn) => {
+      if (fn instanceof Function) data[name].push(fn)
+      return p
+    }
+  })
+  p.done(JSON.parse)
+  request.onreadystatechange = () => {
+    if (request.readyState === 4) {
+      let e = {status: request.status}
+      if (request.status === 200) {
+        try {
+          var response = request.responseText
+          for (var i in data.done) {
+            var value = data.done[i](response)
+            if (value !== undefined) { response = value }
+          }
+        } catch (err) {
+          data.fail.forEach(fail => fail(err))
+        }
+      } else {
+        data.fail.forEach(fail => fail(e))
+      }
+    }
+  }
+  request.open('GET', url)
+  request.setRequestHeader('Accept', 'application/json')
+  request.send()
+  return p
+}
+
+function getScrollBarWidth () {
+  if (document.documentElement.scrollHeight <= document.documentElement.clientHeight) {
+    return 0
+  }
+  let inner = document.createElement('p')
+  inner.style.width = '100%'
+  inner.style.height = '200px'
+
+  let outer = document.createElement('div')
+  outer.style.position = 'absolute'
+  outer.style.top = '0px'
+  outer.style.left = '0px'
+  outer.style.visibility = 'hidden'
+  outer.style.width = '200px'
+  outer.style.height = '150px'
+  outer.style.overflow = 'hidden'
+  outer.appendChild(inner)
+
+  document.body.appendChild(outer)
+  let w1 = inner.offsetWidth
+  outer.style.overflow = 'scroll'
+  let w2 = inner.offsetWidth
+  if (w1 === w2) w2 = outer.clientWidth
+
+  document.body.removeChild(outer)
+
+  return (w1 - w2)
+}
+
+// return all the translations or the default language (english)
+function translations (lang = 'en') {
+  let text = {
+    daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+    limit: 'Limit reached ({{limit}} items max).',
+    loading: 'Loading...',
+    minLength: 'Min. Length',
+    months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    notSelected: 'Nothing Selected',
+    required: 'Required',
+    search: 'Search'
+  }
+  return window.VueStrapLang ? window.VueStrapLang(lang) : text
+}
+
+// delayer: set a function that execute after a delay
+// @params (function, delay_prop or value, default_value)
+function delayer (fn, varTimer, ifNaN = 100) {
+  function toInt (el) { return /^[0-9]+$/.test(el) ? Number(el) || 1 : null }
+  var timerId
+  return function (...args) {
+    if (timerId) clearTimeout(timerId)
+    timerId = setTimeout(() => {
+      fn.apply(this, args)
+    }, toInt(varTimer) || toInt(this[varTimer]) || ifNaN)
+  }
+}
+
+// Fix a vue instance Lifecycle to vue 1/2 (just the basic elements, is not a real parser, so this work only if your code is compatible with both)
+function VueFixer (vue) {
+  var vue2 = !window.Vue || !window.Vue.partial
+  var mixin = {
+    computed: {
+      vue2 () { return !this.$dispatch }
+    }
+  }
+  if (!vue2) {
+    if (vue.beforeCreate) {
+      mixin.create = vue.beforeCreate
+      delete vue.beforeCreate
+    }
+    if (vue.beforeMount) {
+      vue.beforeCompile = vue.beforeMount
+      delete vue.beforeMount
+    }
+    if (vue.mounted) {
+      vue.ready = vue.mounted
+      delete vue.mounted
+    }
+  } else {
+    if (vue.beforeCompile) {
+      vue.beforeMount = vue.beforeCompile
+      delete vue.beforeCompile
+    }
+    if (vue.compiled) {
+      mixin.compiled = vue.compiled
+      delete vue.compiled
+    }
+    if (vue.ready) {
+      vue.mounted = vue.ready
+      delete vue.ready
+    }
+  }
+  if (!vue.mixins) { vue.mixins = [] }
+  vue.mixins.unshift(mixin)
+  return vue
+}
+
+
+/***/ }),
+/* 191 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      directives: [
+        { name: "show", rawName: "v-show", value: _vm.show, expression: "show" }
+      ],
+      class: {
+        alert: true,
+        "alert-success": _vm.type == "success",
+        "alert-warning": _vm.type == "warning",
+        "alert-info": _vm.type == "info",
+        "alert-danger": _vm.type == "danger",
+        top: _vm.placement === "top",
+        "top-right": _vm.placement === "top-right"
+      },
+      style: { width: _vm.width },
+      attrs: { transition: "fade", role: "alert" }
+    },
+    [
+      _c(
+        "button",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.dismissable,
+              expression: "dismissable"
+            }
+          ],
+          staticClass: "close",
+          attrs: { type: "button" },
+          on: {
+            click: function($event) {
+              _vm.show = false
+            }
+          }
+        },
+        [_c("span", [_vm._v("×")])]
+      ),
+      _vm._v(" "),
+      _vm._t("default")
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-caa1e978", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

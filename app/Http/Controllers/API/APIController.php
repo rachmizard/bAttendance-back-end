@@ -13,6 +13,7 @@ use Auth;
 use Carbon\Carbon;
 use Validator;
 use Input;
+use App\Events\Absen as AbsenEvent;
 
 class APIController extends Controller
 {
@@ -276,6 +277,12 @@ class APIController extends Controller
         $verifikasi = Verifikasi::find($id);
         $verifikasi->status = request('status');
         $verifikasi->update();
+
+        $title = 'Absen Notifikasi';
+        $message =  'Seseorang melakukan absen masuk hari ini '. Carbon::now()->format('d-m-Y H:i:s');
+        $type = 'success';
+        $image = 'foto.jpg';
+        event(new AbsenEvent($title, $message, $type, $image));
         return response()->json(['message' => 'success', 'id' => $verifikasi->id]);
     }
 

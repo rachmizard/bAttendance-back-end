@@ -1,4 +1,5 @@
 <?php
+use App\Events\ExpiredSession as Expired;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,9 +22,29 @@ Route::get('/qrcode', function(){
 
 Auth::routes();
 
+Route::get('/expired', function(){
+	if (!auth()->user()) {
+		$title = "Session error";
+		$message = "You're not authorized or your session was expired!";
+		$type = "danger";
+		event(new Expired($title, $message, $type));
+		return response()->json([
+			'users' => Auth::user()
+		]);
+	}else{
+		$title = "Session active";
+		$message = "You're now authorized!";
+		$type = "success";
+		event(new Expired($title, $message, $type));
+		return response()->json([
+			'users' => Auth::user()
+		]);
+	}
+});
+
 Route::get('/panel', function(){
 	return view('home');
-})->name('home');
+})->name('home')->middleware('admin');
 
 Route::resource('laporan', 'LaporanController');
 

@@ -42,6 +42,7 @@
 </head>
 <body>
     <div id="app">
+        <alert-box v-if="$root.expired" :title="title" :message="message" :type="type"></alert-box>
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">

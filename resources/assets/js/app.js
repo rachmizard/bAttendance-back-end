@@ -26,6 +26,15 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 Vue.component('loading', require('./components/LoadingComponent.vue'));
 Vue.component('history-component', require('./components/HistoryComponent.vue'));
 // Vue.component('dashboard-component', require('./components/DashboardComponent.vue'));
+Vue.component('alert-box', require('./components/AlertComponent.vue'), { props: ['title', 'message', 'type'] });
+
+
+/*
+Import Package
+*/
+
+import alert from 'vue-strap/src/alert';
+// Vue.use(alert);
 
 /**
 * Vue Router
@@ -58,9 +67,56 @@ const router = new VueRouter({
 });
 
 const app = new Vue({
-	data: { loading: false },
+  components: {
+    alert: alert
+  },
+
+	data: { 
+          loading: false,
+          expired: false,
+          title: '',
+          message: '',
+          type: '',
+          image: '',
+  },
+
 	router
 }).$mount('#app');
+
+/*
+  *
+  *
+  It'll be sent broadcast alert
+  *
+  *
+*/
+Echo.channel('expired-session')
+.listen('ExpiredSession', (e) => {
+  app.expired = true
+  setTimeout(() => app.expired = false, 10000)
+  app.title = e.title
+  app.message = e.message
+  app.type = e.type // get danger alert (danger is using bootstrap css)
+});
+
+/*
+  *
+  *
+  It'll be sent absen broadcast alert to admin
+  *
+  *
+*/
+
+
+Echo.channel('absen')
+.listen('Absen', (e) => {
+  app.expired = true // triger for launch an alert!
+  setTimeout(() => app.expired = false, 10000)
+  app.title = e.title
+  app.message = e.message
+  app.type = e.type // get danger alert (danger is using bootstrap css)
+  app.image = e.image // get image from listener broadcast
+});
 
 router.beforeEach((to, from, next) => {
   app.loading = true
