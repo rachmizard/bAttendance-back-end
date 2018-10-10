@@ -21,4 +21,10 @@ class HistoryController extends Controller
     {
         return AbsenHistoryResource::collection(Absen::orderBy('created_at', 'DESC')->get());
     }
+
+    public function destroy($id)
+    {
+    	$absen = Absen::find($id);
+    	return $absen->delete();
+    }
 }

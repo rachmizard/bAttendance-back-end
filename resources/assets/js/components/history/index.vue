@@ -29,8 +29,7 @@
 					<td>{{ user.nama }} </td>
 					<td>{{ user.divisi }} </td>
 					<td>{{ user.jam }} </td>
-					<td>{{ user.tanggal }} </td>
-					<td>{{ user.telah_masuk }} </td>
+					<td>{{ user.created_at }} </td>
 					<td class="text-right">
 						<div class="btn btn-group">	
 							<button class="btn btn-danger text-danger" @click.prevent="deleteHistory(user.id)"><i class="fa fa-trash"></i></button>

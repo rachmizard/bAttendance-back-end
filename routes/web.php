@@ -37,3 +37,4 @@ Route::delete('karyawan/{id}/delete', 'KaryawanController@destroy'); // PATCH (U
 
 // History Routes
 Route::get('history', 'HistoryController@index');
+Route::delete('history/{id}/delete', 'HistoryController@destroy');

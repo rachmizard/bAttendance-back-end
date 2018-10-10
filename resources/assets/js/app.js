@@ -9,6 +9,13 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+/*
+  Import Jquery
+*/
+
+window.$ = require('jquery');
+window.JQuery = require('jquery');
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -17,6 +24,7 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('loading', require('./components/LoadingComponent.vue'));
+Vue.component('history-component', require('./components/HistoryComponent.vue'));
 // Vue.component('dashboard-component', require('./components/DashboardComponent.vue'));
 
 /**
@@ -30,22 +38,24 @@ Vue.use(VueRouter);
 // define routes for karyawans
 const routes = [
 {
-  path: '/',  name: 'index',component: require('./components/DashboardComponent.vue')
+  path: '/',  name: 'index',component: require('./components/DashboardComponent.vue'), props: { title: 'Dashboard'}
 },
 {
-  path: '/karyawan',  name: 'userIndex',component: require('./components/karyawan/index.vue')
+  path: '/karyawan',  name: 'userIndex',component: require('./components/karyawan/index.vue'), props: { title: 'Master Karyawan' }
 },
 {
-  path: '/create', name: 'userCreate', component: require('./components/karyawan/create.vue') 
+  path: '/create', name: 'userCreate', component: require('./components/karyawan/create.vue'), props: { title: 'Tambah Karyawan' } 
 },
 {
-  path: '/edit', name: 'userEdit', component: require('./components/karyawan/edit.vue') 
+  path: '/edit', name: 'userEdit', component: require('./components/karyawan/edit.vue'), props: { title: 'Edit Karyawan' }
 },
 {
-  path: '/history', name: 'historyIndex', component: require('./components/history/index.vue') 
+  path: '/history', name: 'historyIndex', component: require('./components/history/index.vue'), props: { title: 'History Absensi' }
 }
 ]
-const router = new VueRouter({ routes });
+const router = new VueRouter({
+ routes 
+});
 
 const app = new Vue({
 	data: { loading: false },
