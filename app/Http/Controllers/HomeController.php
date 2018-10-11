@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Absen;
+use App\Verifikasi;
+use App\Karyawan;
 
 class HomeController extends Controller
 {
@@ -23,6 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $countKaryawan = Karyawan::where('status', ['authorized', 'unauthorized'])->count();
+        $countKehadiran = Absen::where('status', 'masuk')->count();
+        return view('home', compact('countKaryawan', 'countKehadiran'));
     }
 }

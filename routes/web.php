@@ -1,5 +1,6 @@
 <?php
 use App\Events\ExpiredSession as Expired;
+use App\Events\Absen as AbsenEvent;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,9 +43,15 @@ Route::get('/expired', function(){
 	}
 });
 
-Route::get('/panel', function(){
-	return view('home');
-})->name('home')->middleware('admin');
+Route::get('/absentest', function(){
+        $title = 'Absen Notifikasi';
+        $message =  'Seseorang melakukan absen masuk hari ini '. Carbon\Carbon::now()->format('d-m-Y H:i:s');
+        $type = 'success';
+        $image = 'foto.jpg';
+        event(new AbsenEvent($title, $message, $type, $image));
+});
+
+Route::get('/panel', 'HomeController@index')->name('home')->middleware('admin');
 
 Route::resource('laporan', 'LaporanController');
 

@@ -47,9 +47,6 @@ Vue.use(VueRouter);
 // define routes for karyawans
 const routes = [
 {
-  path: '/',  name: 'index',component: require('./components/DashboardComponent.vue'), props: { title: 'Dashboard'}
-},
-{
   path: '/karyawan',  name: 'userIndex',component: require('./components/karyawan/index.vue'), props: { title: 'Master Karyawan' }
 },
 {

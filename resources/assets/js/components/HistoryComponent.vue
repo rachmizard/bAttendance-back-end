@@ -1,4 +1,25 @@
 <template>
+  <section class="panel panel-default">
+    <header class="panel-heading">                    
+      Absen History
+    </header>
+    <section class="panel-body slim-scroll" data-height="230px">
+      <article v-for="(user, index) in users.data" class="media">
+        <span class="pull-left thumb-sm"><img src="images/avatar_default.jpg" class="img-circle"></span>
+        <div class="media-body">
+          <div class="pull-right media-xs text-center text-muted">
+            <strong class="h4">{{ user.jam }}</strong><br>
+          </div>
+          <a href="#" class="h4">Saya Hadir!</a>
+          <small class="block"><a href="#" class="">{{ user.nama }}</a> <span class="label label-success">{{ user.divisi }}</span></small>
+          <small class="block m-t-sm">Horee, saya masuk hari ini!</small>
+        </div>
+      </article>
+      <div class="line pull-in"></div>
+    </section>
+  </section>
+
+<!-- 
 	<div class="table-responsive">
 		<table class="table table-striped table-hover">
 			<thead>
@@ -34,7 +55,7 @@
 				<a @click.prevent="paginate(users.next_page_url)" :href="users.next_page_url">Next &raquo;</a>
 			</li>
 		</ul>
-	</div>
+	</div> -->
 </template>
 
 <script>
@@ -46,7 +67,11 @@
 			}
 		},
 		mounted() {
-			this.fetch();
+			Echo.channel('absen')
+			.listen('Absen', (e) => {
+				this.fetch();
+				alert('Successfully loaded!');
+			});	
 		},
 		methods: {
 			paginate(url) {
@@ -57,9 +82,7 @@
 
 			fetch(){
 				axios.get('history').then(respon => {
-					setInterval(() => {
-						this.users = respon.data;
-					}, 1000);
+					this.users = respon.data;
 				});	
 			},
 
