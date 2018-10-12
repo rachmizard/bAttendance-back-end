@@ -56,7 +56,7 @@
                         <td>
                           @if($karyawan->status == 'unauthorized')
                             <span class="label label-danger">{{ $karyawan->status}}</span>
-                          @else
+                          @elseif($karyawan->status == 'authorized')
                             <span class="label label-success">{{ $karyawan->status}}</span>
                           @endif
                         </td>
@@ -134,6 +134,20 @@
                                 @endif
                             </div>
                         </div> 
+                        <div class="form-group">
+                            <label for="nik" class="col-md-4 control-label">Status</label>
+                            <div class="col-md-4">
+                                <select name="status" class="form-control rounded" id="status">
+                                  <option value="authorized">Buka Akses</option>
+                                  <option value="unauthorized">Tutup Akses</option>
+                                </select>
+                                @if($errors->has('status'))
+                                  <span class="label label-danger">
+                                      {{ $errors->first('status') }}
+                                  </span>
+                                @endif
+                            </div>
+                        </div>
                     <div class="form-group">
                         <div class="col-md-4 col-md-offset-2">
                             <button class="btn btn-primary" id="btnSimpankaryawan" type="submit">Submit</button>
@@ -157,6 +171,7 @@
                         $("#divisi").attr('value', data.divisi);
                         $("#jenis_kelamin").attr('value', data.jenis_kelamin);
                         $("#nik").attr('value', data.nik);
+                        $("#status").attr('value', data.status);
                         // document.getElementById('nama').setAttribute('value', data.nama);
                         // document.getElementById('divisi').setAttribute('value', data.divisi);
                         // document.getElementById('jenis_kelamin').setAttribute('value', data.jenis_kelamin);

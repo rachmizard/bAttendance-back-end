@@ -14,8 +14,9 @@ class JamController extends Controller
      */
     public function index()
     {
-        $jam = Jam::all();
-        return response()->json($jam);
+        $jams = Jam::all();
+        // return response()->json($jam);
+        return view('jam.index', compact('jams'));
     }
 
     /**
@@ -45,7 +46,11 @@ class JamController extends Controller
         $jam->start = $request->start;
         $jam->end = $request->end;
         if ($jam->save()) {
-            return response()->json($jam);
+            $response['status'] = 'success';
+            $response['title'] = 'Sukses!';
+            $response['message'] = 'Berhasil menambahkan master jam!';
+            $response['type'] = 'success';
+            return response()->json(['response' => $response]);
         }
     }
 
@@ -91,15 +96,52 @@ class JamController extends Controller
             'end'  => 'required|string|max:50'
         ]);
 
-        $jam = Jam::find($$id);
-        $jam->start = $request->start;
-        $jam->end = $request->end;
-        if (empty($jam)) {
-            return response()->json($jam);
+        if (!$request->status) {
+            $jam = Jam::find($id);
+            $jam->start = $request->start;
+            $jam->end = $request->end;
+            if (empty($jam)) {
+                $response['status'] = 'failed';
+                $response['title'] = 'Gagal!';
+                $response['message'] = 'Gagal mengedit data, terjadi error!';
+                $response['type'] = 'danger';
+                return response()->json(['response' => $response]);
+            }else{
+                $jam->update();
+                $response['status'] = 'success';
+                $response['title'] = 'Sukses!';
+                $response['message'] = 'Berhasil mengedit master jam!';
+                $response['type'] = 'success';
+                return response()->json(['response' => $response]);
+            }
         }else{
-            $jam->update();
-            return resource()->json($jam);   
+            $jam = Jam::find($id);
+            $jam->start = $request->status;
+            return response()->json(['status' => 'success']);
         }
+    }
+
+    public function aktifkan($id)
+    {
+        // Set all to default 
+        $get = Jam::pluck('id')->toArray();
+        $set = Jam::whereIn('id', $get)->update(['status' => null]);
+        if ($set) {
+            $jam = Jam::find($id);
+            $jam->status = 1;
+            $jam->update();
+        }
+        return redirect()->back();
+    }
+
+
+    public function matikan($id)
+    {
+        // Set all to default 
+        $jam = Jam::find($id);
+        $jam->status = null;
+        $jam->update();
+        return redirect()->back();
     }
 
     /**
@@ -112,6 +154,18 @@ class JamController extends Controller
     {
         $jam = Jam::findOrFail($id);
         $jam->delete();
-        return response()->json($jam);
+        return redirect()->back()->with('message', 'Berhasil di hapus!');
+    }
+
+
+    public function destroySS($id)
+    {
+        $jam = Jam::findOrFail($id);
+        $jam->delete();
+        $response['status'] = 'success';
+        $response['title'] = 'Sukses!';
+        $response['message'] = 'Berhasil menambahkan master jam!';
+        $response['type'] = 'success';
+        return response()->json(['response' => $response]);
     }
 }

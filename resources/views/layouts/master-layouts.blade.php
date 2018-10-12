@@ -215,7 +215,7 @@
                           </a>
                         </li>
                         <li >
-                          <a href="layout-r.html" >                                                        
+                          <a href="{{ route('jam.index') }}" >                                                        
                             <i class="fa fa-clock-o"></i>
                             <span>Jadwal Masuk</span>
                           </a>

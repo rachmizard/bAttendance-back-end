@@ -27,9 +27,10 @@
                 <div :class="['form-group', errors.jenis_kelamin ? 'has-error' : '']">
                     <label class="col-sm-2 control-label">Jenis Kelamin</label>
                     <div class="col-sm-10">
-                        <select v-model="state.jenis_kelamin" class="form-control rounded" :settings="settings" data-placeholder="Pilih Jenis Kelamin"> 
-                                <option value="L" >Laki Laki</option>
-                                <option value="P" >Perempuan</option>
+                        <select v-model="state.jenis_kelamin" class="form-control rounded" :settings="settings.placeholder"> 
+                            <option disabled selected>Pilih Jenis Kelamin</option>
+                            <option value="L" >Laki Laki</option>
+                            <option value="P" >Perempuan</option>
                         </select>
                         <span v-if="message" class="label label-success"><i class="fa fa-check"></i></span>
                         <span v-if="errors.jenis_kelamin" class="label label-danger">{{ errors.jenis_kelamin[0] }}</span>
@@ -41,6 +42,20 @@
                     <div class="col-sm-10">
                         <input v-model="state.nik" type="number" class="form-control rounded" placeholder="NIK Karyawan..">
                         <span v-if="errors.nik" class="label label-danger">{{ errors.nik[0] }}</span>
+                        <span v-if="message" class="label label-success"><i class="fa fa-check"></i></span>
+                        <span v-if="messageError" class="label label-danger">{{ messageError }}</span>
+                    </div>
+                </div>
+
+                <div :class="['form-group', errors.status ? 'has-error' : '']">
+                    <label class="col-sm-2 control-label">Status</label>
+                    <div class="col-sm-10">
+                        <select v-model="state.status" class="form-control rounded" :settings="settings.placeholderStatus">
+                            <option disabled selected>Pilih Status</option>
+                            <option value="authorized">Buka Akses</option>
+                            <option value="unauthorized">Tutup Akses</option>
+                        </select>
+                        <span v-if="errors.status" class="label label-danger">{{ errors.status[0] }}</span>
                         <span v-if="message" class="label label-success"><i class="fa fa-check"></i></span>
                         <span v-if="messageError" class="label label-danger">{{ messageError }}</span>
                     </div>
@@ -63,11 +78,13 @@ export default {
                 divisi: '',
                 jenis_kelamin: '',
                 nik: '',
+                status: ''
             },
             message : '',
             messageError: '',
             settings: {
-                placeholder: 'Pilih Jenis Perusahaan'
+                placeholder: 'Pilih Jenis Kelamin',
+                placeholderStatus: 'Pilih Status Karyawan'
             } 
         }
     },
@@ -87,9 +104,12 @@ export default {
 	                app.state.nama = ''; // clear form
 	                app.state.divisi = ''; // clear form
 	                app.state.jenis_kelamin = ''; // clear form
-	                app.state.nik = ''; // clear form	
+                    app.state.nik = ''; // clear form   
+	                app.state.status = ''; // clear form	
                 }
                 // app.$router.replace('/'); // redirect to url "/"
+            }).then(function(e){
+                window.location.reload();
             }).catch((error) => {
                  this.errors = error.response.data.errors;
                  this.message = false;

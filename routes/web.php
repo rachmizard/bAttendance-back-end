@@ -64,6 +64,13 @@ Route::get('karyawan/{id}/edit', 'KaryawanController@edit'); // PATCH (UPDATE)
 Route::put('karyawan/{id}/update', 'KaryawanController@updateRequest'); // PATCH (UPDATE) 
 Route::delete('karyawan/{id}/delete', 'KaryawanController@destroy'); // PATCH (UPDATE)
 
+Route::get('jam', 'JamController@index')->name('jam.index');
+Route::post('jam/post', 'JamController@store')->name('jam.post');
+Route::delete('jam/{id}/delete', 'JamController@destroy')->name('jam.destroy');
+Route::put('jam/{id}/aktifkan', 'JamController@aktifkan')->name('jam.aktifkan');
+Route::put('jam/{id}/matikan', 'JamController@matikan')->name('jam.matikan');
+
+
 // History Routes
 Route::get('history', 'HistoryController@index');
 Route::delete('history/{id}/delete', 'HistoryController@destroy');

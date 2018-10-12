@@ -28,6 +28,7 @@ Vue.component('history-component', require('./components/HistoryComponent.vue'))
 // Vue.component('dashboard-component', require('./components/DashboardComponent.vue'));
 Vue.component('alert-box', require('./components/AlertComponent.vue'), { props: ['title', 'message', 'type'] });
 Vue.component('create-karyawan', require('./components/karyawan/create.vue'));
+Vue.component('create-jam', require('./components/jam/create.vue'));
 
 
 /*

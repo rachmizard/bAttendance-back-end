@@ -53,7 +53,9 @@ class KaryawanController extends Controller
         $validator = Karyawan::where('nik', $request->nik)->get();
         if (count($validator) > 0) {
             $response['status'] = 'exist';
+            $response['title'] = 'Gagal!';
             $response['message'] = 'NIK sudah terdaftar atau sudah ada!';
+            $response['type'] = 'danger';
             return response()->json(['response' => $response]);
             // return redirect()->back()->with('message', $response['message']);
         }else{
@@ -62,10 +64,13 @@ class KaryawanController extends Controller
             $karyawan->divisi = $request->divisi;
             $karyawan->jenis_kelamin = $request->jenis_kelamin;
             $karyawan->nik = $request->nik;
+            $karyawan->status = $request->status;
             $karyawan->save();
 
             $response['status'] = 'kosong';
+            $response['title'] = 'Sukses!';
             $response['message'] = 'Berhasil di tambahkan '. $karyawan->nama;
+            $response['type'] = 'success';
             return response()->json(['response' => $response]);
             // return redirect()->back()->with('message', 'Berhasil di tambahkan!');
         }
@@ -154,6 +159,7 @@ class KaryawanController extends Controller
                 $karyawan->divisi = $request->get('divisi');
                 $karyawan->jenis_kelamin = $request->get('jenis_kelamin');
                 $karyawan->nik = $request->get('nik');
+                $karyawan->status = $request->get('status');
                 $karyawan->update();
                 return redirect()->back()->with('message', 'Berhasil di update!');
             }
