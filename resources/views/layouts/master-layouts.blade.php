@@ -11,7 +11,8 @@
   <link rel="stylesheet" href="{{asset('/template/css/font-awesome.min.css')}}" type="text/css" />
   <link rel="stylesheet" href="{{asset('/template/css/font.css')}}" type="text/css" />
   <link rel="stylesheet" href="{{asset('/template/js/calendar/bootstrap_calendar.css')}}" type="text/css" />
-    <link rel="stylesheet" href="{{asset('/template/css/app.css')}}" type="text/css" />
+  <link rel="stylesheet" href="{{asset('/template/css/app.css')}}" type="text/css" />
+  <link rel="stylesheet" href="{{asset('/js/datatables/datatables.css')}}" type="text/css"/>
   <!--[if lt IE 9]>
     <script src="js/ie/html5shiv.js"></script>
     <script src="js/ie/respond.min.js"></script>
@@ -208,10 +209,10 @@
                       </a>
                       <ul class="nav lt">
                         <li >
-                          <router-link :to="{ name: 'userIndex' }">
+                          <a href="{{ route('karyawan') }}">
                             <i class="fa fa-group"></i>
                             <span>Karyawan</span>
-                          </router-link>
+                          </a>
                         </li>
                         <li >
                           <a href="layout-r.html" >                                                        
@@ -297,7 +298,7 @@
     </section>
   </section>
 
-  <script type="text/template" src="{{asset('/template/js/jquery.min.js')}}"></script>
+  <!-- <script type="text/template" src="{{asset('/template/js/jquery.min.js')}}"></script> -->
   <!-- Bootstrap -->
   <script type="text/template" src="{{asset('/template/js/bootstrap.js')}}"></script>
   <!-- App -->
@@ -317,6 +318,9 @@
   <script src="{{asset('/template/js/calendar/demo.js')}}"></script>
 
   <script src="{{asset('/template/js/sortable/jquery.sortable.js')}}"></script>
+  <!-- datatables -->
+  <script src="{{asset('/template/js/datatables/jquery.dataTables.min.js')}}"></script>
+  @stack('javascript')
   
 </body>
 </html>

@@ -1,69 +1,59 @@
-<template>	
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading"><i class="fa fa-dashboard"></i> {{ title }}</div>
-                    <div class="panel-body">             	
-						<div>
-					        <ol class="breadcrumb">
-					            <li><router-link :to="{name: 'userIndex'}" >Karyawan</router-link></li>
-					            <li class="active" >Tambah Karyawan</li>    
-					        </ol>
-							<div v-if="message" class="alert alert-success">
-								{{ message }}
-							</div>
-							<div v-if="messageError" class="alert alert-danger">
-								{{ messageError }}
-							</div>
-
-							<form @submit.prevent="store" action="karyawan/post" method="post">
-								<div :class="['form-group', errors.nama ? 'has-error' : '']">
-									<label>Nama Lengkap</label>
-									<input v-model="state.nama" type="text" class="form-control">
-									<span v-if="message" class="label label-success"><i class="fa fa-check"></i></span>
-									<span v-if="errors.nama" class="label label-danger">{{ errors.nama[0] }}</span>
-								</div>
-
-								<div :class="['form-group', errors.divisi ? 'has-error' : '']">
-									<label>Divisi</label>
-									<input v-model="state.divisi" type="text" class="form-control">
-									<span v-if="message" class="label label-success"><i class="fa fa-check"></i></span>
-									<span v-if="errors.divisi" class="label label-danger">{{ errors.divisi[0] }}</span>
-								</div>
-
-								<div :class="['form-group', errors.jenis_kelamin ? 'has-error' : '']">
-									<label>Jenis Kelamin</label>
-									<input v-model="state.jenis_kelamin" type="text" class="form-control">
-									<span v-if="message" class="label label-success"><i class="fa fa-check"></i></span>
-									<span v-if="errors.jenis_kelamin" class="label label-danger">{{ errors.jenis_kelamin[0] }}</span>
-								</div>
-
-								<div :class="['form-group', errors.nik ? 'has-error' : '']">
-									<label>NIK</label>
-									<input v-model="state.nik" type="number" class="form-control">
-									<span v-if="errors.nik" class="label label-danger">{{ errors.nik[0] }}</span>
-									<span v-if="message" class="label label-success"><i class="fa fa-check"></i></span>
-									<span v-if="messageError" class="label label-danger">{{ messageError }}</span>
-								</div>
-
-								<div class="form-group">
-									<button type="submit" class="btn btn-primary">Submit</button>
-									<router-link :to="{ name: 'userIndex' }">Back to index</router-link>
-								</div>
-							</form>
-						</div>
+<template>
+  <section class="panel panel-default">
+    <header class="panel-heading">
+      <i class="fa fa-plus"></i> Tambah Karyawan 
+      <i class="fa fa-info-sign text-muted" data-toggle="tooltip" data-placement="bottom" data-title="ajax to load the data."></i> 
+    </header>
+        <div class="panel-body">
+            <form @submit.prevent="store" action="karyawan/post" class="form-horizontal" method="post">
+                <div :class="['form-group', errors.nama ? 'has-error' : '']">
+                    <label class="col-sm-2 control-label">Nama Lengkap</label>
+                    <div class="col-sm-10">
+                        <input v-model="state.nama" type="text" class="form-control rounded" placeholder="Nama Karyawan..">
+                        <span v-if="message" class="label label-success"><i class="fa fa-check"></i></span>
+                        <span v-if="errors.nama" class="label label-danger">{{ errors.nama[0] }}</span>
                     </div>
-            </div>
+                </div>
+
+                <div :class="['form-group', errors.divisi ? 'has-error' : '']">
+                    <label class="col-sm-2 control-label">Divisi</label>
+                    <div class="col-sm-10">
+                        <input v-model="state.divisi" type="text" class="form-control rounded" placeholder="Jabatan/Divisi Karyawan..">
+                        <span v-if="message" class="label label-success"><i class="fa fa-check"></i></span>
+                        <span v-if="errors.divisi" class="label label-danger">{{ errors.divisi[0] }}</span>
+                    </div>
+                </div>
+
+                <div :class="['form-group', errors.jenis_kelamin ? 'has-error' : '']">
+                    <label class="col-sm-2 control-label">Jenis Kelamin</label>
+                    <div class="col-sm-10">
+                        <select v-model="state.jenis_kelamin" class="form-control rounded" :settings="settings" data-placeholder="Pilih Jenis Kelamin"> 
+                                <option value="L" >Laki Laki</option>
+                                <option value="P" >Perempuan</option>
+                        </select>
+                        <span v-if="message" class="label label-success"><i class="fa fa-check"></i></span>
+                        <span v-if="errors.jenis_kelamin" class="label label-danger">{{ errors.jenis_kelamin[0] }}</span>
+                    </div>
+                </div>
+
+                <div :class="['form-group', errors.nik ? 'has-error' : '']">
+                    <label class="col-sm-2 control-label">NIK</label>
+                    <div class="col-sm-10">
+                        <input v-model="state.nik" type="number" class="form-control rounded" placeholder="NIK Karyawan..">
+                        <span v-if="errors.nik" class="label label-danger">{{ errors.nik[0] }}</span>
+                        <span v-if="message" class="label label-success"><i class="fa fa-check"></i></span>
+                        <span v-if="messageError" class="label label-danger">{{ messageError }}</span>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
         </div>
-    </div>
-</div>
+  </section>
 </template>
 
 <script>
-export default {
-    props: ['title'],
 
+export default {
     data() {
         return {
             errors: [],

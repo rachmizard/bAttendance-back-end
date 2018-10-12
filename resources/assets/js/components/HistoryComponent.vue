@@ -67,12 +67,16 @@
 			}
 		},
 		mounted() {
-			Echo.channel('absen')
-			.listen('Absen', (e) => {
-				this.fetch();
-				alert('Successfully loaded!');
-			});	
+			this.fetch();
 		},
+
+		created(){
+            Echo.channel('qrcode')
+            .listen('qrTrigger', (e) => {
+                this.fetch();
+            });
+		},
+
 		methods: {
 			paginate(url) {
 				axios.get(url).then(response => {
@@ -84,6 +88,7 @@
 				axios.get('history').then(respon => {
 					this.users = respon.data;
 				});	
+				alert('Successfully loaded!');
 			},
 
 			refresh(){

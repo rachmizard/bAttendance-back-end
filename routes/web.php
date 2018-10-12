@@ -56,11 +56,12 @@ Route::get('/panel', 'HomeController@index')->name('home')->middleware('admin');
 Route::resource('laporan', 'LaporanController');
 
 // Karyawan Routes
-Route::get('karyawan', 'KaryawanController@index'); // VIEW
+Route::get('karyawan', 'KaryawanController@index')->name('karyawan'); // VIEW
 Route::get('karyawan/paginate', 'KaryawanController@paginate'); //FETCHING BY PAGINATE
 Route::post('karyawan/post', 'KaryawanController@store'); // POST
 Route::get('karyawan/{id}/edit', 'KaryawanController@edit'); // PATCH (UPDATE)
-Route::put('karyawan/{id}/update', 'KaryawanController@update'); // PATCH (UPDATE)
+// Route::put('karyawan/{id}/update', 'KaryawanController@update'); // PATCH (UPDATE) for VUE JS
+Route::put('karyawan/{id}/update', 'KaryawanController@updateRequest'); // PATCH (UPDATE) 
 Route::delete('karyawan/{id}/delete', 'KaryawanController@destroy'); // PATCH (UPDATE)
 
 // History Routes

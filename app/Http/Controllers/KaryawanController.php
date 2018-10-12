@@ -21,7 +21,8 @@ class KaryawanController extends Controller
      */
     public function index()
     {
-        return view('karyawan.index');
+        $karyawans = Karyawan::orderBy('nama', 'ASC')->get();
+        return view('karyawan.index', compact('karyawans'));
     }
 
     public function paginate()
@@ -54,6 +55,7 @@ class KaryawanController extends Controller
             $response['status'] = 'exist';
             $response['message'] = 'NIK sudah terdaftar atau sudah ada!';
             return response()->json(['response' => $response]);
+            // return redirect()->back()->with('message', $response['message']);
         }else{
             $karyawan = new Karyawan;
             $karyawan->nama = $request->nama;
@@ -65,6 +67,7 @@ class KaryawanController extends Controller
             $response['status'] = 'kosong';
             $response['message'] = 'Berhasil di tambahkan '. $karyawan->nama;
             return response()->json(['response' => $response]);
+            // return redirect()->back()->with('message', 'Berhasil di tambahkan!');
         }
 
     }
@@ -104,7 +107,36 @@ class KaryawanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    // public function update(Request $request, $id)
+    // {
+    //      $this->validate($request, [
+    //         'nama'  => 'required|string|max:50',
+    //         'jenis_kelamin'  => 'required|string|max:50',
+    //         'nik' => 'required', 
+    //         'divisi' => 'required|string|max:50', 
+    //     ]);
+
+    //     $validator = Karyawan::where('nik', $request->nik)->get();
+    //     if (count($validator) > 1) {
+    //         $response['status'] = 'exist';
+    //         $response['message'] = 'NIK Sudah ada!';
+    //         return response()->json(['response' => $response]);
+    //     }else{
+    //         $karyawan = Karyawan::find($id);
+    //         if ($karyawan->nik) {
+    //             $karyawan->nama = $request->get('nama');
+    //             $karyawan->divisi = $request->get('divisi');
+    //             $karyawan->jenis_kelamin = $request->get('jenis_kelamin');
+    //             $karyawan->nik = $request->get('nik');
+    //             $karyawan->update();
+    //             $response['status'] = 'kosong';
+    //             $response['message'] = 'Berhasil di edit!';
+    //             return response()->json(['response' => $response, 'karyawan' => $karyawan]);
+    //         }
+    //     }
+    // }
+
+    public function updateRequest(Request $request, $id)
     {
          $this->validate($request, [
             'nama'  => 'required|string|max:50',
@@ -112,12 +144,9 @@ class KaryawanController extends Controller
             'nik' => 'required', 
             'divisi' => 'required|string|max:50', 
         ]);
-
         $validator = Karyawan::where('nik', $request->nik)->get();
         if (count($validator) > 1) {
-            $response['status'] = 'exist';
-            $response['message'] = 'NIK Sudah ada!';
-            return response()->json(['response' => $response]);
+            return redirect()->back()->with('message', 'NIK Sudah terdaftar!');
         }else{
             $karyawan = Karyawan::find($id);
             if ($karyawan->nik) {
@@ -126,9 +155,7 @@ class KaryawanController extends Controller
                 $karyawan->jenis_kelamin = $request->get('jenis_kelamin');
                 $karyawan->nik = $request->get('nik');
                 $karyawan->update();
-                $response['status'] = 'kosong';
-                $response['message'] = 'Berhasil di edit!';
-                return response()->json(['response' => $response, 'karyawan' => $karyawan]);
+                return redirect()->back()->with('message', 'Berhasil di update!');
             }
         }
     }
@@ -143,6 +170,7 @@ class KaryawanController extends Controller
     {
         $karyawan = Karyawan::find($id);
         $karyawan->delete();
-        return response()->json($karyawan);
+        // return response()->json($karyawan);
+        return redirect()->back()->with('message', 'Berhasil di hapus!');
     }
 }

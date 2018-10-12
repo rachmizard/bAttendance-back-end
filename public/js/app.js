@@ -794,33 +794,6 @@ module.exports = {
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11188,6 +11161,33 @@ if ( !noGlobal ) {
 
 return jQuery;
 } );
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
 
 
 /***/ }),
@@ -22267,7 +22267,7 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(22).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(22).setImmediate))
 
 /***/ }),
 /* 9 */
@@ -22783,7 +22783,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(17);
-module.exports = __webpack_require__(182);
+module.exports = __webpack_require__(177);
 
 
 /***/ }),
@@ -22810,8 +22810,8 @@ window.Vue = __webpack_require__(8);
   Import Jquery
 */
 
-window.$ = __webpack_require__(5);
-window.JQuery = __webpack_require__(5);
+window.$ = __webpack_require__(4);
+window.JQuery = __webpack_require__(4);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -22824,6 +22824,7 @@ Vue.component('loading', __webpack_require__(48));
 Vue.component('history-component', __webpack_require__(153));
 // Vue.component('dashboard-component', require('./components/DashboardComponent.vue'));
 Vue.component('alert-box', __webpack_require__(156), { props: ['title', 'message', 'type'] });
+Vue.component('create-karyawan', __webpack_require__(168));
 
 /*
 Import Package
@@ -22842,13 +22843,13 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 
 // define routes for karyawans
 var routes = [{
-  path: '/karyawan', name: 'userIndex', component: __webpack_require__(170), props: { title: 'Master Karyawan' }
+  path: '/karyawan', name: 'userIndex', component: __webpack_require__(165), props: { title: 'Master Karyawan' }
 }, {
-  path: '/create', name: 'userCreate', component: __webpack_require__(173), props: { title: 'Tambah Karyawan' }
+  path: '/create', name: 'userCreate', component: __webpack_require__(168), props: { title: 'Tambah Karyawan' }
 }, {
-  path: '/edit', name: 'userEdit', component: __webpack_require__(176), props: { title: 'Edit Karyawan' }
+  path: '/edit', name: 'userEdit', component: __webpack_require__(171), props: { title: 'Edit Karyawan' }
 }, {
-  path: '/history', name: 'historyIndex', component: __webpack_require__(179), props: { title: 'History Absensi' }
+  path: '/history', name: 'historyIndex', component: __webpack_require__(174), props: { title: 'History Absensi' }
 }];
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
   routes: routes
@@ -22936,8 +22937,8 @@ window._ = __webpack_require__(19);
  * code may be modified to fit the specific needs of your application.
  */
 
-window.$ = window.jQuery = __webpack_require__(5);
-window.JQuery = __webpack_require__(5);
+window.$ = window.jQuery = __webpack_require__(4);
+window.JQuery = __webpack_require__(4);
 
 __webpack_require__(21);
 
@@ -40112,7 +40113,7 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(20)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(20)(module)))
 
 /***/ }),
 /* 20 */
@@ -42593,7 +42594,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
 /* 23 */
@@ -42786,7 +42787,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(9)))
 
 /***/ }),
 /* 24 */
@@ -57987,13 +57988,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		};
 	},
 	mounted: function mounted() {
+		this.fetch();
+	},
+	created: function created() {
 		var _this = this;
 
-		Echo.channel('absen').listen('Absen', function (e) {
+		Echo.channel('qrcode').listen('qrTrigger', function (e) {
 			_this.fetch();
-			alert('Successfully loaded!');
 		});
 	},
+
 
 	methods: {
 		paginate: function paginate(url) {
@@ -58009,6 +58013,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			axios.get('history').then(function (respon) {
 				_this3.users = respon.data;
 			});
+			alert('Successfully loaded!');
 		},
 		refresh: function refresh() {
 			var _this4 = this;
@@ -61208,20 +61213,15 @@ if (inBrowser && window.Vue) {
 
 
 /***/ }),
-/* 165 */,
-/* 166 */,
-/* 167 */,
-/* 168 */,
-/* 169 */,
-/* 170 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(171)
+var __vue_script__ = __webpack_require__(166)
 /* template */
-var __vue_template__ = __webpack_require__(172)
+var __vue_template__ = __webpack_require__(167)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -61260,12 +61260,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 171 */
+/* 166 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
 //
 //
@@ -61387,7 +61387,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 172 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -61589,15 +61589,15 @@ if (false) {
 }
 
 /***/ }),
-/* 173 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(174)
+var __vue_script__ = __webpack_require__(169)
 /* template */
-var __vue_template__ = __webpack_require__(175)
+var __vue_template__ = __webpack_require__(170)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -61636,7 +61636,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 174 */
+/* 169 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -61694,19 +61694,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['title'],
-
     data: function data() {
         return {
             errors: [],
@@ -61754,295 +61744,279 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 175 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "panel panel-default" }, [
-          _c("div", { staticClass: "panel-heading" }, [
-            _c("i", { staticClass: "fa fa-dashboard" }),
-            _vm._v(" " + _vm._s(_vm.title))
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "panel-body" }, [
-            _c("div", [
-              _c("ol", { staticClass: "breadcrumb" }, [
-                _c(
-                  "li",
-                  [
-                    _c(
-                      "router-link",
-                      { attrs: { to: { name: "userIndex" } } },
-                      [_vm._v("Karyawan")]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("li", { staticClass: "active" }, [_vm._v("Tambah Karyawan")])
+  return _c("section", { staticClass: "panel panel-default" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "panel-body" }, [
+      _c(
+        "form",
+        {
+          staticClass: "form-horizontal",
+          attrs: { action: "karyawan/post", method: "post" },
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.store($event)
+            }
+          }
+        },
+        [
+          _c(
+            "div",
+            { class: ["form-group", _vm.errors.nama ? "has-error" : ""] },
+            [
+              _c("label", { staticClass: "col-sm-2 control-label" }, [
+                _vm._v("Nama Lengkap")
               ]),
               _vm._v(" "),
-              _vm.message
-                ? _c("div", { staticClass: "alert alert-success" }, [
-                    _vm._v(
-                      "\r\n\t\t\t\t\t\t\t\t" +
-                        _vm._s(_vm.message) +
-                        "\r\n\t\t\t\t\t\t\t"
-                    )
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.messageError
-                ? _c("div", { staticClass: "alert alert-danger" }, [
-                    _vm._v(
-                      "\r\n\t\t\t\t\t\t\t\t" +
-                        _vm._s(_vm.messageError) +
-                        "\r\n\t\t\t\t\t\t\t"
-                    )
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c(
-                "form",
-                {
-                  attrs: { action: "karyawan/post", method: "post" },
+              _c("div", { staticClass: "col-sm-10" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.state.nama,
+                      expression: "state.nama"
+                    }
+                  ],
+                  staticClass: "form-control rounded",
+                  attrs: { type: "text", placeholder: "Nama Karyawan.." },
+                  domProps: { value: _vm.state.nama },
                   on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.store($event)
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.state, "nama", $event.target.value)
                     }
                   }
-                },
-                [
-                  _c(
-                    "div",
+                }),
+                _vm._v(" "),
+                _vm.message
+                  ? _c("span", { staticClass: "label label-success" }, [
+                      _c("i", { staticClass: "fa fa-check" })
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.errors.nama
+                  ? _c("span", { staticClass: "label label-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.nama[0]))
+                    ])
+                  : _vm._e()
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { class: ["form-group", _vm.errors.divisi ? "has-error" : ""] },
+            [
+              _c("label", { staticClass: "col-sm-2 control-label" }, [
+                _vm._v("Divisi")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-10" }, [
+                _c("input", {
+                  directives: [
                     {
-                      class: ["form-group", _vm.errors.nama ? "has-error" : ""]
-                    },
-                    [
-                      _c("label", [_vm._v("Nama Lengkap")]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.state.nama,
-                            expression: "state.nama"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text" },
-                        domProps: { value: _vm.state.nama },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.state, "nama", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.message
-                        ? _c("span", { staticClass: "label label-success" }, [
-                            _c("i", { staticClass: "fa fa-check" })
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.errors.nama
-                        ? _c("span", { staticClass: "label label-danger" }, [
-                            _vm._v(_vm._s(_vm.errors.nama[0]))
-                          ])
-                        : _vm._e()
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      class: [
-                        "form-group",
-                        _vm.errors.divisi ? "has-error" : ""
-                      ]
-                    },
-                    [
-                      _c("label", [_vm._v("Divisi")]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.state.divisi,
-                            expression: "state.divisi"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text" },
-                        domProps: { value: _vm.state.divisi },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.state, "divisi", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.message
-                        ? _c("span", { staticClass: "label label-success" }, [
-                            _c("i", { staticClass: "fa fa-check" })
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.errors.divisi
-                        ? _c("span", { staticClass: "label label-danger" }, [
-                            _vm._v(_vm._s(_vm.errors.divisi[0]))
-                          ])
-                        : _vm._e()
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      class: [
-                        "form-group",
-                        _vm.errors.jenis_kelamin ? "has-error" : ""
-                      ]
-                    },
-                    [
-                      _c("label", [_vm._v("Jenis Kelamin")]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.state.jenis_kelamin,
-                            expression: "state.jenis_kelamin"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text" },
-                        domProps: { value: _vm.state.jenis_kelamin },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.state,
-                              "jenis_kelamin",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.message
-                        ? _c("span", { staticClass: "label label-success" }, [
-                            _c("i", { staticClass: "fa fa-check" })
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.errors.jenis_kelamin
-                        ? _c("span", { staticClass: "label label-danger" }, [
-                            _vm._v(_vm._s(_vm.errors.jenis_kelamin[0]))
-                          ])
-                        : _vm._e()
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      class: ["form-group", _vm.errors.nik ? "has-error" : ""]
-                    },
-                    [
-                      _c("label", [_vm._v("NIK")]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.state.nik,
-                            expression: "state.nik"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "number" },
-                        domProps: { value: _vm.state.nik },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.state, "nik", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.errors.nik
-                        ? _c("span", { staticClass: "label label-danger" }, [
-                            _vm._v(_vm._s(_vm.errors.nik[0]))
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.message
-                        ? _c("span", { staticClass: "label label-success" }, [
-                            _c("i", { staticClass: "fa fa-check" })
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.messageError
-                        ? _c("span", { staticClass: "label label-danger" }, [
-                            _vm._v(_vm._s(_vm.messageError))
-                          ])
-                        : _vm._e()
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "form-group" },
-                    [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary",
-                          attrs: { type: "submit" }
-                        },
-                        [_vm._v("Submit")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "router-link",
-                        { attrs: { to: { name: "userIndex" } } },
-                        [_vm._v("Back to index")]
-                      )
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.state.divisi,
+                      expression: "state.divisi"
+                    }
+                  ],
+                  staticClass: "form-control rounded",
+                  attrs: {
+                    type: "text",
+                    placeholder: "Jabatan/Divisi Karyawan.."
+                  },
+                  domProps: { value: _vm.state.divisi },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.state, "divisi", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.message
+                  ? _c("span", { staticClass: "label label-success" }, [
+                      _c("i", { staticClass: "fa fa-check" })
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.errors.divisi
+                  ? _c("span", { staticClass: "label label-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.divisi[0]))
+                    ])
+                  : _vm._e()
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              class: ["form-group", _vm.errors.jenis_kelamin ? "has-error" : ""]
+            },
+            [
+              _c("label", { staticClass: "col-sm-2 control-label" }, [
+                _vm._v("Jenis Kelamin")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-10" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.state.jenis_kelamin,
+                        expression: "state.jenis_kelamin"
+                      }
                     ],
-                    1
-                  )
-                ]
-              )
-            ])
-          ])
-        ])
-      ])
+                    staticClass: "form-control rounded",
+                    attrs: {
+                      settings: _vm.settings,
+                      "data-placeholder": "Pilih Jenis Kelamin"
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.state,
+                          "jenis_kelamin",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "L" } }, [
+                      _vm._v("Laki Laki")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "P" } }, [
+                      _vm._v("Perempuan")
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _vm.message
+                  ? _c("span", { staticClass: "label label-success" }, [
+                      _c("i", { staticClass: "fa fa-check" })
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.errors.jenis_kelamin
+                  ? _c("span", { staticClass: "label label-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.jenis_kelamin[0]))
+                    ])
+                  : _vm._e()
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { class: ["form-group", _vm.errors.nik ? "has-error" : ""] },
+            [
+              _c("label", { staticClass: "col-sm-2 control-label" }, [
+                _vm._v("NIK")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-10" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.state.nik,
+                      expression: "state.nik"
+                    }
+                  ],
+                  staticClass: "form-control rounded",
+                  attrs: { type: "number", placeholder: "NIK Karyawan.." },
+                  domProps: { value: _vm.state.nik },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.state, "nik", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors.nik
+                  ? _c("span", { staticClass: "label label-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.nik[0]))
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.message
+                  ? _c("span", { staticClass: "label label-success" }, [
+                      _c("i", { staticClass: "fa fa-check" })
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.messageError
+                  ? _c("span", { staticClass: "label label-danger" }, [
+                      _vm._v(_vm._s(_vm.messageError))
+                    ])
+                  : _vm._e()
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+            [_vm._v("Submit")]
+          )
+        ]
+      )
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("header", { staticClass: "panel-heading" }, [
+      _c("i", { staticClass: "fa fa-plus" }),
+      _vm._v(" Tambah Karyawan \n    "),
+      _c("i", {
+        staticClass: "fa fa-info-sign text-muted",
+        attrs: {
+          "data-toggle": "tooltip",
+          "data-placement": "bottom",
+          "data-title": "ajax to load the data."
+        }
+      })
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -62053,15 +62027,15 @@ if (false) {
 }
 
 /***/ }),
-/* 176 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(177)
+var __vue_script__ = __webpack_require__(172)
 /* template */
-var __vue_template__ = __webpack_require__(178)
+var __vue_template__ = __webpack_require__(173)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -62100,7 +62074,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 177 */
+/* 172 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -62239,7 +62213,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 178 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -62566,15 +62540,15 @@ if (false) {
 }
 
 /***/ }),
-/* 179 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(180)
+var __vue_script__ = __webpack_require__(175)
 /* template */
-var __vue_template__ = __webpack_require__(181)
+var __vue_template__ = __webpack_require__(176)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -62613,7 +62587,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 180 */
+/* 175 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -62720,7 +62694,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 181 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -62881,7 +62855,7 @@ if (false) {
 }
 
 /***/ }),
-/* 182 */
+/* 177 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
