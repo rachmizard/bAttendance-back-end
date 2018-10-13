@@ -53831,7 +53831,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    HalfCircleSpinner: __WEBPACK_IMPORTED_MODULE_0_epic_spinners__["a" /* HalfCircleSpinner */]
+    RadarSpinner: __WEBPACK_IMPORTED_MODULE_0_epic_spinners__["a" /* RadarSpinner */]
   }
 });
 
@@ -53894,11 +53894,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* unused harmony reexport SwappingSquaresSpinner */
 /* unused harmony reexport ScalingSquaresSpinner */
 /* unused harmony reexport FulfillingBouncingCircleSpinner */
-/* unused harmony reexport RadarSpinner */
+/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_14__components_lib_RadarSpinner_vue___default.a; });
 /* unused harmony reexport SelfBuildingSquareSpinner */
 /* unused harmony reexport SpringSpinner */
 /* unused harmony reexport LoopingRhombusesSpinner */
-/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_18__components_lib_HalfCircleSpinner_vue___default.a; });
+/* unused harmony reexport HalfCircleSpinner */
 /* unused harmony reexport AtomSpinner */
 
 
@@ -57902,8 +57902,8 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("half-circle-spinner", {
-    attrs: { "animation-duration": 1000, size: 60, color: "#91aee0" }
+  return _c("radar-spinner", {
+    attrs: { "animation-duration": 2000, size: 80, color: "#91aee0" }
   })
 }
 var staticRenderFns = []
