@@ -19,7 +19,12 @@ class HistoryController extends Controller
 
     public function index()
     {
-        return AbsenHistoryResource::collection(Absen::orderBy('created_at', 'DESC')->get());
+        return AbsenHistoryResource::collection(Absen::orderBy('created_at', 'DESC')->paginate(20));
+    }
+
+    public function indexview()
+    {
+        return view('history.index');
     }
 
     public function destroy($id)

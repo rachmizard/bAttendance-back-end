@@ -29,6 +29,8 @@ Vue.component('history-component', require('./components/HistoryComponent.vue'))
 Vue.component('alert-box', require('./components/AlertComponent.vue'), { props: ['title', 'message', 'type'] });
 Vue.component('create-karyawan', require('./components/karyawan/create.vue'));
 Vue.component('create-jam', require('./components/jam/create.vue'));
+Vue.component('pagination', require('laravel-vue-pagination'));
+Vue.component('history-page', require('./components/history/index.vue'), require('laravel-vue-pagination'));
 
 
 /*

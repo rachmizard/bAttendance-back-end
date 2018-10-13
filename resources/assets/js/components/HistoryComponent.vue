@@ -71,8 +71,8 @@
 		},
 
 		created(){
-            Echo.channel('qrcode')
-            .listen('qrTrigger', (e) => {
+            Echo.channel('absen')
+            .listen('Absen', (e) => {
                 this.fetch();
             });
 		},
@@ -88,7 +88,6 @@
 				axios.get('history').then(respon => {
 					this.users = respon.data;
 				});	
-				alert('Successfully loaded!');
 			},
 
 			refresh(){

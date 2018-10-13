@@ -18,6 +18,27 @@
     <script src="js/ie/respond.min.js"></script>
     <script src="js/ie/excanvas.js"></script>
   <![endif]-->
+  <style type="text/css">
+      .loading{
+        position: fixed;
+        z-index: 999;
+        height: 2em;
+        width: 2em;
+        overflow: show;
+        margin: auto;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+      }
+      .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s;
+      }
+      .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+        opacity: 0;
+      }
+  </style>
+
   <script>
       window.Laravel = {!! json_encode([
           'csrfToken' => csrf_token(),
@@ -27,9 +48,11 @@
 <body>
   <section class="vbox" id="app">
     <alert-box v-if="$root.expired" :title="title" :message="message" :type="type"></alert-box>
-    <div class="loading">
-        <loading v-if="$root.loading"></loading>
-    </div>
+    <transition name="fade">
+      <div class="loading">
+          <loading v-if="$root.loading"></loading>
+      </div>
+    </transition>
     <header class="bg-dark dk header navbar navbar-fixed-top-xs">
       <div class="navbar-header aside-md">
         <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen,open" data-target="#nav,html">
@@ -223,7 +246,7 @@
                       </ul>
                     </li>
                     <li >
-                      <a href="mail.html"  >
+                      <a href="{{route('history.indexview')}}"  >
                         <b class="badge bg-danger pull-right">3</b>
                         <i class="fa fa-envelope-o icon">
                           <b class="bg-primary dker"></b>
