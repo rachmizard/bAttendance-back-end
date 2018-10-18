@@ -67,7 +67,6 @@
 </template>
 
 <script>
-
 export default {
     data() {
         return {
@@ -108,8 +107,6 @@ export default {
 	                app.state.status = ''; // clear form	
                 }
                 // app.$router.replace('/'); // redirect to url "/"
-            }).then(function(e){
-                window.location.reload();
             }).catch((error) => {
                  this.errors = error.response.data.errors;
                  this.message = false;

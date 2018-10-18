@@ -342,7 +342,9 @@
 
   <script src="{{asset('/template/js/sortable/jquery.sortable.js')}}"></script>
   <!-- datatables -->
-  <script src="{{asset('/template/js/datatables/jquery.dataTables.min.js')}}"></script>
+  <!-- <script src="{{asset('/template/js/datatables/jquery.dataTables.min.js')}}"></script> -->
+  <!-- DataTables -->
+  <script src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
   @stack('javascript')
   
 </body>

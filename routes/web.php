@@ -56,6 +56,10 @@ Route::get('/panel', 'HomeController@index')->name('home')->middleware('admin');
 Route::resource('laporan', 'LaporanController');
 
 // Karyawan Routes
+// Json Return
+Route::get('karyawan/json', 'KaryawanController@jsonKaryawan')->name('jsonKaryawan');
+// End Json Return
+
 Route::get('karyawan', 'KaryawanController@index')->name('karyawan'); // VIEW
 Route::get('karyawan/paginate', 'KaryawanController@paginate'); //FETCHING BY PAGINATE
 Route::post('karyawan/post', 'KaryawanController@store'); // POST

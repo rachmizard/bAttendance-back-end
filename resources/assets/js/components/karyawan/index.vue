@@ -1,77 +1,69 @@
 <template>
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading"><i class="fa fa-dashboard"></i> {{ title }}</div>
-	                <div class="panel-body">
-						<div class="table-responsive">
-							<router-link :to="{name: 'index'}" class="btn btn-info">
-								<i class="fa fa-home"></i> Home
-							</router-link>
-
-							<router-link to="create" class="btn btn-primary">
-								<i class="fa fa-plus"></i> Tambah Karyawan
-							</router-link>
-
-							<hr>
-
-					        <ol class="breadcrumb">
-					            <li><router-link :to="{name: 'index'}" >Home</router-link></li>
-					            <li class="active" >Karyawan</li>    
-					        </ol>
-							<table class="table" id="karyawan">
-								<thead>
-									<tr>
-										<th>No.</th>
-										<th>Nama Lengkap</th>
-										<th>Divisi</th>
-										<th>Jenis Kelamin</th>
-										<th>Nik</th>
-										<th>Created</th>
-										<th class="text-right">Actions</th>
-									</tr>
-								</thead>
-
-								<tbody>
-									<tr v-for="(user, index) in users.data">
-										<td>{{ users.from + index }}</td>
-										<td>{{ user.nama }} </td>
-										<td>{{ user.divisi }} </td>
-										<td>{{ user.jenis_kelamin }} </td>
-										<td>{{ user.nik }} </td>
-										<td>{{ user.created_at }} </td>
-										<td class="text-right">
-											<div class="btn btn-group">	
-												<router-link :to="{ name: 'userEdit', params: {id: user.id} }" class="btn btn-info">
-													<i class="fa fa-pencil"></i>
-												</router-link>
-												<button class="btn btn-danger text-danger" @click.prevent="deleteKaryawan(user.id)"><i class="fa fa-trash"></i></button>
-											</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-							
-							<ul class="pagination">
-								<li v-if="users.prev_page_url">
-									<a @click.prevent="paginate(users.prev_page_url)" :href="users.prev_page_url">&laquo; Previous</a>
-								</li>
-								<li v-if="users.next_page_url">
-									<a @click.prevent="paginate(users.next_page_url)" :href="users.next_page_url">Next &raquo;</a>
-								</li>
-							</ul>
-						</div>
-	                </div>
-            </div>
+  <section class="panel panel-default">
+    <header class="panel-heading">
+      <i class="fa fa-table"></i> Tabel Karyawan 
+      <i class="fa fa-info-sign text-muted" data-toggle="tooltip" data-placement="bottom" data-title="ajax to load the data."></i> 
+    </header>
+        <div class="table-responsive">
+          <table id="karyawanTable" class="table table-striped m-b-none">
+            <thead>
+              <tr>
+                <th width="5%">ID</th>
+                <th width="15%">Nik</th>
+                <th width="25%">Nama Lengkap</th>
+                <th width="25%">Divisi</th>
+                <th width="10%">Jenis Kelamin</th>
+                <th width="10%">Status</th>
+                <th width="25%">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
         </div>
-    </div>
-</div>
+  </section>
 </template>
 
 <script>
 	import JQuery from 'jquery'
+	 $(function() {
+               var table = $('#karyawanTable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: "karyawan/json",
+                    columns: [
+                        { data: 'id', name: 'id' },
+                        { data: 'nik', name: 'nik' },
+                        { data: 'nama', name: 'nama' },
+                        { data: 'divisi', name: 'divisi' },
+                        { data: 'jenis_kelamin', name: 'jenis_kelamin' },
+                        { data: 'status', name: 'status' },
+                        { data: 'action', name: 'action', orderable: false, searchable: false },
+                    ]
+                });
+              Echo.channel('draw-table-event')
+              .listen('DrawTableEvent', (e) => {
+                table.draw();
+              });
+            });
+            $(document).ready(function(){
+              $('#editKaryawanModal').on('show.bs.modal', function(e) {
+                      var id = $(e.relatedTarget).data('id');
+                      $.get('karyawan/' + id + '/edit', function( data ) {
+                        $("#namaTitle").attr('value', data.nama);
+                        $("#nama").attr('value', data.nama);
+                        $("#divisi").attr('value', data.divisi);
+                        $("#jenis_kelamin").attr('value', data.jenis_kelamin);
+                        $("#nik").attr('value', data.nik);
+                        $("#status").attr('value', data.status);
+                        // document.getElementById('nama').setAttribute('value', data.nama);
+                        // document.getElementById('divisi').setAttribute('value', data.divisi);
+                        // document.getElementById('jenis_kelamin').setAttribute('value', data.jenis_kelamin);
+                        // document.getElementById('nik').setAttribute('value', data.nik);
+                      });
+                $("#updateForm").attr('action', 'karyawan/'+ id +'/update');
+              });
+            });
 	export default {
         props: ['title'],
         

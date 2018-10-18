@@ -29,49 +29,9 @@
               <!-- Create Form Component -->
               <create-karyawan></create-karyawan>
               <!-- End Form Component -->
-              <section class="panel panel-default">
-                <header class="panel-heading">
-                  <i class="fa fa-table"></i> Tabel Karyawan 
-                  <i class="fa fa-info-sign text-muted" data-toggle="tooltip" data-placement="bottom" data-title="ajax to load the data."></i> 
-                </header>
-                <div class="table-responsive">
-                  <table class="table table-striped m-b-none" data-ride="datatables">
-                    <thead>
-                      <tr>
-                        <th width="15%">Nik</th>
-                        <th width="25%">Nama Lengkap</th>
-                        <th width="25%">Divisi</th>
-                        <th width="10%">Jenis Kelamin</th>
-                        <th width="10%">Status</th>
-                        <th width="25%">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach($karyawans as $karyawan)
-                      <tr>
-                        <td>{{ $karyawan->nik }}</td>
-                        <td>{{ $karyawan->nama }}</td>
-                        <td>{{ $karyawan->divisi }}</td>
-                        <td>{{ $karyawan->jenis_kelamin }}</td>
-                        <td>
-                          @if($karyawan->status == 'unauthorized')
-                            <span class="label label-danger">{{ $karyawan->status}}</span>
-                          @elseif($karyawan->status == 'authorized')
-                            <span class="label label-success">{{ $karyawan->status}}</span>
-                          @endif
-                        </td>
-                        <td>
-                          <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-info" data-target="#editKaryawanModal" data-toggle="modal" data-id="{{ $karyawan->id }}" data-nik="{{ $karyawan->nik }}" data-nama="{{ $karyawan->nama }}" data-divisi="{{ $karyawan->divisi }}" data-jenis_kelamin="{{ $karyawan->jenis_kelamin }}" data-status="{{ $karyawan->status }}"><i class="fa fa-pencil"></i></button>
-                            <a href="" class="btn btn-sm btn-danger"><i class="fa fa-trash-o"></i></a>
-                          </div>
-                        </td>
-                      </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
-                </div>
-              </section>
+              <!-- Create Form Component -->
+              <karyawan-component v-if="$root.drawTable"></karyawan-component>
+              <!-- End Form Component -->
             </section>
           </section>
           <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
@@ -159,27 +119,4 @@
             </div><!-- /.modal-dialog -->
           </div><!-- /.modal -->
         </section>
-
-        @push('javascript')
-          <script>
-            $(document).ready(function(){
-              $('#editKaryawanModal').on('show.bs.modal', function(e) {
-                      var id = $(e.relatedTarget).data('id');
-                      $.get('karyawan/' + id + '/edit', function( data ) {
-                        $("#namaTitle").attr('value', data.nama);
-                        $("#nama").attr('value', data.nama);
-                        $("#divisi").attr('value', data.divisi);
-                        $("#jenis_kelamin").attr('value', data.jenis_kelamin);
-                        $("#nik").attr('value', data.nik);
-                        $("#status").attr('value', data.status);
-                        // document.getElementById('nama').setAttribute('value', data.nama);
-                        // document.getElementById('divisi').setAttribute('value', data.divisi);
-                        // document.getElementById('jenis_kelamin').setAttribute('value', data.jenis_kelamin);
-                        // document.getElementById('nik').setAttribute('value', data.nik);
-                      });
-                $("#updateForm").attr('action', 'karyawan/'+ id +'/update');
-              });
-            });
-          </script>
-        @endpush
 @endsection

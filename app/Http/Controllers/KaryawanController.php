@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Karyawan;
 use Carbon\Carbon;
+use Yajra\Datatables\Datatables;
+use App\Events\DrawTableEvent;
 
 class KaryawanController extends Controller
 {
@@ -19,6 +21,28 @@ class KaryawanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function jsonKaryawan()
+    {
+        $karyawans = Karyawan::all();
+        return Datatables::of(Karyawan::all())
+                ->addColumn('action', function($karyawans){
+                    return '
+                            <button type="button" class="btn btn-sm btn-info" data-target="#editKaryawanModal" data-toggle="modal" data-id="'. $karyawans->id .'" data-nik="'. $karyawans->nik .'" data-nama="'. $karyawans->nama .'" data-divisi="'. $karyawans->divisi .'" data-jenis_kelamin="'. $karyawans->jenis_kelamin .'" data-status="'. $karyawans->status .'"><i class="fa fa-pencil"></i></button>
+                            <a href="" class="btn btn-sm btn-danger"><i class="fa fa-trash-o"></i></a>
+                            ';
+                })
+                ->editColumn('status', function($karyawans){
+                    if ($karyawans->status == 'unauthorized') {
+                        return '<span class="label label-danger">'. $karyawans->status .'</span>';
+                    }else{
+                        return '<span class="label label-success">'. $karyawans->status .'</span>';
+                    }
+                })
+                ->rawColumns(['action', 'status'])
+                ->make(true);
+    }
+
     public function index()
     {
         $karyawans = Karyawan::orderBy('nama', 'ASC')->get();
@@ -71,6 +95,7 @@ class KaryawanController extends Controller
             $response['title'] = 'Sukses!';
             $response['message'] = 'Berhasil di tambahkan '. $karyawan->nama;
             $response['type'] = 'success';
+            event(new DrawTableEvent());
             return response()->json(['response' => $response]);
             // return redirect()->back()->with('message', 'Berhasil di tambahkan!');
         }
@@ -161,6 +186,7 @@ class KaryawanController extends Controller
                 $karyawan->nik = $request->get('nik');
                 $karyawan->status = $request->get('status');
                 $karyawan->update();
+                event(new DrawTableEvent());
                 return redirect()->back()->with('message', 'Berhasil di update!');
             }
         }

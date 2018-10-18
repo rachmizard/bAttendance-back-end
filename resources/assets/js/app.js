@@ -27,6 +27,7 @@ Vue.component('loading', require('./components/LoadingComponent.vue'));
 Vue.component('history-component', require('./components/HistoryComponent.vue'));
 // Vue.component('dashboard-component', require('./components/DashboardComponent.vue'));
 Vue.component('alert-box', require('./components/AlertComponent.vue'), { props: ['title', 'message', 'type'] });
+Vue.component('karyawan-component', require('./components/karyawan/index.vue'));
 Vue.component('create-karyawan', require('./components/karyawan/create.vue'));
 Vue.component('create-jam', require('./components/jam/create.vue'));
 Vue.component('pagination', require('laravel-vue-pagination'));
@@ -71,7 +72,6 @@ const app = new Vue({
   components: {
     alert: alert
   },
-
 	data: { 
           loading: false,
           expired: false,
@@ -79,8 +79,8 @@ const app = new Vue({
           message: '',
           type: '',
           image: '',
+          drawTable: true
   },
-
 	router
 }).$mount('#app');
 
@@ -107,8 +107,6 @@ Echo.channel('expired-session')
   *
   *
 */
-
-
 Echo.channel('absen')
 .listen('Absen', (e) => {
   app.expired = true // triger for launch an alert!
