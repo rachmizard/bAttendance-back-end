@@ -52,6 +52,7 @@ Route::get('/absentest', function(){
 });
 
 Route::get('/panel', 'HomeController@index')->name('home')->middleware('admin');
+Route::get('dashboard', 'HomeController@dashboard')->name('home.dashboard'); // DASHBOARD COUNT
 
 Route::resource('laporan', 'LaporanController');
 

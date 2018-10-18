@@ -7,6 +7,7 @@ use App\Karyawan;
 use Carbon\Carbon;
 use Yajra\Datatables\Datatables;
 use App\Events\DrawTableEvent;
+use App\Http\Resources\DashboardResource;
 
 class KaryawanController extends Controller
 {

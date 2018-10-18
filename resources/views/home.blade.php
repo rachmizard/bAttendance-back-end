@@ -65,7 +65,8 @@
                   <section class="panel panel-default">
                     <header class="panel-heading font-bold">Statistics</header>
                     <div class="panel-body">
-                      <div id="flot-1ine" style="height:210px"></div>
+                      <!-- <div id="flot-1ine" style="height:210px"></div> -->
+                      <g-chart></g-chart>
                     </div>
                     <footer class="panel-footer bg-white no-padder">
                       <div class="row text-center no-gutter">

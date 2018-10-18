@@ -16,6 +16,15 @@ window.Vue = require('vue');
 window.$ = require('jquery');
 window.JQuery = require('jquery');
 
+/*
+Import Package
+*/
+
+import alert from 'vue-strap/src/alert';
+import VueGoogleCharts from 'vue-google-charts';
+Vue.use(VueGoogleCharts);
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -32,14 +41,7 @@ Vue.component('create-karyawan', require('./components/karyawan/create.vue'));
 Vue.component('create-jam', require('./components/jam/create.vue'));
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('history-page', require('./components/history/index.vue'), require('laravel-vue-pagination'));
-
-
-/*
-Import Package
-*/
-
-import alert from 'vue-strap/src/alert';
-// Vue.use(alert);
+Vue.component('g-chart', require('./components/GChartComponent.vue'));
 
 /**
 * Vue Router
