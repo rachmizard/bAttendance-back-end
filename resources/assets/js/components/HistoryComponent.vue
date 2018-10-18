@@ -12,7 +12,7 @@
           </div>
           <a href="#" class="h4">Saya Hadir!</a>
           <small class="block"><a href="#" class="">{{ user.nama }}</a> <span class="label label-success">{{ user.divisi }}</span></small>
-          <small class="block m-t-sm">Horee, saya masuk hari ini!</small>
+          <small class="block m-t-sm">{{ user.text_message }}</small>
         </div>
       </article>
       <div class="line pull-in"></div>
@@ -85,13 +85,13 @@
 			},
 
 			fetch(){
-				axios.get('history').then(respon => {
+				axios.get('history/today').then(respon => {
 					this.users = respon.data;
 				});	
 			},
 
 			refresh(){
-			 	axios.get('history').then(respon => {
+			 	axios.get('history/today').then(respon => {
 					this.users = respon.data;
 				});	
 				this.$root.loading = true;

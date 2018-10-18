@@ -78,5 +78,6 @@ Route::put('jam/{id}/matikan', 'JamController@matikan')->name('jam.matikan');
 
 // History Routes
 Route::get('history', 'HistoryController@index')->name('history.index');
+Route::get('history/today', 'HistoryController@history')->name('history.history');
 Route::get('historyabsensi', 'HistoryController@indexview')->name('history.indexview');
 Route::delete('history/{id}/delete', 'HistoryController@destroy')->name('history.destroy');

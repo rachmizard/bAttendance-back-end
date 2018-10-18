@@ -24,7 +24,8 @@ class AbsenHistoryResource extends Resource
             'jam' => $this->verifikasi->created_at->format('h:i:s A'),
             'tanggal' => $this->verifikasi->created_at->diffForHumans(),
             'created_at' => $this->verifikasi->created_at->format('d-m-Y'),
-            'telah_masuk' => $this->verifikasi->created_at->diffForHumans()
+            'telah_masuk' => $this->verifikasi->created_at->diffForHumans(),
+            'text_message' => 'Hi, saya telah masuk '. $this->created_at->diffForHumans()
         ];
     }
 }

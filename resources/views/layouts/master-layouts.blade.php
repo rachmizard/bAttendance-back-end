@@ -216,7 +216,7 @@
                         <i class="fa fa-dashboard icon">
                           <b class="bg-danger"></b>
                         </i>
-                        <span>Workset</span>
+                        <span>Dashboard</span>
                       </a>
                     </li>
                     <li >

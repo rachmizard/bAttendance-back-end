@@ -59407,14 +59407,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		fetch: function fetch() {
 			var _this3 = this;
 
-			axios.get('history').then(function (respon) {
+			axios.get('history/today').then(function (respon) {
 				_this3.users = respon.data;
 			});
 		},
 		refresh: function refresh() {
 			var _this4 = this;
 
-			axios.get('history').then(function (respon) {
+			axios.get('history/today').then(function (respon) {
 				_this4.users = respon.data;
 			});
 			this.$root.loading = true;
@@ -59482,7 +59482,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("small", { staticClass: "block m-t-sm" }, [
-                _vm._v("Horee, saya masuk hari ini!")
+                _vm._v(_vm._s(user.text_message))
               ])
             ])
           ])
@@ -60982,14 +60982,12 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("section", { attrs: { id: "content" } }, [
     _c("section", { staticClass: "hbox stretch" }, [
-      _vm._m(0),
-      _vm._v(" "),
       _c("aside", [
         _c("section", { staticClass: "vbox" }, [
           _c("header", { staticClass: "header bg-white b-b clearfix" }, [
             _c("div", { staticClass: "row m-t-sm" }, [
               _c("div", { staticClass: "col-sm-8 m-b-xs" }, [
-                _vm._m(1),
+                _vm._m(0),
                 _vm._v(" "),
                 _c("div", { staticClass: "btn-group" }, [
                   _c(
@@ -61006,11 +61004,11 @@ var render = function() {
                     [_c("i", { staticClass: "fa fa-refresh" })]
                   ),
                   _vm._v(" "),
-                  _vm._m(2)
+                  _vm._m(1)
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(3)
+              _vm._m(2)
             ])
           ]),
           _vm._v(" "),
@@ -61018,7 +61016,7 @@ var render = function() {
             _c("section", { staticClass: "panel panel-default" }, [
               _c("div", { staticClass: "table-responsive" }, [
                 _c("table", { staticClass: "table table-striped m-b-none" }, [
-                  _vm._m(4),
+                  _vm._m(3),
                   _vm._v(" "),
                   _c(
                     "tbody",
@@ -61140,72 +61138,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "aside",
-      { staticClass: "aside-md bg-white b-r", attrs: { id: "subNav" } },
-      [
-        _c("div", { staticClass: "wrapper b-b header" }, [
-          _vm._v("Submenu Header")
-        ]),
-        _vm._v(" "),
-        _c("ul", { staticClass: "nav" }, [
-          _c("li", { staticClass: "b-b b-light" }, [
-            _c("a", { attrs: { href: "#" } }, [
-              _c("i", {
-                staticClass:
-                  "fa fa-chevron-right pull-right m-t-xs text-xs icon-muted"
-              }),
-              _vm._v("Phasellus at ultricies")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "b-b b-light" }, [
-            _c("a", { attrs: { href: "#" } }, [
-              _c("i", {
-                staticClass:
-                  "fa fa-chevron-right pull-right m-t-xs text-xs icon-muted"
-              }),
-              _vm._v("Malesuada augue")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "b-b b-light" }, [
-            _c("a", { attrs: { href: "#" } }, [
-              _c("i", {
-                staticClass:
-                  "fa fa-chevron-right pull-right m-t-xs text-xs icon-muted"
-              }),
-              _vm._v("Donec eleifend")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "b-b b-light" }, [
-            _c("a", { attrs: { href: "#" } }, [
-              _c("i", {
-                staticClass:
-                  "fa fa-chevron-right pull-right m-t-xs text-xs icon-muted"
-              }),
-              _vm._v("Dapibus porta")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "b-b b-light" }, [
-            _c("a", { attrs: { href: "#" } }, [
-              _c("i", {
-                staticClass:
-                  "fa fa-chevron-right pull-right m-t-xs text-xs icon-muted"
-              }),
-              _vm._v("Dacus eu neque")
-            ])
-          ])
-        ])
-      ]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -65027,7 +64959,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       alfaOktober: '',
       alfaNovember: '',
       alfaDesember: '',
-      chartData: [['Bulan', 'Hadir', 'Izin', 'Sakit', 'alfa'], ['Pilih Karyawan...', parseInt(this.hadir), parseInt(this.izin), parseInt(this.sakit), parseInt(this.alfa)]],
+      chartData: [['Bulan', 'Hadir', 'Izin', 'Sakit', 'Alfa'], ['Pilih Karyawan...', parseInt(this.hadir), parseInt(this.izin), parseInt(this.sakit), parseInt(this.alfa)]],
       chartOptions: {
         chart: {
           title: 'Graphic Statistic',
@@ -65052,6 +64984,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     filter: function filter() {
       var _this2 = this;
 
+      this.$root.loading = true;
+      setInterval(function () {
+        _this2.$root.loading = false;
+      }, 2000);
       axios.get('dashboard?filter=' + this.input.filter).then(function (response) {
         var data = response.data;
         _this2.hadirJanuari = response.data.total.total_hadir_januari;
@@ -65102,7 +65038,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this2.alfaOktober = response.data.total.total_alfa_oktober;
         _this2.alfaNovember = response.data.total.total_alfa_november;
         _this2.alfaDesember = response.data.total.total_alfa_desember;
-        _this2.chartData = [['Bulan', 'Hadir', 'Izin', 'Sakit', 'alfa'], ['Januari', parseInt(_this2.hadirJanuari), parseInt(_this2.izinJanuari), parseInt(_this2.sakitJanuari), parseInt(_this2.alfaJanuari)], ['Februari', parseInt(_this2.hadirFebruari), parseInt(_this2.izinFebruari), parseInt(_this2.sakitFebruari), parseInt(_this2.alfaFebruari)], ['Maret', parseInt(_this2.hadirMaret), parseInt(_this2.izinMaret), parseInt(_this2.sakitMaret), parseInt(_this2.alfaMaret)], ['April', parseInt(_this2.hadirApril), parseInt(_this2.izinApril), parseInt(_this2.April), parseInt(_this2.alfaApril)], ['Mei', parseInt(_this2.hadirMei), parseInt(_this2.izinMei), parseInt(_this2.Mei), parseInt(_this2.alfaMei)], ['Juni', parseInt(_this2.hadirJuni), parseInt(_this2.izinJuni), parseInt(_this2.Juni), parseInt(_this2.alfaJuni)], ['Juli', parseInt(_this2.hadirJuli), parseInt(_this2.izinJuli), parseInt(_this2.Juli), parseInt(_this2.alfaJuli)], ['Agustus', parseInt(_this2.hadirAgustus), parseInt(_this2.izinAgustus), parseInt(_this2.Agustus), parseInt(_this2.alfaAgustus)], ['September', parseInt(_this2.hadirSeptember), parseInt(_this2.izinSeptember), parseInt(_this2.September), parseInt(_this2.alfaSeptember)], ['Oktober', parseInt(_this2.hadirOktober), parseInt(_this2.izinOktober), parseInt(_this2.Oktober), parseInt(_this2.alfaOktober)], ['November', parseInt(_this2.hadirNovember), parseInt(_this2.izinNovember), parseInt(_this2.November), parseInt(_this2.alfaNovember)], ['Desember', parseInt(_this2.hadirDesember), parseInt(_this2.izinDesember), parseInt(_this2.Desember), parseInt(_this2.alfaDesember)]];
+        _this2.chartData = [['Bulan', 'Hadir', 'Izin', 'Sakit', 'alfa'], ['Januari', parseInt(_this2.hadirJanuari), parseInt(_this2.izinJanuari), parseInt(_this2.sakitJanuari), parseInt(_this2.alfaJanuari)], ['Februari', parseInt(_this2.hadirFebruari), parseInt(_this2.izinFebruari), parseInt(_this2.sakitFebruari), parseInt(_this2.alfaFebruari)], ['Maret', parseInt(_this2.hadirMaret), parseInt(_this2.izinMaret), parseInt(_this2.sakitMaret), parseInt(_this2.alfaMaret)], ['April', parseInt(_this2.hadirApril), parseInt(_this2.izinApril), parseInt(_this2.sakitApril), parseInt(_this2.alfaApril)], ['Mei', parseInt(_this2.hadirMei), parseInt(_this2.izinMei), parseInt(_this2.sakitMei), parseInt(_this2.alfaMei)], ['Juni', parseInt(_this2.hadirJuni), parseInt(_this2.izinJuni), parseInt(_this2.sakitJuni), parseInt(_this2.alfaJuni)], ['Juli', parseInt(_this2.hadirJuli), parseInt(_this2.izinJuli), parseInt(_this2.sakitJuli), parseInt(_this2.alfaJuli)], ['Agustus', parseInt(_this2.hadirAgustus), parseInt(_this2.izinAgustus), parseInt(_this2.sakitAgustus), parseInt(_this2.alfaAgustus)], ['September', parseInt(_this2.hadirSeptember), parseInt(_this2.izinSeptember), parseInt(_this2.sakitSeptember), parseInt(_this2.alfaSeptember)], ['Oktober', parseInt(_this2.hadirOktober), parseInt(_this2.izinOktober), parseInt(_this2.sakitOktober), parseInt(_this2.alfaOktober)], ['November', parseInt(_this2.hadirNovember), parseInt(_this2.izinNovember), parseInt(_this2.sakitNovember), parseInt(_this2.alfaNovember)], ['Desember', parseInt(_this2.hadirDesember), parseInt(_this2.izinDesember), parseInt(_this2.sakitDesember), parseInt(_this2.alfaDesember)]];
+      }).then(function (resp) {
+        _this2.$root.loading = true;
+        setInterval(function () {
+          _this2.$root.loading = false;
+        }, 2000);
       });
     }
   }

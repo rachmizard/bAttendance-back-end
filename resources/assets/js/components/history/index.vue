@@ -1,7 +1,7 @@
 <template>
         <section id="content">
           <section class="hbox stretch">
-            <aside class="aside-md bg-white b-r" id="subNav">
+            <!-- <aside class="aside-md bg-white b-r" id="subNav">
               <div class="wrapper b-b header">Submenu Header</div>
               <ul class="nav">
                 <li class="b-b b-light"><a href="#"><i class="fa fa-chevron-right pull-right m-t-xs text-xs icon-muted"></i>Phasellus at ultricies</a></li>
@@ -10,7 +10,7 @@
                 <li class="b-b b-light"><a href="#"><i class="fa fa-chevron-right pull-right m-t-xs text-xs icon-muted"></i>Dapibus porta</a></li>
                 <li class="b-b b-light"><a href="#"><i class="fa fa-chevron-right pull-right m-t-xs text-xs icon-muted"></i>Dacus eu neque</a></li>
               </ul>
-            </aside>
+            </aside> -->
             <aside>
               <section class="vbox">
                 <header class="header bg-white b-b clearfix">
