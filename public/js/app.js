@@ -24230,7 +24230,7 @@ Vue.component('create-karyawan', __webpack_require__(17));
 Vue.component('create-jam', __webpack_require__(169));
 Vue.component('pagination', __webpack_require__(8));
 Vue.component('history-page', __webpack_require__(18), __webpack_require__(8));
-Vue.component('g-chart', __webpack_require__(193));
+Vue.component('g-chart', __webpack_require__(382));
 
 /**
 * Vue Router
@@ -64695,15 +64695,204 @@ if (false) {
 
 
 /***/ }),
-/* 193 */
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */,
+/* 232 */,
+/* 233 */,
+/* 234 */,
+/* 235 */,
+/* 236 */,
+/* 237 */,
+/* 238 */,
+/* 239 */,
+/* 240 */,
+/* 241 */,
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */,
+/* 259 */,
+/* 260 */,
+/* 261 */,
+/* 262 */,
+/* 263 */,
+/* 264 */,
+/* 265 */,
+/* 266 */,
+/* 267 */,
+/* 268 */,
+/* 269 */,
+/* 270 */,
+/* 271 */,
+/* 272 */,
+/* 273 */,
+/* 274 */,
+/* 275 */,
+/* 276 */,
+/* 277 */,
+/* 278 */,
+/* 279 */,
+/* 280 */,
+/* 281 */,
+/* 282 */,
+/* 283 */,
+/* 284 */,
+/* 285 */,
+/* 286 */,
+/* 287 */,
+/* 288 */,
+/* 289 */,
+/* 290 */,
+/* 291 */,
+/* 292 */,
+/* 293 */,
+/* 294 */,
+/* 295 */,
+/* 296 */,
+/* 297 */,
+/* 298 */,
+/* 299 */,
+/* 300 */,
+/* 301 */,
+/* 302 */,
+/* 303 */,
+/* 304 */,
+/* 305 */,
+/* 306 */,
+/* 307 */,
+/* 308 */,
+/* 309 */,
+/* 310 */,
+/* 311 */,
+/* 312 */,
+/* 313 */,
+/* 314 */,
+/* 315 */,
+/* 316 */,
+/* 317 */,
+/* 318 */,
+/* 319 */,
+/* 320 */,
+/* 321 */,
+/* 322 */,
+/* 323 */,
+/* 324 */,
+/* 325 */,
+/* 326 */,
+/* 327 */,
+/* 328 */,
+/* 329 */,
+/* 330 */,
+/* 331 */,
+/* 332 */,
+/* 333 */,
+/* 334 */,
+/* 335 */,
+/* 336 */,
+/* 337 */,
+/* 338 */,
+/* 339 */,
+/* 340 */,
+/* 341 */,
+/* 342 */,
+/* 343 */,
+/* 344 */,
+/* 345 */,
+/* 346 */,
+/* 347 */,
+/* 348 */,
+/* 349 */,
+/* 350 */,
+/* 351 */,
+/* 352 */,
+/* 353 */,
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */,
+/* 359 */,
+/* 360 */,
+/* 361 */,
+/* 362 */,
+/* 363 */,
+/* 364 */,
+/* 365 */,
+/* 366 */,
+/* 367 */,
+/* 368 */,
+/* 369 */,
+/* 370 */,
+/* 371 */,
+/* 372 */,
+/* 373 */,
+/* 374 */,
+/* 375 */,
+/* 376 */,
+/* 377 */,
+/* 378 */,
+/* 379 */,
+/* 380 */,
+/* 381 */,
+/* 382 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(194)
+var __vue_script__ = __webpack_require__(383)
 /* template */
-var __vue_template__ = __webpack_require__(195)
+var __vue_template__ = __webpack_require__(384)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -64720,7 +64909,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/GChartComponent.vue"
+Component.options.__file = "resources/assets/js/components/dashboard/GChartComponent.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -64729,9 +64918,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-22d6031f", Component.options)
+    hotAPI.createRecord("data-v-6866bc38", Component.options)
   } else {
-    hotAPI.reload("data-v-22d6031f", Component.options)
+    hotAPI.reload("data-v-6866bc38", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -64742,12 +64931,30 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 194 */
+/* 383 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_google_charts__ = __webpack_require__(192);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -64771,19 +64978,65 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return {
       // Array will be automatically processed with visualization.arrayToDataTable function
       karyawans: [],
-      hadir: null,
-      izin: null,
-      sakit: null,
-      alfa: null,
-      chartData: [['Bulan', 'Hadir', 'Izin', 'Sakit', 'alfa'], ['Januari', parseInt(this.hadir), parseInt(this.izin), parseInt(this.sakit), parseInt(this.alfa)]],
+      bulan: '',
+      hadirJanuari: '',
+      hadirFebruari: '',
+      hadirMaret: '',
+      hadirApril: '',
+      hadirMei: '',
+      hadirJuni: '',
+      hadirJuli: '',
+      hadirAgustus: '',
+      hadirSeptember: '',
+      hadirOktober: '',
+      hadirNovember: '',
+      hadirDesember: '',
+      izinJanuari: '',
+      izinFebruari: '',
+      izinMaret: '',
+      izinApril: '',
+      izinMei: '',
+      izinJuni: '',
+      izinJuli: '',
+      izinAgustus: '',
+      izinSeptember: '',
+      izinOktober: '',
+      izinNovember: '',
+      izinDesember: '',
+      sakitJanuari: '',
+      sakitFebruari: '',
+      sakitMaret: '',
+      sakitApril: '',
+      sakitMei: '',
+      sakitJuni: '',
+      sakitJuli: '',
+      sakitAgustus: '',
+      sakitSeptember: '',
+      sakitOktober: '',
+      sakitNovember: '',
+      sakitDesember: '',
+      alfaJanuari: '',
+      alfaFebruari: '',
+      alfaMaret: '',
+      alfaApril: '',
+      alfaMei: '',
+      alfaJuni: '',
+      alfaJuli: '',
+      alfaAgustus: '',
+      alfaSeptember: '',
+      alfaOktober: '',
+      alfaNovember: '',
+      alfaDesember: '',
+      chartData: [['Bulan', 'Hadir', 'Izin', 'Sakit', 'alfa'], ['Pilih Karyawan...', parseInt(this.hadir), parseInt(this.izin), parseInt(this.sakit), parseInt(this.alfa)]],
       chartOptions: {
         chart: {
-          title: 'Company Performance',
-          subtitle: 'Sales, Expenses, and Profit: 2014-2017'
+          title: 'Graphic Statistic',
+          subtitle: '2018'
         }
       },
       input: {
-        data: ''
+        filter: '',
+        bulan: ''
       }
     };
   },
@@ -64799,19 +65052,64 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     filter: function filter() {
       var _this2 = this;
 
-      axios.get('dashboard?filter=' + this.input.data).then(function (response) {
+      axios.get('dashboard?filter=' + this.input.filter).then(function (response) {
         var data = response.data;
-        _this2.hadir = parseInt(response.data.total.total_hadir);
-        _this2.izin = parseInt(response.data.total.total_izin);
-        _this2.sakit = parseInt(response.data.total.total_sakit);
-        _this2.alfa = parseInt(response.data.total.total_alfa);
+        _this2.hadirJanuari = response.data.total.total_hadir_januari;
+        _this2.hadirFebruari = response.data.total.total_hadir_februari;
+        _this2.hadirMaret = response.data.total.total_hadir_maret;
+        _this2.hadirApril = response.data.total.total_hadir_april;
+        _this2.hadirMei = response.data.total.total_hadir_mei;
+        _this2.hadirJuni = response.data.total.total_hadir_juni;
+        _this2.hadirJuli = response.data.total.total_hadir_juli;
+        _this2.hadirAgustus = response.data.total.total_hadir_agustus;
+        _this2.hadirSeptember = response.data.total.total_hadir_september;
+        _this2.hadirOktober = response.data.total.total_hadir_oktober;
+        _this2.hadirNovember = response.data.total.total_hadir_november;
+        _this2.hadirDesember = response.data.total.total_hadir_desember;
+        _this2.izinJanuari = response.data.total.total_izin_januari;
+        _this2.izinFebruari = response.data.total.total_izin_februari;
+        _this2.izinMaret = response.data.total.total_izin_maret;
+        _this2.izinApril = response.data.total.total_izin_april;
+        _this2.izinMei = response.data.total.total_izin_mei;
+        _this2.izinJuni = response.data.total.total_izin_juni;
+        _this2.izinJuli = response.data.total.total_izin_juli;
+        _this2.izinAgustus = response.data.total.total_izin_agustus;
+        _this2.izinSeptember = response.data.total.total_izin_september;
+        _this2.izinOktober = response.data.total.total_izin_oktober;
+        _this2.izinNovember = response.data.total.total_izin_november;
+        _this2.izinDesember = response.data.total.total_izin_desember;
+        _this2.sakitJanuari = response.data.total.total_sakit_januari;
+        _this2.sakitFebruari = response.data.total.total_sakit_februari;
+        _this2.sakitMaret = response.data.total.total_sakit_maret;
+        _this2.sakitApril = response.data.total.total_sakit_april;
+        _this2.sakitMei = response.data.total.total_sakit_mei;
+        _this2.sakitJuni = response.data.total.total_sakit_juni;
+        _this2.sakitJuli = response.data.total.total_sakit_juli;
+        _this2.sakitAgustus = response.data.total.total_sakit_agustus;
+        _this2.sakitSeptember = response.data.total.total_sakit_september;
+        _this2.sakitOktober = response.data.total.total_sakit_oktober;
+        _this2.sakitNovember = response.data.total.total_sakit_november;
+        _this2.sakitDesember = response.data.total.total_sakit_desember;
+        _this2.alfaJanuari = response.data.total.total_alfa_januari;
+        _this2.alfaFebruari = response.data.total.total_alfa_februari;
+        _this2.alfaMaret = response.data.total.total_alfa_maret;
+        _this2.alfaApril = response.data.total.total_alfa_april;
+        _this2.alfaMei = response.data.total.total_alfa_mei;
+        _this2.alfaJuni = response.data.total.total_alfa_juni;
+        _this2.alfaJuli = response.data.total.total_alfa_juli;
+        _this2.alfaAgustus = response.data.total.total_alfa_agustus;
+        _this2.alfaSeptember = response.data.total.total_alfa_september;
+        _this2.alfaOktober = response.data.total.total_alfa_oktober;
+        _this2.alfaNovember = response.data.total.total_alfa_november;
+        _this2.alfaDesember = response.data.total.total_alfa_desember;
+        _this2.chartData = [['Bulan', 'Hadir', 'Izin', 'Sakit', 'alfa'], ['Januari', parseInt(_this2.hadirJanuari), parseInt(_this2.izinJanuari), parseInt(_this2.sakitJanuari), parseInt(_this2.alfaJanuari)], ['Februari', parseInt(_this2.hadirFebruari), parseInt(_this2.izinFebruari), parseInt(_this2.sakitFebruari), parseInt(_this2.alfaFebruari)], ['Maret', parseInt(_this2.hadirMaret), parseInt(_this2.izinMaret), parseInt(_this2.sakitMaret), parseInt(_this2.alfaMaret)], ['April', parseInt(_this2.hadirApril), parseInt(_this2.izinApril), parseInt(_this2.April), parseInt(_this2.alfaApril)], ['Mei', parseInt(_this2.hadirMei), parseInt(_this2.izinMei), parseInt(_this2.Mei), parseInt(_this2.alfaMei)], ['Juni', parseInt(_this2.hadirJuni), parseInt(_this2.izinJuni), parseInt(_this2.Juni), parseInt(_this2.alfaJuni)], ['Juli', parseInt(_this2.hadirJuli), parseInt(_this2.izinJuli), parseInt(_this2.Juli), parseInt(_this2.alfaJuli)], ['Agustus', parseInt(_this2.hadirAgustus), parseInt(_this2.izinAgustus), parseInt(_this2.Agustus), parseInt(_this2.alfaAgustus)], ['September', parseInt(_this2.hadirSeptember), parseInt(_this2.izinSeptember), parseInt(_this2.September), parseInt(_this2.alfaSeptember)], ['Oktober', parseInt(_this2.hadirOktober), parseInt(_this2.izinOktober), parseInt(_this2.Oktober), parseInt(_this2.alfaOktober)], ['November', parseInt(_this2.hadirNovember), parseInt(_this2.izinNovember), parseInt(_this2.November), parseInt(_this2.alfaNovember)], ['Desember', parseInt(_this2.hadirDesember), parseInt(_this2.izinDesember), parseInt(_this2.Desember), parseInt(_this2.alfaDesember)]];
       });
     }
   }
 });
 
 /***/ }),
-/* 195 */
+/* 384 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -64823,45 +65121,65 @@ var render = function() {
     { staticClass: "section" },
     [
       _c(
-        "select",
+        "form",
         {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.input.data,
-              expression: "input.data"
-            }
-          ],
-          attrs: { name: "filter" },
           on: {
-            change: [
-              function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.$set(
-                  _vm.input,
-                  "data",
-                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                )
-              },
-              function($event) {
-                _vm.filter()
-              }
-            ]
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.filter($event)
+            }
           }
         },
-        _vm._l(_vm.karyawans.data, function(karyawan, index) {
-          return _c("option", { domProps: { value: karyawan.id } }, [
-            _vm._v(_vm._s(karyawan.nama))
-          ])
-        })
+        [
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.input.filter,
+                  expression: "input.filter"
+                }
+              ],
+              attrs: { name: "filter" },
+              on: {
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.input,
+                      "filter",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  },
+                  function($event) {
+                    _vm.filter()
+                  }
+                ]
+              }
+            },
+            [
+              _c("option", { attrs: { selected: "" } }, [
+                _vm._v("Pilih Karyawan")
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.karyawans.data, function(karyawan, index) {
+                return _c("option", { domProps: { value: karyawan.id } }, [
+                  _vm._v(_vm._s(karyawan.nama))
+                ])
+              })
+            ],
+            2
+          )
+        ]
       ),
       _vm._v(" "),
       _c("GChart", {
@@ -64881,7 +65199,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-22d6031f", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-6866bc38", module.exports)
   }
 }
 
