@@ -102,11 +102,6 @@
             </div>
           </section>
         </li>
-        <li>
-          <div class="m-t m-l">
-            <a href="price.html" class="dropdown-toggle btn btn-xs btn-primary" title="Upgrade"><i class="fa fa-long-arrow-up"></i></a>
-          </div>
-        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user">
         <li class="hidden-xs">
@@ -189,22 +184,6 @@
         <!-- .aside -->
         <aside class="bg-dark lter aside-md hidden-print" id="nav">
           <section class="vbox">
-            <header class="header bg-primary lter text-center clearfix">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-dark btn-icon" title="New project"><i class="fa fa-plus"></i></button>
-                <div class="btn-group hidden-nav-xs">
-                  <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-                    Switch Project
-                    <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu text-left">
-                    <li><a href="#">Project</a></li>
-                    <li><a href="#">Another Project</a></li>
-                    <li><a href="#">More Projects</a></li>
-                  </ul>
-                </div>
-              </div>
-            </header>
             <section class="w-f scrollable">
               <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">
 
@@ -248,7 +227,7 @@
                     <li >
                       <a href="{{route('history.indexview')}}"  >
                         <b class="badge bg-danger pull-right">3</b>
-                        <i class="fa fa-envelope-o icon">
+                        <i class="fa fa-clock-o icon">
                           <b class="bg-primary dker"></b>
                         </i>
                         <span>History Absensi</span>

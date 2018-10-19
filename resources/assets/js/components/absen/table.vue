@@ -4,7 +4,10 @@
       <table class="table table-striped m-b-none">
         <thead>
           <tr>
-            <th width="10"></th>
+            <th width="10">
+              <button class="btn btn-xs btn-default" @click="deleteChecked()"><i class="fa fa-trash-o"></i></button>
+              <button class="btn btn-xs btn-default" @click="paginate()"><i class="fa fa-refresh"></i></button>
+            </th>
             <th width="40">Nama Karyawan</th>
             <th width="20">Jam Masuk</th>
             <th width="20">Tanggal</th>
@@ -26,6 +29,9 @@
             <td v-if="user.action == 'izin'"><span class="label label-info">Izin</span></i></td>
             <td v-if="user.action == 'sakit'"><span class="label label-warning">Sakit</span></td>
             <td v-if="user.action == ''"><span class="label label-default">Tidak ada keterangan</span></td>
+          </tr>
+          <tr v-if="total.length == null">
+            <td class="text-center" colspan="8">Belum ada data.</td>
           </tr>
         </tbody>
       </table>
@@ -93,6 +99,10 @@
 					this.to = response.data.meta.to
 					this.total = response.data.meta.total
 				})
+				this.$root.loading = true;
+				 setInterval(() => {
+					this.$root.loading = false
+				 }, 2000)
 			},
 
 			fetch(){
@@ -127,13 +137,13 @@
 			},
 
 			deleteChecked() {
-				if (this.checkedRows.length == 0) {
+				if (this.checkedRows.length == null) {
 					alert('Silahkan ceklik karyawan yang ingn di hapus!');
 				}else{
 					if (confirm('Anda yakin untuk menghapus data yang di ceklis?')) {
-						axios.post('history/deleteChecked', { checkedId: this.checkedRows })
+						axios.post('absen-admin/destroyChecked', { checkedId: this.checkedRows })
 						.then(respon => {
-							this.refresh()
+							this.paginate()
 						})
 					}
 				}

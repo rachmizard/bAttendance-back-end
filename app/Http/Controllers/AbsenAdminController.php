@@ -90,8 +90,8 @@ class AbsenAdminController extends Controller
 
     public function destroyChecked(Request $request)
     {
-      if ($request->id_absen) {
-        foreach ($request->id_absen as $value) {
+      if ($request->checkedId) {
+        foreach ($request->checkedId as $value) {
           Absen::destroy($value);
         }
       }

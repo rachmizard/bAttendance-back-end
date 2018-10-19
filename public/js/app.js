@@ -62053,6 +62053,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -62093,6 +62099,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				_this2.to = response.data.meta.to;
 				_this2.total = response.data.meta.total;
 			});
+			this.$root.loading = true;
+			setInterval(function () {
+				_this2.$root.loading = false;
+			}, 2000);
 		},
 		fetch: function fetch() {
 			var _this3 = this;
@@ -62129,12 +62139,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		deleteChecked: function deleteChecked() {
 			var _this5 = this;
 
-			if (this.checkedRows.length == 0) {
+			if (this.checkedRows.length == null) {
 				alert('Silahkan ceklik karyawan yang ingn di hapus!');
 			} else {
 				if (confirm('Anda yakin untuk menghapus data yang di ceklis?')) {
-					axios.post('history/deleteChecked', { checkedId: this.checkedRows }).then(function (respon) {
-						_this5.refresh();
+					axios.post('absen-admin/destroyChecked', { checkedId: this.checkedRows }).then(function (respon) {
+						_this5.paginate();
 					});
 				}
 			}
@@ -62153,100 +62163,151 @@ var render = function() {
   return _c("section", { staticClass: "panel panel-default" }, [
     _c("div", { staticClass: "table-responsive" }, [
       _c("table", { staticClass: "table table-striped m-b-none" }, [
-        _vm._m(0),
+        _c("thead", [
+          _c("tr", [
+            _c("th", { attrs: { width: "10" } }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-xs btn-default",
+                  on: {
+                    click: function($event) {
+                      _vm.deleteChecked()
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fa fa-trash-o" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-xs btn-default",
+                  on: {
+                    click: function($event) {
+                      _vm.paginate()
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fa fa-refresh" })]
+              )
+            ]),
+            _vm._v(" "),
+            _c("th", { attrs: { width: "40" } }, [_vm._v("Nama Karyawan")]),
+            _vm._v(" "),
+            _c("th", { attrs: { width: "20" } }, [_vm._v("Jam Masuk")]),
+            _vm._v(" "),
+            _c("th", { attrs: { width: "20" } }, [_vm._v("Tanggal")]),
+            _vm._v(" "),
+            _c("th", { attrs: { width: "30" } })
+          ])
+        ]),
         _vm._v(" "),
         _c(
           "tbody",
-          _vm._l(_vm.users.data, function(user, index) {
-            return _c("tr", [
-              _c("td", [
-                _c("label", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.checkedRows,
-                        expression: "checkedRows"
-                      }
-                    ],
-                    attrs: { type: "checkbox" },
-                    domProps: {
-                      value: user.id,
-                      checked: Array.isArray(_vm.checkedRows)
-                        ? _vm._i(_vm.checkedRows, user.id) > -1
-                        : _vm.checkedRows
-                    },
-                    on: {
-                      change: function($event) {
-                        var $$a = _vm.checkedRows,
-                          $$el = $event.target,
-                          $$c = $$el.checked ? true : false
-                        if (Array.isArray($$a)) {
-                          var $$v = user.id,
-                            $$i = _vm._i($$a, $$v)
-                          if ($$el.checked) {
-                            $$i < 0 && (_vm.checkedRows = $$a.concat([$$v]))
+          [
+            _vm._l(_vm.users.data, function(user, index) {
+              return _c("tr", [
+                _c("td", [
+                  _c("label", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.checkedRows,
+                          expression: "checkedRows"
+                        }
+                      ],
+                      attrs: { type: "checkbox" },
+                      domProps: {
+                        value: user.id,
+                        checked: Array.isArray(_vm.checkedRows)
+                          ? _vm._i(_vm.checkedRows, user.id) > -1
+                          : _vm.checkedRows
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.checkedRows,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = user.id,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 && (_vm.checkedRows = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.checkedRows = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
                           } else {
-                            $$i > -1 &&
-                              (_vm.checkedRows = $$a
-                                .slice(0, $$i)
-                                .concat($$a.slice($$i + 1)))
+                            _vm.checkedRows = $$c
                           }
-                        } else {
-                          _vm.checkedRows = $$c
                         }
                       }
-                    }
-                  })
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(user.nama))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(user.jam))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(user.created_at))]),
+                _vm._v(" "),
+                user.action == "masuk"
+                  ? _c("td", [
+                      _c("i", { staticClass: "fa fa-check text-success" })
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                user.action == "alfa"
+                  ? _c("td", [
+                      _c("span", { staticClass: "label label-danger" }, [
+                        _vm._v("Alfa")
+                      ])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                user.action == "izin"
+                  ? _c("td", [
+                      _c("span", { staticClass: "label label-info" }, [
+                        _vm._v("Izin")
+                      ])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                user.action == "sakit"
+                  ? _c("td", [
+                      _c("span", { staticClass: "label label-warning" }, [
+                        _vm._v("Sakit")
+                      ])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                user.action == ""
+                  ? _c("td", [
+                      _c("span", { staticClass: "label label-default" }, [
+                        _vm._v("Tidak ada keterangan")
+                      ])
+                    ])
+                  : _vm._e()
+              ])
+            }),
+            _vm._v(" "),
+            _vm.total.length == null
+              ? _c("tr", [
+                  _c(
+                    "td",
+                    { staticClass: "text-center", attrs: { colspan: "8" } },
+                    [_vm._v("Belum ada data.")]
+                  )
                 ])
-              ]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(user.nama))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(user.jam))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(user.created_at))]),
-              _vm._v(" "),
-              user.action == "masuk"
-                ? _c("td", [
-                    _c("i", { staticClass: "fa fa-check text-success" })
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              user.action == "alfa"
-                ? _c("td", [
-                    _c("span", { staticClass: "label label-danger" }, [
-                      _vm._v("Alfa")
-                    ])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              user.action == "izin"
-                ? _c("td", [
-                    _c("span", { staticClass: "label label-info" }, [
-                      _vm._v("Izin")
-                    ])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              user.action == "sakit"
-                ? _c("td", [
-                    _c("span", { staticClass: "label label-warning" }, [
-                      _vm._v("Sakit")
-                    ])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              user.action == ""
-                ? _c("td", [
-                    _c("span", { staticClass: "label label-default" }, [
-                      _vm._v("Tidak ada keterangan")
-                    ])
-                  ])
-                : _vm._e()
-            ])
-          })
+              : _vm._e()
+          ],
+          2
         )
       ])
     ]),
@@ -62291,26 +62352,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", { attrs: { width: "10" } }),
-        _vm._v(" "),
-        _c("th", { attrs: { width: "40" } }, [_vm._v("Nama Karyawan")]),
-        _vm._v(" "),
-        _c("th", { attrs: { width: "20" } }, [_vm._v("Jam Masuk")]),
-        _vm._v(" "),
-        _c("th", { attrs: { width: "20" } }, [_vm._v("Tanggal")]),
-        _vm._v(" "),
-        _c("th", { attrs: { width: "30" } })
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
