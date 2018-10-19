@@ -29,17 +29,17 @@ class APIController extends Controller
         $nik = Karyawan::where('nik', '=', request('nik'))->first();
         if(count($nik) > 0){
             if ($nik['status'] == 'unauthorized') {
-                // Get this ID 
+                // Get this ID
                 $karyawanID = null;
                 $response['message'] = 'unauthorized';
                 return response()->json(['response' => $response, 'karyawan' => $karyawanID ]);
             }else if($nik['status'] == 'authorized') {
-                // Get this ID 
+                // Get this ID
                 $karyawanID = Karyawan::where('nik', request('nik'))->first();
                 $response['message'] = 'success';
                 return response()->json(['response' => $response, 'karyawan' => $karyawanID ]);
             }else{
-                // Get this ID 
+                // Get this ID
                 $karyawanID = null;
                 $response['message'] = 'vacant';
                 return response()->json(['response' => $response, 'karyawan' => $karyawanID ]);
@@ -70,7 +70,7 @@ class APIController extends Controller
                  $response['message'] = 'failed';
                  return response()->json(['response' => $response, 'karyawan' => $getID]);
              }
-         }else{  
+         }else{
             $response['message'] = 'failed';
             return response()->json(['response' => $response, 'karyawan' => null]);
          }
@@ -89,7 +89,7 @@ class APIController extends Controller
              $getID->pin = request('pin');
              $getID->update();
              return response()->json(['karyawan' => $getID]);
-         }else{  
+         }else{
              return response()->json(['karyawan' => null]);
          }
     }
@@ -297,7 +297,7 @@ class APIController extends Controller
         $verification = Verifikasi::findOrFail($id);
         return response()->json(['id' => (string)$verification->id, 'pin' => $verification->pin, 'status' => $verification->status]);
     }
-    
+
     /**
      * Fetching data presence resource.
      *
@@ -307,7 +307,7 @@ class APIController extends Controller
     {
         return AbsenHistoryResource::collection(Absen::orderBy('created_at', 'DESC')->get());
     }
-    
+
     /**
      * Fetching data by users id presence resource.
      *
@@ -366,10 +366,10 @@ class APIController extends Controller
         // $this->validate($request, [
         //     'nama'  => 'required|string|max:50',
         //     'jenis_kelamin'  => 'required|string|max:50',
-        //     'nik'  => 'required|numeric|max:50', 
-        //     'divisi' => 'required|string|max:50', 
+        //     'nik'  => 'required|numeric|max:50',
+        //     'divisi' => 'required|string|max:50',
         // ]);
-        
+
         $karyawan = new Karyawan;
         $karyawan->nama = $request->nama;
         $karyawan->divisi = $request->divisi;
@@ -392,7 +392,7 @@ class APIController extends Controller
         if (count($getNik) > 0) {
             $response['message'] = 'exist';
             return response()->json(['response' => $response, 'karyawan' => $getNik]);
-        }else{  
+        }else{
             $response['message'] = 'empty';
             return response()->json(['response' => $response, 'karyawan' => null]);
         }

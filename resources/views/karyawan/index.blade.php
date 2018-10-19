@@ -1,5 +1,5 @@
 @extends('layouts.master-layouts')
-@section('content')<!-- 
+@section('content')<!--
 <div class="container">
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
@@ -42,8 +42,8 @@
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                   <h4 class="modal-title" id="namaTitle"></h4>
                 </div>
-                <div class="modal-body"> 
-                    <form class="form-horizontal" method="POST" id="updateForm"> 
+                <div class="modal-body">
+                    <form class="form-horizontal" method="POST" id="updateForm">
                       <input type="hidden" name="_token" value="{{ csrf_token() }}">
                       <input type="hidden" name="_method" value="PUT">
                         <div class="form-group">
@@ -67,11 +67,11 @@
                                   </span>
                                 @endif
                             </div>
-                        </div> 
+                        </div>
                         <div class="form-group">
                             <label for="jenis_kelamin" class="col-md-4 control-label">Jenis Kelamin</label>
                             <div class="col-md-4">
-                                <select name="jenis_kelamin" id="jenis_kelamin" class="form-control rounded"> 
+                                <select name="jenis_kelamin" id="jenis_kelamin" class="form-control rounded">
                                         <option value="L" >Laki Laki</option>
                                         <option value="P"  >Perempuan</option>
                                 </select>
@@ -93,7 +93,7 @@
                                   </span>
                                 @endif
                             </div>
-                        </div> 
+                        </div>
                         <div class="form-group">
                             <label for="nik" class="col-md-4 control-label">Status</label>
                             <div class="col-md-4">
@@ -118,5 +118,34 @@
               </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
           </div><!-- /.modal -->
+
+
+            <div id="uploadModal" class="modal fade" tabindex="-1" role="dialog">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="namaTitle"><i class="fa fa-upload"></i> Upload Karyawan</h4>
+                  </div>
+                    <form action="karyawan/import" method="post" enctype="multipart/form-data" id="submitUpload">
+                      {{ csrf_field() }}
+                      <div class="modal-body" style="margin-bottom: 50px;">
+                        <div class="form-group">
+                          <label class="col-md-2 control-label" for="file_name">File Excel</label>
+                          <div class="col-md-10">
+                            <input type="file" name="file_name" class="form-control" required>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <div class="btn-group">
+                          <button class="btn btn-md btn-default" data-dismiss="modal">Tutup</button>
+                          <button class="btn btn-md btn-info"><i class="fa fa-upload" click="document.getElementById('submitUpload').submit()"></i> Mulai Upload</button>
+                        </div>
+                      </div>
+                    </form>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
         </section>
 @endsection

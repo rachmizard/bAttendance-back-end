@@ -5,7 +5,7 @@
   <title>{{ config('app.name', 'Laravel') }}</title>
   <meta id="token" name="csrf-token" content="{{ csrf_token() }}">
   <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <link rel="stylesheet" href="{{asset('/template/css/bootstrap.css')}}" type="text/css" />
   <link rel="stylesheet" href="{{asset('/template/css/animate.css')}}" type="text/css" />
   <link rel="stylesheet" href="{{asset('/template/css/font-awesome.min.css')}}" type="text/css" />
@@ -66,7 +66,7 @@
       <ul class="nav navbar-nav hidden-xs">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle dker" data-toggle="dropdown">
-            <i class="fa fa-building-o"></i> 
+            <i class="fa fa-building-o"></i>
             <span class="font-bold">Activity</span>
           </a>
           <section class="dropdown-menu aside-xl on animated fadeInLeft no-borders lt">
@@ -107,7 +107,7 @@
             <a href="price.html" class="dropdown-toggle btn btn-xs btn-primary" title="Upgrade"><i class="fa fa-long-arrow-up"></i></a>
           </div>
         </li>
-      </ul>      
+      </ul>
       <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user">
         <li class="hidden-xs">
           <a href="#" class="dropdown-toggle dk" data-toggle="dropdown">
@@ -182,12 +182,12 @@
             </li>
           </ul>
         </li>
-      </ul>      
+      </ul>
     </header>
     <section>
       <section class="hbox stretch">
         <!-- .aside -->
-        <aside class="bg-dark lter aside-md hidden-print" id="nav">          
+        <aside class="bg-dark lter aside-md hidden-print" id="nav">
           <section class="vbox">
             <header class="header bg-primary lter text-center clearfix">
               <div class="btn-group">
@@ -207,7 +207,7 @@
             </header>
             <section class="w-f scrollable">
               <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">
-                
+
                 <!-- nav -->
                 <nav class="nav-primary hidden-xs">
                   <ul class="nav">
@@ -238,7 +238,7 @@
                           </a>
                         </li>
                         <li >
-                          <a href="{{ route('jam.index') }}" >                                                        
+                          <a href="{{ route('jam.index') }}" >
                             <i class="fa fa-clock-o"></i>
                             <span>Jadwal Masuk</span>
                           </a>
@@ -255,7 +255,7 @@
                       </a>
                     </li>
                     <li >
-                      <a href="notebook.html"  >
+                      <a href="{{ route('absen-admin.view') }}"  >
                         <i class="fa fa-user icon">
                           <b class="bg-info"></b>
                         </i>
@@ -275,7 +275,7 @@
                 <!-- / nav -->
               </div>
             </section>
-            
+
             <footer class="footer lt hidden-xs b-t b-dark">
               <div id="chat" class="dropup">
                 <section class="dropdown-menu on aside-md m-l-n">
@@ -288,7 +288,7 @@
                   </section>
                 </section>
               </div>
-              <div id="invite" class="dropup">                
+              <div id="invite" class="dropup">
                 <section class="dropdown-menu on aside-md m-l-n">
                   <section class="panel bg-white">
                     <header class="panel-heading b-b b-light">
@@ -346,6 +346,6 @@
   <!-- DataTables -->
   <script src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
   @stack('javascript')
-  
+
 </body>
 </html>

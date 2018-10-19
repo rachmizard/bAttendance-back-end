@@ -71,7 +71,7 @@
                     <div class="col-md-6 hidden-sm">
                       <p class="text-muted m-t">Current Page <span class="label label-info">{{ current_page }}</span> of {{ total }}</p>
                     </div>
-                    <div class="col-md-6 col-sm-12 text-right text-center-xs">                
+                    <div class="col-md-6 col-sm-12 text-right text-center-xs">
                       <!-- ul class="pagination pagination-sm m-t-sm m-b-none">
                         <li v-if="users.prev_page_url">
 							<a @click.prevent="paginate(users.prev_page_url)" :href="users.prev_page_url">&laquo; Previous</a>
@@ -107,7 +107,7 @@
 
         <ol class="breadcrumb">
             <li><router-link :to="{name: 'index'}" >Home</router-link></li>
-            <li class="active" >History Absensi</li>    
+            <li class="active" >History Absensi</li>
         </ol>
 		<table class="table">
 			<thead>
@@ -130,14 +130,14 @@
 					<td>{{ user.jam }} </td>
 					<td>{{ user.created_at }} </td>
 					<td class="text-right">
-						<div class="btn btn-group">	
+						<div class="btn btn-group">
 							<button class="btn btn-danger text-danger" @click.prevent="deleteHistory(user.id)"><i class="fa fa-trash"></i></button>
 						</div>
 					</td>
 				</tr>
 			</tbody>
 		</table>
-		
+
 		<ul class="pagination">
 			<li v-if="users.prev_page_url">
 				<a @click.prevent="paginate(users.links.prev)" :href="users.prev_page_url">&laquo; Previous</a>
@@ -190,13 +190,13 @@
 					this.per_page = respon.data.meta.per_page
 					this.to = respon.data.meta.to
 					this.total = respon.data.meta.total
-				});	
+				});
 			},
 
 			refresh(){
 			 	axios.get('history').then(respon => {
 					this.users = respon.data;
-				});	
+				});
 				this.$root.loading = true;
 				 setInterval(() => {
 					this.$root.loading = false
@@ -205,10 +205,10 @@
 
 			deleteHistory(id){
 				var app = this;
-				if (confirm('Anda Yakin?')) {	
+				if (confirm('Anda Yakin?')) {
 					axios.delete('history/'+ id +'/delete').then(function(resp){
                 		app.fetch(); // redirect to url "/"
-					})	
+					})
 				}
 			},
 

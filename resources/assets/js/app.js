@@ -42,6 +42,9 @@ Vue.component('create-jam', require('./components/jam/create.vue'));
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('history-page', require('./components/history/index.vue'), require('laravel-vue-pagination'));
 Vue.component('g-chart', require('./components/dashboard/GChartComponent.vue'));
+Vue.component('create-absen', require('./components/absen/create.vue'));
+Vue.component('table-absen', require('./components/absen/table.vue'));
+Vue.component('datatable-absen', require('./components/absen/datatable.vue'));
 
 /**
 * Vue Router
@@ -57,7 +60,7 @@ const routes = [
   path: '/karyawan',  name: 'userIndex',component: require('./components/karyawan/index.vue'), props: { title: 'Master Karyawan' }
 },
 {
-  path: '/create', name: 'userCreate', component: require('./components/karyawan/create.vue'), props: { title: 'Tambah Karyawan' } 
+  path: '/create', name: 'userCreate', component: require('./components/karyawan/create.vue'), props: { title: 'Tambah Karyawan' }
 },
 {
   path: '/edit', name: 'userEdit', component: require('./components/karyawan/edit.vue'), props: { title: 'Edit Karyawan' }
@@ -67,14 +70,14 @@ const routes = [
 }
 ]
 const router = new VueRouter({
- routes 
+ routes
 });
 
 const app = new Vue({
   components: {
     alert: alert
   },
-	data: { 
+	data: {
           loading: false,
           expired: false,
           title: '',

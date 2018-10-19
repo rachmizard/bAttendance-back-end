@@ -1,8 +1,8 @@
 <template>
   <section class="panel panel-default">
     <header class="panel-heading">
-      <i class="fa fa-plus"></i> Tambah Karyawan 
-      <i class="fa fa-info-sign text-muted" data-toggle="tooltip" data-placement="bottom" data-title="ajax to load the data."></i> 
+      <i class="fa fa-plus"></i> Tambah Karyawan
+      <i class="fa fa-info-sign text-muted" data-toggle="tooltip" data-placement="bottom" data-title="ajax to load the data."></i>
     </header>
         <div class="panel-body">
             <form @submit.prevent="store" action="karyawan/post" class="form-horizontal" method="post">
@@ -27,7 +27,7 @@
                 <div :class="['form-group', errors.jenis_kelamin ? 'has-error' : '']">
                     <label class="col-sm-2 control-label">Jenis Kelamin</label>
                     <div class="col-sm-10">
-                        <select v-model="state.jenis_kelamin" class="form-control rounded" :settings="settings.placeholder"> 
+                        <select v-model="state.jenis_kelamin" class="form-control rounded" :settings="settings.placeholder">
                             <option disabled selected>Pilih Jenis Kelamin</option>
                             <option value="L" >Laki Laki</option>
                             <option value="P" >Perempuan</option>
@@ -37,7 +37,7 @@
                     </div>
                 </div>
 
-                <div :class="['form-group', errors.nik ? 'has-error' : '']">
+                <!-- <div :class="['form-group', errors.nik ? 'has-error' : '']">
                     <label class="col-sm-2 control-label">NIK</label>
                     <div class="col-sm-10">
                         <input v-model="state.nik" type="number" class="form-control rounded" placeholder="NIK Karyawan..">
@@ -45,7 +45,7 @@
                         <span v-if="message" class="label label-success"><i class="fa fa-check"></i></span>
                         <span v-if="messageError" class="label label-danger">{{ messageError }}</span>
                     </div>
-                </div>
+                </div> -->
 
                 <div :class="['form-group', errors.status ? 'has-error' : '']">
                     <label class="col-sm-2 control-label">Status</label>
@@ -61,6 +61,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
+                <a data-target="#uploadModal" data-toggle="modal" class="btn btn-info"><i class="fa fa-upload"></i> Upload</a>
             </form>
         </div>
   </section>
@@ -84,7 +85,7 @@ export default {
             settings: {
                 placeholder: 'Pilih Jenis Kelamin',
                 placeholderStatus: 'Pilih Status Karyawan'
-            } 
+            }
         }
     },
     methods: {
@@ -103,8 +104,8 @@ export default {
 	                app.state.nama = ''; // clear form
 	                app.state.divisi = ''; // clear form
 	                app.state.jenis_kelamin = ''; // clear form
-                    app.state.nik = ''; // clear form   
-	                app.state.status = ''; // clear form	
+                    app.state.nik = ''; // clear form
+	                app.state.status = ''; // clear form
                 }
                 // app.$router.replace('/'); // redirect to url "/"
             }).catch((error) => {

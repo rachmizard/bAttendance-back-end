@@ -71,8 +71,7 @@ class KaryawanController extends Controller
          $this->validate($request, [
             'nama'  => 'required|string|max:50',
             'jenis_kelamin'  => 'required|string|max:50',
-            'nik' => 'required|numeric', 
-            'divisi' => 'required|string|max:50', 
+            'divisi' => 'required|string|max:50',
         ]);
 
         $validator = Karyawan::where('nik', $request->nik)->get();
@@ -88,7 +87,7 @@ class KaryawanController extends Controller
             $karyawan->nama = $request->nama;
             $karyawan->divisi = $request->divisi;
             $karyawan->jenis_kelamin = $request->jenis_kelamin;
-            $karyawan->nik = $request->nik;
+            $karyawan->nik = Carbon::now()->format('y') . Carbon::now()->format('m') . Carbon::now()->format('is');
             $karyawan->status = $request->status;
             $karyawan->save();
 
@@ -143,8 +142,8 @@ class KaryawanController extends Controller
     //      $this->validate($request, [
     //         'nama'  => 'required|string|max:50',
     //         'jenis_kelamin'  => 'required|string|max:50',
-    //         'nik' => 'required', 
-    //         'divisi' => 'required|string|max:50', 
+    //         'nik' => 'required',
+    //         'divisi' => 'required|string|max:50',
     //     ]);
 
     //     $validator = Karyawan::where('nik', $request->nik)->get();
@@ -172,8 +171,8 @@ class KaryawanController extends Controller
          $this->validate($request, [
             'nama'  => 'required|string|max:50',
             'jenis_kelamin'  => 'required|string|max:50',
-            'nik' => 'required', 
-            'divisi' => 'required|string|max:50', 
+            'nik' => 'required',
+            'divisi' => 'required|string|max:50',
         ]);
         $validator = Karyawan::where('nik', $request->nik)->get();
         if (count($validator) > 1) {

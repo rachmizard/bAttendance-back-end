@@ -76,27 +76,27 @@ Route::get('myhistory/{id}/show', 'API\APIController@myHistory');
 
 // We'll started edit's action from presence
 /*
-	In this part we're using put method for edit the data. 
+	In this part we're using put method for edit the data.
 */
 Route::put('absen/{id}/edit', 'API\APIController@editAbsen');
 
 
 // We'll started change status' action from presence
 /*
-	In this part we're using put method for edit the data. 
+	In this part we're using put method for edit the data.
 */
 Route::put('verifikasi/{id}/edit', 'API\APIController@changeStatus');
 
 
 // We'll started change status' action from presence
 /*
-	In this part we're using get method for edit the data. 
+	In this part we're using get method for edit the data.
 */
 Route::get('verifikasi/{id}/show', 'API\APIController@showVerifikasi');
 
 // We'll started delete's action from presence
 /*
-	In this part we're using delete method for destroy the data. 
+	In this part we're using delete method for destroy the data.
 */
 Route::delete('absen/{id}/delete', 'API\APIController@deleteAbsen');
 
@@ -107,9 +107,8 @@ Route::delete('absen/{id}/delete', 'API\APIController@deleteAbsen');
 Route::post('karyawan/post', 'API\APIController@postKaryawan'); // POST
 
 /*
-	In this part we're using put method for edit the new pin. 
+	In this part we're using put method for edit the new pin.
 */
 // Route::put('karyawan/pin', 'API\APIController@forgotPin');
-
 
 /////////////////////////////////// END REAL LIFE /////////////////////////////////////////////

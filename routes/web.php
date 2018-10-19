@@ -66,8 +66,11 @@ Route::get('karyawan/paginate', 'KaryawanController@paginate'); //FETCHING BY PA
 Route::post('karyawan/post', 'KaryawanController@store'); // POST
 Route::get('karyawan/{id}/edit', 'KaryawanController@edit'); // PATCH (UPDATE)
 // Route::put('karyawan/{id}/update', 'KaryawanController@update'); // PATCH (UPDATE) for VUE JS
-Route::put('karyawan/{id}/update', 'KaryawanController@updateRequest'); // PATCH (UPDATE) 
+Route::put('karyawan/{id}/update', 'KaryawanController@updateRequest'); // PATCH (UPDATE)
 Route::post('karyawan/{id}/delete', 'KaryawanController@destroy'); // PATCH (UPDATE)
+
+Route::post('karyawan/import', 'KaryawanImportController@import'); // PATCH (UPDATE)
+
 // Route::delete('karyawan/json/{id}/delete', 'KaryawanController@destroyJson'); // PATCH (UPDATE)
 
 Route::get('jam', 'JamController@index')->name('jam.index');
@@ -83,3 +86,11 @@ Route::get('history/today', 'HistoryController@history')->name('history.history'
 Route::get('historyabsensi', 'HistoryController@indexview')->name('history.indexview');
 Route::delete('history/{id}/delete', 'HistoryController@destroy')->name('history.destroy');
 Route::post('history/deleteChecked', 'HistoryController@destroyChecked'); // PATCH (UPDATE)
+
+// Absen admin
+Route::get('absen-admin', 'AbsenAdminController@view')->name('absen-admin.view');
+Route::post('absen-admin/store', 'AbsenAdminController@store')->name('absen-admin.store');
+Route::get('absen-admin/{id}/edit', 'AbsenAdminController@edit')->name('absen-admin.edit');
+Route::post('absen-admin/{id}/update', 'AbsenAdminController@update')->name('absen-admin.update');
+Route::post('absen-admin/{id}/destroy', 'AbsenAdminController@destroy')->name('absen-admin.destroy');
+Route::post('absen-admin/destroyChecked', 'AbsenAdminController@destroyChecked')->name('absen-admin.destroyChecked');
