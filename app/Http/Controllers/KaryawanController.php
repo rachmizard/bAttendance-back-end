@@ -30,7 +30,7 @@ class KaryawanController extends Controller
                 ->addColumn('action', function($karyawans){
                     return '
                             <button type="button" class="btn btn-sm btn-info" data-target="#editKaryawanModal" data-toggle="modal" data-id="'. $karyawans->id .'" data-nik="'. $karyawans->nik .'" data-nama="'. $karyawans->nama .'" data-divisi="'. $karyawans->divisi .'" data-jenis_kelamin="'. $karyawans->jenis_kelamin .'" data-status="'. $karyawans->status .'"><i class="fa fa-pencil"></i></button>
-                            <a href="" class="btn btn-sm btn-danger"><i class="fa fa-trash-o"></i></a>
+                            <button class="btn btn-sm btn-danger" data-target="#deleteModal" data-toggle="modal" data-id="'. $karyawans->id .'"><i class="fa fa-trash-o"></i></button>
                             ';
                 })
                 ->editColumn('status', function($karyawans){
@@ -203,7 +203,7 @@ class KaryawanController extends Controller
     {
         $karyawan = Karyawan::find($id);
         $karyawan->delete();
-        // return response()->json($karyawan);
-        return redirect()->back()->with('message', 'Berhasil di hapus!');
+        return response()->json($karyawan);
+        // return redirect()->back()->with('message', 'Berhasil di hapus!');
     }
 }

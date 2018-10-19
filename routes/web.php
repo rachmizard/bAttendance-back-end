@@ -67,7 +67,8 @@ Route::post('karyawan/post', 'KaryawanController@store'); // POST
 Route::get('karyawan/{id}/edit', 'KaryawanController@edit'); // PATCH (UPDATE)
 // Route::put('karyawan/{id}/update', 'KaryawanController@update'); // PATCH (UPDATE) for VUE JS
 Route::put('karyawan/{id}/update', 'KaryawanController@updateRequest'); // PATCH (UPDATE) 
-Route::delete('karyawan/{id}/delete', 'KaryawanController@destroy'); // PATCH (UPDATE)
+Route::post('karyawan/{id}/delete', 'KaryawanController@destroy'); // PATCH (UPDATE)
+// Route::delete('karyawan/json/{id}/delete', 'KaryawanController@destroyJson'); // PATCH (UPDATE)
 
 Route::get('jam', 'JamController@index')->name('jam.index');
 Route::post('jam/post', 'JamController@store')->name('jam.post');
@@ -81,3 +82,4 @@ Route::get('history', 'HistoryController@index')->name('history.index');
 Route::get('history/today', 'HistoryController@history')->name('history.history');
 Route::get('historyabsensi', 'HistoryController@indexview')->name('history.indexview');
 Route::delete('history/{id}/delete', 'HistoryController@destroy')->name('history.destroy');
+Route::post('history/deleteChecked', 'HistoryController@destroyChecked'); // PATCH (UPDATE)

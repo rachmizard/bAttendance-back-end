@@ -19,7 +19,7 @@
                       <a href="#subNav" data-toggle="class:hide" class="btn btn-sm btn-default active"><i class="fa fa-caret-right text fa-lg"></i><i class="fa fa-caret-left text-active fa-lg"></i></a>
                       <div class="btn-group">
                         <button @click="refresh()" type="button" class="btn btn-sm btn-default" title="Refresh"><i class="fa fa-refresh"></i></button>
-                        <button type="button" class="btn btn-sm btn-default" title="Remove"><i class="fa fa-trash-o"></i></button>
+                        <button class="btn btn-sm btn-default" @click="deleteChecked()"><i class="fa fa-trash-o"></i></button>
                       </div>
                     </div>
                     <div class="col-sm-4 m-b-xs">
@@ -38,6 +38,7 @@
                       <table class="table table-striped m-b-none">
                         <thead>
                           <tr>
+                            <th width="10"></th>
                             <th width="40">Nama Karyawan</th>
                             <th width="20">Jam Masuk</th>
                             <th width="20">Tanggal</th>
@@ -46,6 +47,11 @@
                         </thead>
                         <tbody>
                         	<tr v-for="(user, index) in users.data">
+                        		<td>
+		                          <label>
+		                            <input type="checkbox" v-model="checkedRows" :value="user.id">
+		                          </label>
+                        		</td>
                         		<td>{{ user.nama }}</td>
                         		<td>{{ user.jam }}</td>
                         		<td>{{ user.created_at }}</td>
@@ -148,6 +154,7 @@
 	export default {
 		data() {
 			return {
+				checkedRows: [],
 				users: {},
 				current_page: '',
 				from: '',
@@ -202,6 +209,19 @@
 					axios.delete('history/'+ id +'/delete').then(function(resp){
                 		app.fetch(); // redirect to url "/"
 					})	
+				}
+			},
+
+			deleteChecked() {
+				if (this.checkedRows.length == 0) {
+					alert('Silahkan ceklik karyawan yang ingn di hapus!');
+				}else{
+					if (confirm('Anda yakin untuk menghapus data yang di ceklis?')) {
+						axios.post('history/deleteChecked', { checkedId: this.checkedRows })
+						.then(respon => {
+							this.refresh()
+						})
+					}
 				}
 			}
 		}

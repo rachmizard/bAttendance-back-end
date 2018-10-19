@@ -38,4 +38,14 @@ class HistoryController extends Controller
     	$absen = Absen::find($id);
     	return $absen->delete();
     }
+
+
+    public function destroyChecked(Request $request)
+    {
+        if ($request->checkedId) {
+            foreach ($request->checkedId as $value) {
+                Absen::destroy($value);
+            }
+        }
+    }
 }
