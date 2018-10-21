@@ -24302,8 +24302,8 @@ Vue.component('g-chart', __webpack_require__(179));
 Vue.component('create-absen', __webpack_require__(182));
 Vue.component('table-absen', __webpack_require__(185));
 Vue.component('datatable-absen', __webpack_require__(188));
-Vue.component('rekap-absen', __webpack_require__(205));
-Vue.component('tgl-aktif-rekap', __webpack_require__(208));
+Vue.component('rekap-absen', __webpack_require__(214));
+Vue.component('tgl-aktif-rekap', __webpack_require__(211));
 
 /**
 * Vue Router
@@ -66022,18 +66022,520 @@ if (false) {
 /* 202 */,
 /* 203 */,
 /* 204 */,
-/* 205 */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed: Error: EPERM: operation not permitted, open 'C:\\xampp\\htdocs\\JOB\\B'ATTENDANCE\\bAttendance-back-end\\resources\\assets\\js\\components\\rekap\\index.vue'");
-
-/***/ }),
+/* 205 */,
 /* 206 */,
 /* 207 */,
-/* 208 */
-/***/ (function(module, exports) {
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed: Error: EPERM: operation not permitted, open 'C:\\xampp\\htdocs\\JOB\\B'ATTENDANCE\\bAttendance-back-end\\resources\\assets\\js\\components\\rekap\\tgl-aktif-rekap.vue'");
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(212)
+/* template */
+var __vue_template__ = __webpack_require__(213)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/master-rekap/tgl-aktif-rekap.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-41106c51", Component.options)
+  } else {
+    hotAPI.reload("data-v-41106c51", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 212 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        this.fetch();
+    },
+    data: function data() {
+        return {
+            errors: [],
+            // url : 'karyawan/post',
+            masterRekap: {
+                tanggal_aktif_rekap: ''
+            },
+            message: '',
+            messageError: '',
+            settings: {
+                placeholder: 'Pilih Jenis Kelamin',
+                placeholderStatus: 'Pilih Status Karyawan'
+            }
+        };
+    },
+
+    methods: {
+        fetch: function fetch() {
+            var _this = this;
+
+            axios.get('rekap-admin/selectMasterRekap').then(function (respon) {
+                _this.masterRekap = respon.data;
+            });
+        },
+
+        update: function update(e) {
+            var _this2 = this;
+
+            var app = this;
+            var newState = app.masterRekap;
+            axios.put(e.target.action, newState).then(function (resp) {
+                app.errors = [];
+                if (resp.data.response.status == 'exist') {
+                    app.message = false;
+                    app.messageError = resp.data.response.message; // showing result
+                } else {
+                    app.message = resp.data.response.message;
+                    app.messageError = false; // showing result
+                    app.masterRekap.tanggal_aktif_rekap = ''; // clear form
+                    app.masterRekap.alasan = ''; // clear form
+                    app.masterRekap.status = ''; // clear form
+                }
+                // app.$router.replace('/'); // redirect to url "/"
+            }).catch(function (error) {
+                _this2.errors = error.response.data.errors;
+                _this2.message = false;
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 213 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("section", { staticClass: "panel panel-default" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "panel-body" }, [
+      _c(
+        "form",
+        {
+          staticClass: "form-horizontal",
+          attrs: { action: "rekap-admin/1/updateMasterRekap", method: "post" },
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.update($event)
+            }
+          }
+        },
+        [
+          _c(
+            "div",
+            {
+              class: [
+                "form-group",
+                _vm.errors.tanggal_aktif_rekap ? "has-error" : ""
+              ]
+            },
+            [
+              _c("label", { staticClass: "col-sm-2 control-label" }, [
+                _vm._v("Tanggal Rekap Aktif")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-10" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.masterRekap.tanggal_aktif_rekap,
+                      expression: "masterRekap.tanggal_aktif_rekap"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.masterRekap.tanggal_aktif_rekap },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.masterRekap,
+                        "tanggal_aktif_rekap",
+                        $event.target.value
+                      )
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors.tanggal_aktif_rekap
+                  ? _c("span", { staticClass: "label label-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.tanggal_aktif_rekap[0]))
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.message
+                  ? _c("span", { staticClass: "label label-success" }, [
+                      _c("i", { staticClass: "fa fa-check" })
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.messageError
+                  ? _c("span", { staticClass: "label label-danger" }, [
+                      _vm._v(_vm._s(_vm.messageError))
+                    ])
+                  : _vm._e()
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _vm._m(1)
+        ]
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("header", { staticClass: "panel-heading" }, [
+      _c("i", { staticClass: "fa fa-check" }),
+      _vm._v(" Set Tanggal Rekap\n    "),
+      _c("i", {
+        staticClass: "fa fa-info-sign text-muted",
+        attrs: {
+          "data-toggle": "tooltip",
+          "data-placement": "bottom",
+          "data-title": "ajax to load the data."
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-primary col-md-offset-9",
+        attrs: { type: "submit" }
+      },
+      [_c("i", { staticClass: "fa fa-plus" }), _vm._v(" Absen")]
+    )
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-41106c51", module.exports)
+  }
+}
+
+/***/ }),
+/* 214 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(215)
+/* template */
+var __vue_template__ = __webpack_require__(216)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/master-rekap/index.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-56c5c114", Component.options)
+  } else {
+    hotAPI.reload("data-v-56c5c114", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 215 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+$(function () {
+  var table = $('#rekapTable').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: "rekap-admin/json",
+    columns: [{ data: 'id', name: 'id' }, { data: 'karyawan', name: 'karyawan' }, { data: 'jml_hadir', name: 'jml_hadir' }, { data: 'jml_izin', name: 'jml_izin' }, { data: 'jml_sakit', name: 'jml_sakit' }, { data: 'jml_alfa', name: 'jml_alfa' }]
+  });
+  Echo.channel('draw-table-event').listen('DrawTableEvent', function (e) {
+    table.draw();
+  });
+
+  $('#deleteModal').on('show.bs.modal', function (e) {
+    var id = $(e.relatedTarget).data('id');
+    $.get('karyawan/' + id + '/edit', function (data) {
+      $("#namaKaryawan").attr('value', data.nama);
+      this.id_karyawan = data.id;
+    });
+    $("#deleteBtn").on('click', function () {
+      axios.post('karyawan/' + id + '/delete').then(function (resp) {
+        $('#deleteModal').modal('hide');
+        table.draw();
+      }).then(function () {
+        window.location.reload();
+      });
+    });
+  });
+});
+$(document).ready(function () {
+  $('#editKaryawanModal').on('show.bs.modal', function (e) {
+    var id = $(e.relatedTarget).data('id');
+    $.get('karyawan/' + id + '/edit', function (data) {
+      $("#namaTitle").attr('value', data.nama);
+      $("#nama").attr('value', data.nama);
+      $("#divisi").attr('value', data.divisi);
+      $("#jenis_kelamin").attr('value', data.jenis_kelamin);
+      $("#nik").attr('value', data.nik);
+      $("#status").attr('value', data.status);
+      // document.getElementById('nama').setAttribute('value', data.nama);
+      // document.getElementById('divisi').setAttribute('value', data.divisi);
+      // document.getElementById('jenis_kelamin').setAttribute('value', data.jenis_kelamin);
+      // document.getElementById('nik').setAttribute('value', data.nik);
+    });
+    $("#updateForm").attr('action', 'karyawan/' + id + '/update');
+  });
+});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['title'],
+
+  data: function data() {
+    return {
+      users: [],
+      id_karyawan: null,
+      alertShow: false
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('karyawan/json').then(function (response) {
+      _this.users = response.data;
+      _this.alertShow = true;
+    });
+  },
+
+  methods: {
+    paginate: function paginate(url) {
+      var _this2 = this;
+
+      axios.get(url).then(function (response) {
+        _this2.users = response.data;
+      });
+    },
+    fetch: function fetch() {
+      var _this3 = this;
+
+      axios.get('karyawan/json').then(function (respon) {
+        _this3.users = respon.data;
+      });
+    },
+    deleteKaryawan: function deleteKaryawan(id) {
+      var app = this;
+      if (confirm('Anda Yakin?')) {
+        axios.delete('karyawan/' + id + '/delete').then(function (resp) {
+          app.fetch(); // redirect to url "/"
+        });
+      }
+    }
+  }
+});
+
+/***/ }),
+/* 216 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", { staticClass: "panel panel-default" }, [
+      _c("header", { staticClass: "panel-heading" }, [
+        _c("i", { staticClass: "fa fa-table" }),
+        _vm._v(" Rekap Absen Tabel\n    "),
+        _c("i", {
+          staticClass: "fa fa-info-sign text-muted",
+          attrs: {
+            "data-toggle": "tooltip",
+            "data-placement": "bottom",
+            "data-title": "ajax to load the data."
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "table-responsive" }, [
+        _c(
+          "table",
+          {
+            staticClass: "table table-striped m-b-none",
+            attrs: { id: "rekapTable" }
+          },
+          [
+            _c("thead", [
+              _c("tr", [
+                _c("th", { attrs: { width: "5%" } }, [_vm._v("ID")]),
+                _vm._v(" "),
+                _c("th", { attrs: { width: "15%" } }, [
+                  _vm._v("Nama Karyawan")
+                ]),
+                _vm._v(" "),
+                _c("th", { attrs: { width: "25%" } }, [_vm._v("Jumlah Hadir")]),
+                _vm._v(" "),
+                _c("th", { attrs: { width: "25%" } }, [_vm._v("Jumlah Izin")]),
+                _vm._v(" "),
+                _c("th", { attrs: { width: "10%" } }, [_vm._v("Jumlah Sakit")]),
+                _vm._v(" "),
+                _c("th", { attrs: { width: "10%" } }, [_vm._v("Jumlah Alfa")])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("tbody")
+          ]
+        )
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-56c5c114", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

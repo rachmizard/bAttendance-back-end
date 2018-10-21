@@ -242,7 +242,7 @@
                       </a>
                     </li>
                     <li >
-                      <a href="notebook.html"  >
+                      <a href="{{ route('rekap-admin.index') }}"  >
                         <i class="fa fa-book icon">
                           <b class="bg-info"></b>
                         </i>
