@@ -17,13 +17,45 @@ class KaryawanImport implements ToModel, WithChunkReading, ShouldQueue
     */
     public function model(array $row)
     {
-        return new Karyawan([
-           'nik'     => Carbon::now()->format('y') . Carbon::now()->format('m') . Carbon::now()->format('is'),
-           'nama'    => $row['nama'],
-           'divisi' =>  $row['divisi'],
-           'jenis_kelamin' => $row['jenis_kelamin'],
-           'status' => $row['status']
-        ]);
+      $validator = Karyawan::where('id', $row[0])->count();
+      if ($validator) {
+        Karyawan::where('id', $row[0])->update([
+             'id' => $row[0],
+             'nik'     => $row[4],
+             'nama'    => $row[1],
+             'divisi' =>  $row[2],
+             'jenis_kelamin' => $row[3],
+             'status' => $row[5]
+          ]);
+      }else if($row[0] == null){
+        $validator2 = Karyawan::where([
+            'nik' => $row[4],
+            'nama' => $row[1],
+            'divisi' => $row[2],
+            'jenis_kelamin' => $row[3],
+            'status' => $row[5]
+        ])->get();
+
+        if (count($validator2)) {
+            foreach ($validator2 as $replace) {
+                Karyawan::where('id', $replace->id)->update([
+                     'nik'     => Carbon::now()->format('y') . Carbon::now()->format('m') . Carbon::now()->format('is'),
+                     'nama'    => $row[1],
+                     'divisi' =>  $row[2],
+                     'jenis_kelamin' => $row[3],
+                     'status' => $row[5]
+                    ]);
+            }
+        }else{
+            return new Karyawan([
+                 'nik'     => Carbon::now()->format('y') . Carbon::now()->format('m') . Carbon::now()->format('is'),
+                 'nama'    => $row[1],
+                 'divisi' =>  $row[2],
+                 'jenis_kelamin' => $row[3],
+                 'status' => $row[5]
+              ]);
+        }
+      }
     }
 
     public function chunkSize(): int

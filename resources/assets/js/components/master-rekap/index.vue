@@ -8,7 +8,7 @@
           <table id="rekapTable" class="table table-striped m-b-none">
             <thead>
               <tr>
-                <th width="5%">ID</th>
+                <th width="5%">NIK</th>
                 <th width="15%">Nama Karyawan</th>
                 <th width="25%">Jumlah Hadir</th>
                 <th width="25%">Jumlah Izin</th>
@@ -32,7 +32,7 @@
               serverSide: true,
               ajax: "rekap-admin/json",
               columns: [
-                  { data: 'id', name: 'id' },
+                  { data: 'nik', name: 'nik' },
                   { data: 'karyawan', name: 'karyawan' },
                   { data: 'jml_hadir', name: 'jml_hadir' },
                   { data: 'jml_izin', name: 'jml_izin' },

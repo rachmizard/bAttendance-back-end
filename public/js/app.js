@@ -60104,6 +60104,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -60223,7 +60224,19 @@ var staticRenderFns = [
             "data-placement": "bottom",
             "data-title": "ajax to load the data."
           }
-        })
+        }),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "btn btn-sm btn-info",
+            attrs: {
+              href: "#",
+              onclick: "document.getElementById('submitExport').submit()"
+            }
+          },
+          [_c("i", { staticClass: "fa fa-download" }), _vm._v(" Export")]
+        )
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "table-responsive" }, [
@@ -62951,7 +62964,7 @@ $(function () {
 		processing: true,
 		serverSide: true,
 		ajax: "rekap-admin/json",
-		columns: [{ data: 'id', name: 'id' }, { data: 'karyawan', name: 'karyawan' }, { data: 'jml_hadir', name: 'jml_hadir' }, { data: 'jml_izin', name: 'jml_izin' }, { data: 'jml_sakit', name: 'jml_sakit' }, { data: 'jml_alfa', name: 'jml_alfa' }]
+		columns: [{ data: 'nik', name: 'nik' }, { data: 'karyawan', name: 'karyawan' }, { data: 'jml_hadir', name: 'jml_hadir' }, { data: 'jml_izin', name: 'jml_izin' }, { data: 'jml_sakit', name: 'jml_sakit' }, { data: 'jml_alfa', name: 'jml_alfa' }]
 	});
 	Echo.channel('draw-table-event').listen('DrawTableEvent', function (e) {
 		table.draw();
@@ -63040,7 +63053,7 @@ var staticRenderFns = [
           [
             _c("thead", [
               _c("tr", [
-                _c("th", { attrs: { width: "5%" } }, [_vm._v("ID")]),
+                _c("th", { attrs: { width: "5%" } }, [_vm._v("NIK")]),
                 _vm._v(" "),
                 _c("th", { attrs: { width: "15%" } }, [
                   _vm._v("Nama Karyawan")

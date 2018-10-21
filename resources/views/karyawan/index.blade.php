@@ -147,5 +147,9 @@
                 </div><!-- /.modal-content -->
               </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
+
+            <form action="karyawan/exportKaryawan" method="POST" id="submitExport">
+              {{ csrf_field() }}
+            </form>
         </section>
 @endsection

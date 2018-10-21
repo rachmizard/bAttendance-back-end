@@ -70,6 +70,7 @@ Route::put('karyawan/{id}/update', 'KaryawanController@updateRequest'); // PATCH
 Route::post('karyawan/{id}/delete', 'KaryawanController@destroy'); // PATCH (UPDATE)
 
 Route::post('karyawan/import', 'KaryawanImportController@import'); // PATCH (UPDATE)
+Route::post('karyawan/exportKaryawan', 'KaryawanImportController@exportKaryawan')->name('karyawan.exportKaryawan'); // PATCH (UPDATE)
 
 // Route::delete('karyawan/json/{id}/delete', 'KaryawanController@destroyJson'); // PATCH (UPDATE)
 

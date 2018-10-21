@@ -3,6 +3,7 @@
     <header class="panel-heading">
       <i class="fa fa-table"></i> Tabel Karyawan 
       <i class="fa fa-info-sign text-muted" data-toggle="tooltip" data-placement="bottom" data-title="ajax to load the data."></i> 
+      <a href="#" onclick="document.getElementById('submitExport').submit()" class="btn btn-sm btn-info"><i class="fa fa-download"></i> Export</a>
     </header>
         <div class="table-responsive">
           <table id="karyawanTable" class="table table-striped m-b-none">
