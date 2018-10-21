@@ -22,45 +22,23 @@
                   </div>
               </div>
               <div :class="['form-group', errors.bulan_awal ? 'has-error'  : '']">
-                  <label class="col-sm-4 control-label">Bulan Awal</label>
+                  <label class="col-sm-4 control-label">Bulan</label>
                   <div class="col-sm-8">
                         <select class="form-control" v-model="masterRekap.bulan_awal">
-                          <option value="first day of January">Januari</option>
-                          <option value="first day of February">Februari</option>
-                          <option value="first day of March">Maret</option>
-                          <option value="first day of April">April</option>
-                          <option value="first day of May">Mei</option>
-                          <option value="first day of June">Juni</option>
-                          <option value="first day of July">Juli</option>
-                          <option value="first day of August">Agustus</option>
-                          <option value="first day of September">September</option>
-                          <option value="first day of October">Oktober</option>
-                          <option value="first day of November">November</option>
-                          <option value="first day of December">Desember</option>
+                          <option value="January">Januari</option>
+                          <option value="February">Februari</option>
+                          <option value="March">Maret</option>
+                          <option value="April">April</option>
+                          <option value="May">Mei</option>
+                          <option value="June">Juni</option>
+                          <option value="July">Juli</option>
+                          <option value="August">Agustus</option>
+                          <option value="September">September</option>
+                          <option value="October">Oktober</option>
+                          <option value="November">November</option>
+                          <option value="December">Desember</option>
                         </select>
                       <span v-if="errors.bulan_awal" class="label label-danger">{{ errors.bulan_awal[0] }}</span>
-                      <span v-if="message" class="label label-success"><i class="fa fa-check"></i></span>
-                      <span v-if="messageError" class="label label-danger">{{ messageError }}</span>
-                  </div>
-              </div>
-              <div :class="['form-group', errors.bulan_akhir ? 'has-error'  : '']">
-                  <label class="col-sm-4 control-label">Bulan Akhir</label>
-                  <div class="col-sm-8">
-                        <select class="form-control" v-model="masterRekap.bulan_akhir">
-                          <option value="last day of January">Januari</option>
-                          <option value="last day of February">Februari</option>
-                          <option value="last day of March">Maret</option>
-                          <option value="last day of April">April</option>
-                          <option value="last day of May">Mei</option>
-                          <option value="last day of June">Juni</option>
-                          <option value="last day of July">Juli</option>
-                          <option value="last day of August">Agustus</option>
-                          <option value="last day of September">September</option>
-                          <option value="last day of October">Oktober</option>
-                          <option value="last day of November">November</option>
-                          <option value="last day of December">Desember</option>
-                        </select>
-                      <span v-if="errors.bulan_akhir" class="label label-danger">{{ errors.bulan_akhir[0] }}</span>
                       <span v-if="message" class="label label-success"><i class="fa fa-check"></i></span>
                       <span v-if="messageError" class="label label-danger">{{ messageError }}</span>
                   </div>
@@ -83,7 +61,6 @@ export default {
             // url : 'karyawan/post',
             masterRekap: {
                 bulan_awal: '',
-                bulan_akhir: '',
                 tahun: '',
             },
             message : '',

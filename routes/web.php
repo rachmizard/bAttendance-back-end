@@ -18,6 +18,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
+
+Route::get('/carbon', function(){
+	return new Carbon\Carbon('last day of October 2018');
+});
+
 Route::get('/expired', function(){
 	if (!auth()->user()) {
 		$title = "Session error";

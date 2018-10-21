@@ -25,7 +25,7 @@ class HistoryController extends Controller
 
     public function history()
     {
-        return AbsenHistoryResource::collection(Absen::orderBy('created_at', 'DESC')->where('status', 'masuk')->where('created_at', Carbon::now()->format('Y-m-d'))->get());
+        return AbsenHistoryResource::collection(Absen::orderBy('created_at', 'DESC')->where('status', 'masuk')->whereDate('created_at', Carbon::now()->format('Y-m-d'))->get());
     }
 
     public function indexview()

@@ -53,13 +53,12 @@ class RekapController extends Controller
     {
       $this->validate($request, [
             'tahun' => 'required',
-            'bulan_awal' => 'required',
-            'bulan_akhir' => 'required'
+            'bulan_awal' => 'required'
       ]);
 
       $get = MasterRekap::find(1);
-      $get->start = $request->bulan_awal .' '.$request->tahun;
-      $get->end = $request->bulan_akhir .' '.$request->tahun;
+      $get->start = 'first day of '. $request->bulan_awal .' '.$request->tahun;
+      $get->end = 'last day of '. $request->bulan_awal .' '.$request->tahun;
       $get->update();
 
       $response['status'] = 'kosong';
