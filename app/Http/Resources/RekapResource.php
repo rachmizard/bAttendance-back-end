@@ -31,28 +31,28 @@ class RekapResource extends Resource
     public function countHadir()
     {
       return Absen::where(['karyawan_id' => $this->id, 'status' => 'keluar'])
-            ->whereBetween('created_at', [MasterRekap::find(1)->tanggal_aktif_rekap, Carbon::now()->endOfMonth()])
+            ->whereBetween('created_at', [new Carbon(MasterRekap::find(1)->start), new Carbon(MasterRekap::find(1)->end)])
             ->count();
     }
 
     public function countIzin()
     {
       return Absen::where(['karyawan_id' => $this->id, 'status' => 'izin'])
-            ->whereBetween('created_at', [MasterRekap::find(1)->tanggal_aktif_rekap, Carbon::now()->endOfMonth()])
+            ->whereBetween('created_at', [new Carbon(MasterRekap::find(1)->start), new Carbon(MasterRekap::find(1)->end)])
             ->count();
     }
 
     public function countSakit()
     {
       return Absen::where(['karyawan_id' => $this->id, 'status' => 'sakit'])
-            ->whereBetween('created_at', [MasterRekap::find(1)->tanggal_aktif_rekap, Carbon::now()->endOfMonth()])
+            ->whereBetween('created_at', [new Carbon(MasterRekap::find(1)->start), new Carbon(MasterRekap::find(1)->end)])
             ->count();
     }
 
     public function countAlfa()
     {
       return Absen::where(['karyawan_id' => $this->id, 'status' => 'alfa'])
-            ->whereBetween('created_at', [MasterRekap::find(1)->tanggal_aktif_rekap, Carbon::now()->endOfMonth()])
+            ->whereBetween('created_at', [new Carbon(MasterRekap::find(1)->start), new Carbon(MasterRekap::find(1)->end)])
             ->count();
     }
 

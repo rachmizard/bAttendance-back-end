@@ -63158,6 +63158,47 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
@@ -63168,8 +63209,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             errors: [],
             // url : 'karyawan/post',
             masterRekap: {
-                tanggal_aktif_rekap: '',
-                tahun_aktif_rekap: ''
+                bulan_awal: '',
+                bulan_akhir: '',
+                tahun: ''
             },
             message: '',
             messageError: '',
@@ -63238,47 +63280,190 @@ var render = function() {
         [
           _c(
             "div",
-            {
-              class: [
-                "form-group",
-                _vm.errors.tahun_aktif_rekap ? "has-error" : ""
-              ]
-            },
+            { class: ["form-group", _vm.errors.tahun ? "has-error" : ""] },
             [
               _c("label", { staticClass: "col-sm-4 control-label" }, [
                 _vm._v("Set Tahun")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-sm-8" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.masterRekap.tahun_aktif_rekap,
-                      expression: "masterRekap.tahun_aktif_rekap"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.masterRekap.tahun_aktif_rekap },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.masterRekap.tahun,
+                        expression: "masterRekap.tahun"
                       }
-                      _vm.$set(
-                        _vm.masterRekap,
-                        "tahun_aktif_rekap",
-                        $event.target.value
-                      )
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.masterRekap,
+                          "tahun",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
                     }
-                  }
-                }),
+                  },
+                  [
+                    _c("option", { attrs: { value: "2018" } }, [
+                      _vm._v("2018")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "2019" } }, [
+                      _vm._v("2019")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "2020" } }, [
+                      _vm._v("2020")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "2021" } }, [
+                      _vm._v("2021")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "2022" } }, [_vm._v("2022")])
+                  ]
+                ),
                 _vm._v(" "),
-                _vm.errors.tahun_aktif_rekap
+                _vm.errors.tahun
                   ? _c("span", { staticClass: "label label-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.tahun_aktif_rekap[0]))
+                      _vm._v(_vm._s(_vm.errors.tahun[0]))
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.message
+                  ? _c("span", { staticClass: "label label-success" }, [
+                      _c("i", { staticClass: "fa fa-check" })
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.messageError
+                  ? _c("span", { staticClass: "label label-danger" }, [
+                      _vm._v(_vm._s(_vm.messageError))
+                    ])
+                  : _vm._e()
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { class: ["form-group", _vm.errors.bulan_awal ? "has-error" : ""] },
+            [
+              _c("label", { staticClass: "col-sm-4 control-label" }, [
+                _vm._v("Bulan Awal")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-8" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.masterRekap.bulan_awal,
+                        expression: "masterRekap.bulan_awal"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.masterRekap,
+                          "bulan_awal",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "first day of January" } }, [
+                      _vm._v("Januari")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "option",
+                      { attrs: { value: "first day of February" } },
+                      [_vm._v("Februari")]
+                    ),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "first day of March" } }, [
+                      _vm._v("Maret")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "first day of April" } }, [
+                      _vm._v("April")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "first day of May" } }, [
+                      _vm._v("Mei")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "first day of June" } }, [
+                      _vm._v("Juni")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "first day of July" } }, [
+                      _vm._v("Juli")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "first day of August" } }, [
+                      _vm._v("Agustus")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "option",
+                      { attrs: { value: "first day of September" } },
+                      [_vm._v("September")]
+                    ),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "first day of October" } }, [
+                      _vm._v("Oktober")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "option",
+                      { attrs: { value: "first day of November" } },
+                      [_vm._v("November")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "option",
+                      { attrs: { value: "first day of December" } },
+                      [_vm._v("Desember")]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _vm.errors.bulan_awal
+                  ? _c("span", { staticClass: "label label-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.bulan_awal[0]))
                     ])
                   : _vm._e(),
                 _vm._v(" "),
@@ -63300,46 +63485,102 @@ var render = function() {
           _c(
             "div",
             {
-              class: [
-                "form-group",
-                _vm.errors.tanggal_aktif_rekap ? "has-error" : ""
-              ]
+              class: ["form-group", _vm.errors.bulan_akhir ? "has-error" : ""]
             },
             [
               _c("label", { staticClass: "col-sm-4 control-label" }, [
-                _vm._v("Set Tanggal")
+                _vm._v("Bulan Akhir")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-sm-8" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.masterRekap.tanggal_aktif_rekap,
-                      expression: "masterRekap.tanggal_aktif_rekap"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.masterRekap.tanggal_aktif_rekap },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.masterRekap.bulan_akhir,
+                        expression: "masterRekap.bulan_akhir"
                       }
-                      _vm.$set(
-                        _vm.masterRekap,
-                        "tanggal_aktif_rekap",
-                        $event.target.value
-                      )
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.masterRekap,
+                          "bulan_akhir",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
                     }
-                  }
-                }),
+                  },
+                  [
+                    _c("option", { attrs: { value: "last day of January" } }, [
+                      _vm._v("Januari")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "last day of February" } }, [
+                      _vm._v("Februari")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "last day of March" } }, [
+                      _vm._v("Maret")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "last day of April" } }, [
+                      _vm._v("April")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "last day of May" } }, [
+                      _vm._v("Mei")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "last day of June" } }, [
+                      _vm._v("Juni")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "last day of July" } }, [
+                      _vm._v("Juli")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "last day of August" } }, [
+                      _vm._v("Agustus")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "option",
+                      { attrs: { value: "last day of September" } },
+                      [_vm._v("September")]
+                    ),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "last day of October" } }, [
+                      _vm._v("Oktober")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "last day of November" } }, [
+                      _vm._v("November")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "last day of December" } }, [
+                      _vm._v("Desember")
+                    ])
+                  ]
+                ),
                 _vm._v(" "),
-                _vm.errors.tanggal_aktif_rekap
+                _vm.errors.bulan_akhir
                   ? _c("span", { staticClass: "label label-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.tanggal_aktif_rekap[0]))
+                      _vm._v(_vm._s(_vm.errors.bulan_akhir[0]))
                     ])
                   : _vm._e(),
                 _vm._v(" "),

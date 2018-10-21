@@ -52,12 +52,14 @@ class RekapController extends Controller
     public function updateMasterRekap(Request $request)
     {
       $this->validate($request, [
-            'tanggal_aktif_rekap' => 'required|date_format:m',
-            'tahun_aktif_rekap' => 'required|date_format:Y'
+            'tahun' => 'required',
+            'bulan_awal' => 'required',
+            'bulan_akhir' => 'required'
       ]);
 
       $get = MasterRekap::find(1);
-      $get->tanggal_aktif_rekap = $request->tahun_aktif_rekap.'-'.$request->tanggal_aktif_rekap.'-01';
+      $get->start = $request->bulan_awal .' '.$request->tahun;
+      $get->end = $request->bulan_akhir .' '.$request->tahun;
       $get->update();
 
       $response['status'] = 'kosong';

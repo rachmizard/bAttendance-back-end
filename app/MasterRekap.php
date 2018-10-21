@@ -9,7 +9,9 @@ class MasterRekap extends Model
     protected $table = 'master_rekap';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'tanggal_aktif_rekap'
+        'tanggal_aktif_rekap',
+        'start',
+        'end'
     ];
     protected $dates = ['tanggal_aktif_rekap'];
 
