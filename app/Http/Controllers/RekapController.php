@@ -11,6 +11,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Resources\RekapResource;
 use App\Karyawan;
 use App\MasterRekap;
+use App\Events\DrawTableEvent;
 use DB;
 
 class RekapController extends Controller
@@ -22,7 +23,10 @@ class RekapController extends Controller
 
     public function jsonRekap()
     {
-      return Datatables::of(RekapResource::collection(Absen::all()))->make(true);
+      $getMasterRekap = MasterRekap::find(1);
+      $now = Carbon::now();
+      return Datatables::of(RekapResource::collection(Karyawan::where('status', 'authorized')->get()))
+      ->make(true);
     }
 
     public function store(Request $request)
@@ -47,14 +51,20 @@ class RekapController extends Controller
 
     public function updateMasterRekap(Request $request)
     {
+      $this->validate($request, [
+            'tanggal_aktif_rekap' => 'required|date_format:m',
+            'tahun_aktif_rekap' => 'required|date_format:Y'
+      ]);
+
       $get = MasterRekap::find(1);
-      $get->tanggal_aktif_rekap = $request->tanggal_aktif_rekap;
+      $get->tanggal_aktif_rekap = $request->tahun_aktif_rekap.'-'.$request->tanggal_aktif_rekap.'-01';
       $get->update();
 
       $response['status'] = 'kosong';
       $response['title'] = 'Sukses!';
       $response['message'] = 'Berhasil di setting master tanggal rekap!';
       $response['type'] = 'success';
+      event(new DrawTableEvent());
       return response()->json(['response' => $response]);
     }
 

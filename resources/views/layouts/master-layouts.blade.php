@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="{{asset('/template/css/font.css')}}" type="text/css" />
   <link rel="stylesheet" href="{{asset('/template/js/calendar/bootstrap_calendar.css')}}" type="text/css" />
   <link rel="stylesheet" href="{{asset('/template/css/app.css')}}" type="text/css" />
+  <link rel="stylesheet" href="{{asset('/template/js/datepicker/datepicker.css')}}" type="text/css" />
   <link rel="stylesheet" href="{{asset('/js/datatables/datatables.css')}}" type="text/css"/>
   <!--[if lt IE 9]>
     <script src="js/ie/html5shiv.js"></script>
@@ -320,6 +321,12 @@
   <script src="{{asset('/template/js/calendar/demo.js')}}"></script>
 
   <script src="{{asset('/template/js/sortable/jquery.sortable.js')}}"></script>
+  <!-- datepicker -->
+  <script src="{{asset('/template/js/datepicker/bootstrap-datepicker.js')}}"></script>
+  <!-- combodate -->
+  <script src="{{asset('/template/js/libs/moment.min.js')}}"></script>
+  <script src="{{asset('/template/js/combodate/combodate.js')}}"></script>
+
   <!-- datatables -->
   <!-- <script src="{{asset('/template/js/datatables/jquery.dataTables.min.js')}}"></script> -->
   <!-- DataTables -->

@@ -12,6 +12,7 @@ class Rekap extends Model
         'absen_id', 'jml_hadir', 'jml_izin', 'jml_sakit', 'jml_alfa', 'tgl_rekap'
     ];
 
+
     public function absen()
     {
       $this->belongsTo(Absen::class, 'absen_id', 'id');

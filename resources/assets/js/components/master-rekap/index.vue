@@ -44,45 +44,9 @@
         .listen('DrawTableEvent', (e) => {
           table.draw();
         });
-
-        $('#deleteModal').on('show.bs.modal', function(e) {
-                var id = $(e.relatedTarget).data('id');
-                $.get('karyawan/' + id + '/edit', function( data ) {
-                  $("#namaKaryawan").attr('value', data.nama);
-                    this.id_karyawan = data.id
-                });
-          $("#deleteBtn").on('click', function(){
-              axios.post('karyawan/'+ id +'/delete').then(function(resp){
-                $('#deleteModal').modal('hide')
-                table.draw()
-              }).then(function(){
-                window.location.reload()
-              })
-          });
-        });
-      });
-      $(document).ready(function(){
-        $('#editKaryawanModal').on('show.bs.modal', function(e) {
-                var id = $(e.relatedTarget).data('id');
-                $.get('karyawan/' + id + '/edit', function( data ) {
-                  $("#namaTitle").attr('value', data.nama);
-                  $("#nama").attr('value', data.nama);
-                  $("#divisi").attr('value', data.divisi);
-                  $("#jenis_kelamin").attr('value', data.jenis_kelamin);
-                  $("#nik").attr('value', data.nik);
-                  $("#status").attr('value', data.status);
-                  // document.getElementById('nama').setAttribute('value', data.nama);
-                  // document.getElementById('divisi').setAttribute('value', data.divisi);
-                  // document.getElementById('jenis_kelamin').setAttribute('value', data.jenis_kelamin);
-                  // document.getElementById('nik').setAttribute('value', data.nik);
-                });
-          $("#updateForm").attr('action', 'karyawan/'+ id +'/update');
-        });
       });
 	export default {
         props: ['title'],
-
-
 		data() {
 			return {
 				users: [],

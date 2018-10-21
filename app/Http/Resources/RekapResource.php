@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\Resource;
 use App\Absen;
 use App\MasterRekap;
+use Carbon\Carbon;
 
 class RekapResource extends Resource
 {
@@ -19,32 +20,40 @@ class RekapResource extends Resource
         // return parent::toArray($request);
         return [
           'id' => $this->id,
-          'karyawan' => $this->karyawan->nama,
-          'jml_hadir' => $this->countHadir(),
-          'jml_izin' => $this->countIzin(),
-          'jml_sakit' => $this->countSakit(),
-          'jml_alfa' => $this->countAlfa()
+          'karyawan' => $this->nama,
+          'jml_hadir' => $this->countHadir() == 0 ? '0' : $this->countHadir(),
+          'jml_izin' => $this->countIzin() == 0 ? '0' : $this->countIzin(),
+          'jml_sakit' => $this->countSakit() == 0 ? '0' : $this->countSakit(),
+          'jml_alfa' => $this->countAlfa() == 0 ? '0' : $this->countAlfa()
         ];
     }
 
     public function countHadir()
     {
-      return Absen::with('master_rekap')->where(['karyawan_id' => $this->karyawan->id, 'status' => 'keluar', 'created_at' => MasterRekap::find(1)->tanggal_aktif_rekap])->count();
+      return Absen::where(['karyawan_id' => $this->id, 'status' => 'keluar'])
+            ->whereBetween('created_at', [MasterRekap::find(1)->tanggal_aktif_rekap, Carbon::now()->endOfMonth()])
+            ->count();
     }
 
     public function countIzin()
     {
-      return Absen::with('master_rekap')->where(['karyawan_id' => $this->karyawan->id, 'status' => 'izin', 'created_at' => MasterRekap::find(1)->tanggal_aktif_rekap])->count();
+      return Absen::where(['karyawan_id' => $this->id, 'status' => 'izin'])
+            ->whereBetween('created_at', [MasterRekap::find(1)->tanggal_aktif_rekap, Carbon::now()->endOfMonth()])
+            ->count();
     }
 
     public function countSakit()
     {
-      return Absen::with('master_rekap')->where(['karyawan_id' => $this->karyawan->id, 'status' => 'sakit', 'created_at' => MasterRekap::find(1)->tanggal_aktif_rekap])->count();
+      return Absen::where(['karyawan_id' => $this->id, 'status' => 'sakit'])
+            ->whereBetween('created_at', [MasterRekap::find(1)->tanggal_aktif_rekap, Carbon::now()->endOfMonth()])
+            ->count();
     }
 
     public function countAlfa()
     {
-      return Absen::with('master_rekap')->where(['karyawan_id' => $this->karyawan->id, 'status' => 'alfa', 'created_at' => MasterRekap::find(1)->tanggal_aktif_rekap])->count();
+      return Absen::where(['karyawan_id' => $this->id, 'status' => 'alfa'])
+            ->whereBetween('created_at', [MasterRekap::find(1)->tanggal_aktif_rekap, Carbon::now()->endOfMonth()])
+            ->count();
     }
 
 
