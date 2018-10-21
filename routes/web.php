@@ -16,11 +16,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-Route::get('/qrcode', function(){
-	return view('qrpage');
-});
-
 Auth::routes();
 
 Route::get('/expired', function(){
@@ -89,8 +84,15 @@ Route::post('history/deleteChecked', 'HistoryController@destroyChecked'); // PAT
 
 // Absen admin
 Route::get('absen-admin', 'AbsenAdminController@view')->name('absen-admin.view');
+Route::get('absen-admin/retrieve', 'AbsenAdminController@retrieve')->name('absen-admin.retrieve');
 Route::post('absen-admin/store', 'AbsenAdminController@store')->name('absen-admin.store');
 Route::get('absen-admin/{id}/edit', 'AbsenAdminController@edit')->name('absen-admin.edit');
 Route::post('absen-admin/{id}/update', 'AbsenAdminController@update')->name('absen-admin.update');
 Route::post('absen-admin/{id}/destroy', 'AbsenAdminController@destroy')->name('absen-admin.destroy');
 Route::post('absen-admin/destroyChecked', 'AbsenAdminController@destroyChecked')->name('absen-admin.destroyChecked');
+
+// Rekap Admin Routes
+Route::get('rekap-admin', 'RekapController@index')->name('rekap-admin.index');
+Route::get('rekap-admin/json', 'RekapController@jsonRekap');
+Route::get('rekap-admin/selectMasterRekap', 'RekapController@selectMasterRekap');
+Route::put('rekap-admin/{id}/updateMasterRekap', 'RekapController@updateMasterRekap');
