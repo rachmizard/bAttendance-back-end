@@ -4,6 +4,7 @@
       <i class="fa fa-table"></i> Tabel Karyawan 
       <i class="fa fa-info-sign text-muted" data-toggle="tooltip" data-placement="bottom" data-title="ajax to load the data."></i> 
       <a href="#" onclick="document.getElementById('submitExport').submit()" class="btn btn-sm btn-info"><i class="fa fa-download"></i> Export</a>
+      <a data-target="#uploadModal" data-toggle="modal" class="btn btn-sm btn-info"><i class="fa fa-upload"></i> Upload</a>
     </header>
         <div class="table-responsive">
           <table id="karyawanTable" class="table table-striped m-b-none">

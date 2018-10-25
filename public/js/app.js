@@ -60105,6 +60105,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -60236,6 +60237,15 @@ var staticRenderFns = [
             }
           },
           [_c("i", { staticClass: "fa fa-download" }), _vm._v(" Export")]
+        ),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "btn btn-sm btn-info",
+            attrs: { "data-target": "#uploadModal", "data-toggle": "modal" }
+          },
+          [_c("i", { staticClass: "fa fa-upload" }), _vm._v(" Upload")]
         )
       ]),
       _vm._v(" "),
@@ -60359,7 +60369,6 @@ if (false) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
 //
 //
 //
@@ -60755,9 +60764,7 @@ var render = function() {
             "button",
             { staticClass: "btn btn-primary", attrs: { type: "submit" } },
             [_vm._v("Submit")]
-          ),
-          _vm._v(" "),
-          _vm._m(1)
+          )
         ]
       )
     ])
@@ -60780,19 +60787,6 @@ var staticRenderFns = [
         }
       })
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "btn btn-info",
-        attrs: { "data-target": "#uploadModal", "data-toggle": "modal" }
-      },
-      [_c("i", { staticClass: "fa fa-upload" }), _vm._v(" Upload")]
-    )
   }
 ]
 render._withStripped = true
@@ -62657,6 +62651,8 @@ var render = function() {
             _vm._v(" "),
             _c("th", { attrs: { width: "20" } }, [_vm._v("Jam Masuk")]),
             _vm._v(" "),
+            _c("th", { attrs: { width: "20" } }, [_vm._v("Jam Keluar")]),
+            _vm._v(" "),
             _c("th", { attrs: { width: "20" } }, [_vm._v("Tanggal")]),
             _vm._v(" "),
             _c("th", { attrs: { width: "30" } })
@@ -62665,109 +62661,106 @@ var render = function() {
         _vm._v(" "),
         _c(
           "tbody",
-          [
-            _vm._l(_vm.users.data, function(user, index) {
-              return _c("tr", [
-                _c("td", [
-                  _c("label", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.checkedRows,
-                          expression: "checkedRows"
-                        }
-                      ],
-                      attrs: { type: "checkbox" },
-                      domProps: {
-                        value: user.id,
-                        checked: Array.isArray(_vm.checkedRows)
-                          ? _vm._i(_vm.checkedRows, user.id) > -1
-                          : _vm.checkedRows
-                      },
-                      on: {
-                        change: function($event) {
-                          var $$a = _vm.checkedRows,
-                            $$el = $event.target,
-                            $$c = $$el.checked ? true : false
-                          if (Array.isArray($$a)) {
-                            var $$v = user.id,
-                              $$i = _vm._i($$a, $$v)
-                            if ($$el.checked) {
-                              $$i < 0 && (_vm.checkedRows = $$a.concat([$$v]))
-                            } else {
-                              $$i > -1 &&
-                                (_vm.checkedRows = $$a
-                                  .slice(0, $$i)
-                                  .concat($$a.slice($$i + 1)))
-                            }
+          _vm._l(_vm.users.data, function(user, index) {
+            return _c("tr", [
+              _c("td", [
+                _c("label", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.checkedRows,
+                        expression: "checkedRows"
+                      }
+                    ],
+                    attrs: { type: "checkbox" },
+                    domProps: {
+                      value: user.id,
+                      checked: Array.isArray(_vm.checkedRows)
+                        ? _vm._i(_vm.checkedRows, user.id) > -1
+                        : _vm.checkedRows
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.checkedRows,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = user.id,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 && (_vm.checkedRows = $$a.concat([$$v]))
                           } else {
-                            _vm.checkedRows = $$c
+                            $$i > -1 &&
+                              (_vm.checkedRows = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
                           }
+                        } else {
+                          _vm.checkedRows = $$c
                         }
                       }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(user.nama))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(user.jam))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(user.created_at))]),
-                _vm._v(" "),
-                user.action == "masuk"
-                  ? _c("td", [
-                      _c("i", { staticClass: "fa fa-check text-success" })
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                user.action == "alfa"
-                  ? _c("td", [
-                      _c("span", { staticClass: "label label-danger" }, [
-                        _vm._v("Alfa")
-                      ])
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                user.action == "izin"
-                  ? _c("td", [
-                      _c("span", { staticClass: "label label-info" }, [
-                        _vm._v("Izin")
-                      ])
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                user.action == "sakit"
-                  ? _c("td", [
-                      _c("span", { staticClass: "label label-warning" }, [
-                        _vm._v("Sakit")
-                      ])
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                user.action == ""
-                  ? _c("td", [
-                      _c("span", { staticClass: "label label-default" }, [
-                        _vm._v("Tidak ada keterangan")
-                      ])
-                    ])
-                  : _vm._e()
-              ])
-            }),
-            _vm._v(" "),
-            _vm.total.length == null
-              ? _c("tr", [
-                  _c(
-                    "td",
-                    { staticClass: "text-center", attrs: { colspan: "8" } },
-                    [_vm._v("Belum ada data.")]
-                  )
+                    }
+                  })
                 ])
-              : _vm._e()
-          ],
-          2
+              ]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(user.nama))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(user.checkin))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(user.checkout))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(user.created_at))]),
+              _vm._v(" "),
+              user.action == "masuk"
+                ? _c("td", [
+                    _c("span", { staticClass: "label label-info" }, [
+                      _vm._v("on working")
+                    ])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              user.action == "keluar"
+                ? _c("td", [
+                    _c("i", { staticClass: "fa fa-check text-success" })
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              user.action == "alfa"
+                ? _c("td", [
+                    _c("span", { staticClass: "label label-danger" }, [
+                      _vm._v("Alfa")
+                    ])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              user.action == "izin"
+                ? _c("td", [
+                    _c("span", { staticClass: "label label-info" }, [
+                      _vm._v("Izin")
+                    ])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              user.action == "sakit"
+                ? _c("td", [
+                    _c("span", { staticClass: "label label-warning" }, [
+                      _vm._v("Sakit")
+                    ])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              user.action == ""
+                ? _c("td", [
+                    _c("span", { staticClass: "label label-default" }, [
+                      _vm._v("Tidak ada keterangan")
+                    ])
+                  ])
+                : _vm._e()
+            ])
+          })
         )
       ])
     ]),

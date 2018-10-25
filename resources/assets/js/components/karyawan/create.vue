@@ -61,7 +61,6 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <a data-target="#uploadModal" data-toggle="modal" class="btn btn-info"><i class="fa fa-upload"></i> Upload</a>
             </form>
         </div>
   </section>

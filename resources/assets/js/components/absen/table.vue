@@ -10,6 +10,7 @@
             </th>
             <th width="40">Nama Karyawan</th>
             <th width="20">Jam Masuk</th>
+            <th width="20">Jam Keluar</th>
             <th width="20">Tanggal</th>
             <th width="30"></th>
           </tr>
@@ -22,16 +23,15 @@
               </label>
             </td>
             <td>{{ user.nama }}</td>
-            <td>{{ user.jam }}</td>
+            <td>{{ user.checkin }}</td>
+            <td>{{ user.checkout }}</td>
             <td>{{ user.created_at }}</td>
-            <td v-if="user.action == 'masuk'"><i class="fa fa-check text-success"></i></td>
+    		<td v-if="user.action == 'masuk'"><span class="label label-info">on working</span></td>
+    		<td v-if="user.action == 'keluar'"><i class="fa fa-check text-success"></i></td>
             <td v-if="user.action == 'alfa'"><span class="label label-danger">Alfa</span></td>
             <td v-if="user.action == 'izin'"><span class="label label-info">Izin</span></i></td>
             <td v-if="user.action == 'sakit'"><span class="label label-warning">Sakit</span></td>
             <td v-if="user.action == ''"><span class="label label-default">Tidak ada keterangan</span></td>
-          </tr>
-          <tr v-if="total.length == null">
-            <td class="text-center" colspan="8">Belum ada data.</td>
           </tr>
         </tbody>
       </table>
