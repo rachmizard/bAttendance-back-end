@@ -8,6 +8,7 @@ use App\Absen;
 use App\Rekap;
 use Yajra\Datatables\Datatables;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\RekapExport;
 use App\Http\Resources\RekapResource;
 use App\Karyawan;
 use App\MasterRekap;
@@ -26,7 +27,13 @@ class RekapController extends Controller
       $getMasterRekap = MasterRekap::find(1);
       $now = Carbon::now();
       return Datatables::of(RekapResource::collection(Karyawan::where('status', 'authorized')->get()))
+      ->rawColumns(['total_lembur'])
       ->make(true);
+    }
+
+    public function export()
+    {
+      return Excel::download(new RekapExport ,'hasil_rekapan_'. MasterRekap::find(1)->tanggal_aktif_rekap .'_'. Carbon::now()->format('Y') .'.xlsx');
     }
 
     public function store(Request $request)
@@ -57,6 +64,7 @@ class RekapController extends Controller
       ]);
 
       $get = MasterRekap::find(1);
+      $get->tanggal_aktif_rekap = $request->bulan_awal;
       $get->start = 'first day of '. $request->bulan_awal .' '.$request->tahun;
       $get->end = 'last day of '. $request->bulan_awal .' '.$request->tahun;
       $get->update();

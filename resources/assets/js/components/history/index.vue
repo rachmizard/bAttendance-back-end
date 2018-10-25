@@ -39,9 +39,10 @@
                         <thead>
                           <tr>
                             <th width="10"></th>
+                            <th width="20">Tanggal</th>
                             <th width="40">Nama Karyawan</th>
                             <th width="20">Jam Masuk</th>
-                            <th width="20">Tanggal</th>
+                            <th width="20">Jam Keluar</th>
                             <th width="30"></th>
                           </tr>
                         </thead>
@@ -52,9 +53,10 @@
 		                            <input type="checkbox" v-model="checkedRows" :value="user.id">
 		                          </label>
                         		</td>
-                        		<td>{{ user.nama }}</td>
-                        		<td>{{ user.jam }}</td>
                         		<td>{{ user.created_at }}</td>
+                        		<td>{{ user.nama }}</td>
+                        		<td>{{ user.checkin }}</td>
+                        		<td>{{ user.checkout }}</td>
                         		<td v-if="user.action == 'masuk'"><i class="fa fa-check text-success"></i></td>
                         		<td v-if="user.action == 'alfa'"><span class="label label-danger">Alfa</span></td>
                         		<td v-if="user.action == 'izin'"><span class="label label-info">Izin</span></i></td>

@@ -9,8 +9,10 @@ class Absen extends Model
     protected $table = 'absen';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'karyawan_id', 'verifikasi_id', 'status', 'alasan'
+        'karyawan_id', 'verifikasi_id', 'status', 'alasan', 'created_at', 'updated_at'
     ];
+
+    // protected $dates = ['created_at', 'updated_at'];
 
     public function karyawan()
     {

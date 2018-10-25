@@ -19,10 +19,6 @@ Route::get('/', function () {
 Auth::routes();
 
 
-Route::get('/carbon', function(){
-	return new Carbon\Carbon('last day of October 2018');
-});
-
 Route::get('/expired', function(){
 	if (!auth()->user()) {
 		$title = "Session error";
@@ -102,3 +98,4 @@ Route::get('rekap-admin', 'RekapController@index')->name('rekap-admin.index');
 Route::get('rekap-admin/json', 'RekapController@jsonRekap');
 Route::get('rekap-admin/selectMasterRekap', 'RekapController@selectMasterRekap');
 Route::put('rekap-admin/{id}/updateMasterRekap', 'RekapController@updateMasterRekap');
+Route::get('rekap-admin/export', 'RekapController@export')->name('rekap-admin.export');

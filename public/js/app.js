@@ -61247,6 +61247,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -61436,11 +61438,13 @@ var render = function() {
                           ])
                         ]),
                         _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(user.created_at))]),
+                        _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(user.nama))]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(user.jam))]),
+                        _c("td", [_vm._v(_vm._s(user.checkin))]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(user.created_at))]),
+                        _c("td", [_vm._v(_vm._s(user.checkout))]),
                         _vm._v(" "),
                         user.action == "masuk"
                           ? _c("td", [
@@ -61600,11 +61604,13 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", { attrs: { width: "10" } }),
         _vm._v(" "),
+        _c("th", { attrs: { width: "20" } }, [_vm._v("Tanggal")]),
+        _vm._v(" "),
         _c("th", { attrs: { width: "40" } }, [_vm._v("Nama Karyawan")]),
         _vm._v(" "),
         _c("th", { attrs: { width: "20" } }, [_vm._v("Jam Masuk")]),
         _vm._v(" "),
-        _c("th", { attrs: { width: "20" } }, [_vm._v("Tanggal")]),
+        _c("th", { attrs: { width: "20" } }, [_vm._v("Jam Keluar")]),
         _vm._v(" "),
         _c("th", { attrs: { width: "30" } })
       ])
@@ -62956,6 +62962,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -62964,7 +62971,7 @@ $(function () {
 		processing: true,
 		serverSide: true,
 		ajax: "rekap-admin/json",
-		columns: [{ data: 'nik', name: 'nik' }, { data: 'karyawan', name: 'karyawan' }, { data: 'jml_hadir', name: 'jml_hadir' }, { data: 'jml_izin', name: 'jml_izin' }, { data: 'jml_sakit', name: 'jml_sakit' }, { data: 'jml_alfa', name: 'jml_alfa' }]
+		columns: [{ data: 'nik', name: 'nik' }, { data: 'karyawan', name: 'karyawan' }, { data: 'jml_hadir', name: 'jml_hadir' }, { data: 'jml_izin', name: 'jml_izin' }, { data: 'jml_sakit', name: 'jml_sakit' }, { data: 'jml_alfa', name: 'jml_alfa' }, { data: 'total_lembur', name: 'total_lembur' }]
 	});
 	Echo.channel('draw-table-event').listen('DrawTableEvent', function (e) {
 		table.draw();
@@ -63065,7 +63072,9 @@ var staticRenderFns = [
                 _vm._v(" "),
                 _c("th", { attrs: { width: "10%" } }, [_vm._v("Jumlah Sakit")]),
                 _vm._v(" "),
-                _c("th", { attrs: { width: "10%" } }, [_vm._v("Jumlah Alfa")])
+                _c("th", { attrs: { width: "10%" } }, [_vm._v("Jumlah Alfa")]),
+                _vm._v(" "),
+                _c("th", { attrs: { width: "10%" } }, [_vm._v("Total Lembur")])
               ])
             ]),
             _vm._v(" "),

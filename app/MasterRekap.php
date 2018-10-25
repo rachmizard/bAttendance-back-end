@@ -13,7 +13,7 @@ class MasterRekap extends Model
         'start',
         'end'
     ];
-    protected $dates = ['tanggal_aktif_rekap'];
+    // protected $dates = ['tanggal_aktif_rekap'];
 
     public function absen()
     {
