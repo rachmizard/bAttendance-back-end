@@ -8,6 +8,7 @@ class Absen extends Model
 {
     protected $table = 'absen';
     protected $primaryKey = 'id';
+    public $timestamps = true;
     protected $fillable = [
         'karyawan_id', 'verifikasi_id', 'status', 'alasan', 'created_at', 'updated_at'
     ];

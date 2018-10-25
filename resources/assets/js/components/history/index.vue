@@ -43,25 +43,28 @@
                             <th width="40">Nama Karyawan</th>
                             <th width="20">Jam Masuk</th>
                             <th width="20">Jam Keluar</th>
-                            <th width="30"></th>
+                            <th width="30">Status</th>
+                            <th width="30">Alasan</th>
                           </tr>
                         </thead>
                         <tbody>
                         	<tr v-for="(user, index) in users.data">
                         		<td>
 		                          <label>
-		                            <input type="checkbox" v-model="checkedRows" :value="user.id">
+		                            <input type="checkbox" v-model="checkedRows" :value="user.absen_id">
 		                          </label>
                         		</td>
                         		<td>{{ user.created_at }}</td>
                         		<td>{{ user.nama }}</td>
                         		<td>{{ user.checkin }}</td>
                         		<td>{{ user.checkout }}</td>
-                        		<td v-if="user.action == 'masuk'"><i class="fa fa-check text-success"></i></td>
+                        		<td v-if="user.action == 'masuk'"><span class="label label-info">on working</span></td>
+                        		<td v-if="user.action == 'keluar'"><i class="fa fa-check text-success"></i></td>
                         		<td v-if="user.action == 'alfa'"><span class="label label-danger">Alfa</span></td>
                         		<td v-if="user.action == 'izin'"><span class="label label-info">Izin</span></i></td>
                         		<td v-if="user.action == 'sakit'"><span class="label label-warning">Sakit</span></td>
                         		<td v-if="user.action == ''"><span class="label label-default">Tidak ada keterangan</span></td>
+                        		<td>{{ user.alasan }}</td>
                         	</tr>
                         </tbody>
                       </table>

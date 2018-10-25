@@ -1,6 +1,7 @@
 <?php
 use App\Events\ExpiredSession as Expired;
 use App\Events\Absen as AbsenEvent;
+use Carbon\Carbon;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,6 +19,44 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('estimation', function(){
+	$start = Carbon::parse('2018-09-10 07:00:00');
+	$pause = Carbon::parse('2018-09-10 17:00:00');
+
+	return $diffInSeconds = $pause->diffInHours($start).' jam/'.$pause->diffInSeconds($start).' menit/';
+});
+
+Route::get('/randomabsen', function(){
+
+    // Get date now
+    $validator = Carbon::today()->format('Y-m-d');
+    // Check if data is already exist for presence today
+    $check = \App\Absen::where('karyawan_id', request(rand(82, 110)))->where('status', 'masuk')->whereDate('created_at', $validator)->get();
+    if (!count($check) > 0) {
+		$data['karyawan_id'] = rand(82, 110);
+		$data['verifikasi_id'] = rand(1, 14);
+		$data['status'] = 'masuk';
+		$data['alasan'] = null;
+	    $title = 'Absen Notifikasi';
+	    $message =  \App\Karyawan::find($data['karyawan_id'])->nama .' melakukan absen masuk hari ini '. Carbon::now()->format('d-m-Y H:i:s');
+	    $type = 'success';
+	    $image = 'foto.jpg';
+	    event(new AbsenEvent($title, $message, $type, $image));
+		return \App\Absen::create($data);
+    }else{
+
+		$data['karyawan_id'] = rand(82, 110);
+		$data['verifikasi_id'] = rand(1, 14);
+		$data['status'] = 'masuk';
+		$data['alasan'] = null;
+	    $title = 'Absen Notifikasi';
+	    $message =  \App\Karyawan::find($data['karyawan_id'])->nama .' sudah melakukan absen masuk hari ini '. Carbon::now()->format('d-m-Y H:i:s');
+	    $type = 'success';
+	    $image = 'foto.jpg';
+	    event(new AbsenEvent($title, $message, $type, $image));
+		return 'sudah absen';
+    }
+});
 
 Route::get('/expired', function(){
 	if (!auth()->user()) {

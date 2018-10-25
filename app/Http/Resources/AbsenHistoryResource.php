@@ -19,23 +19,27 @@ class AbsenHistoryResource extends Resource
     {
         // return parent::toArray($request);
         $jam = Absen::where(['karyawan_id' => $this->id, 'status' => 'masuk'])->whereDate('created_at', Carbon::now()->format('Y-m-d'))->value('created_at');
+        $getStatus = Absen::where(['karyawan_id' => $this->id])->whereDate('created_at', Carbon::now()->format('Y-m-d'))->first();
+        $getAlasan = Absen::where(['karyawan_id' => $this->id, 'status' => 'izin'])->whereDate('created_at', Carbon::now()->format('Y-m-d'))->first();
         return [
             'id' => $this->id,
+            'absen_id' => $getStatus['id'],
             'karyawan_id' => $this->id,
             'nama' => $this->nama,
             'divisi' => $this->divisi,
-            'action' => $this->status,
+            'action' => $getStatus['status'],
             // 'jam' => $this->verifikasi->created_at->format('h:i:s A'),
             'jam' => $jam == null ? '-' : Carbon::parse($jam)->diffForHumans(),
             'checkin' => $this->checkInKaryawan() == null ? '-' : Carbon::parse($this->checkInKaryawan())->format('H:i:s'),
-            'checkout' => $this->checkOutKaryawan() == null ? 'Belum pulang' : Carbon::parse($this->checkOutKaryawan())->format('H:i:s'),
+            'checkout' => $this->checkOutKaryawan() == null ? '-' : Carbon::parse($this->checkOutKaryawan())->format('H:i:s'),
             // 'tanggal' => $this->verifikasi->created_at->diffForHumans(),
             'tanggal' => $this->absenId() == null ? '-' : Carbon::parse($this->absenId())->diffForHumans(),
             // 'created_at' => $this->verifikasi->created_at->format('d-m-Y'),
             'created_at' => $this->absenId() == null ? '-' : Carbon::parse($this->absenId())->format('d-m-Y'),
             // 'telah_masuk' => $this->verifikasi->created_at->diffForHumans(),
             'telah_masuk' => $this->absenId() == null ? '-' : Carbon::parse($this->absenId())->diffForHumans(),
-            'text_message' => $this->absenId() == null ? '-' : 'Hai, saya telah masuk '. Carbon::parse($this->absenId())->diffForHumans()
+            'text_message' => $this->absenId() == null ? '-' : 'Hai, saya telah masuk '. Carbon::parse($this->absenId())->diffForHumans(),
+            'alasan' => $getAlasan['alasan']
         ];
     }
 
@@ -53,8 +57,17 @@ class AbsenHistoryResource extends Resource
 
     public function checkOutKaryawan()
     {
-        $checkOut = Absen::where(['karyawan_id' => $this->karyawan_id, 'status' => 'keluar', 'created_at' => Carbon::now()->format('Y-m-d')])->value('created_at');
-        return $checkOut;
+        
+        return Absen::where(['karyawan_id' => $this->id, 'status' => 'keluar'])->whereDate('created_at', Carbon::now()->format('Y-m-d'))->value('created_at');
         // return response()->json(['status' => 'keluar']);
+    }
+
+    public function countEstimation()
+    {
+        
+    $start = Carbon::parse($this->checkInKaryawan());
+    $pause = Carbon::parse($this->checkOu());
+
+    return $diffInSeconds = $pause->diffInHours($start);
     }
 }

@@ -61249,6 +61249,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -61407,9 +61410,9 @@ var render = function() {
                               ],
                               attrs: { type: "checkbox" },
                               domProps: {
-                                value: user.id,
+                                value: user.absen_id,
                                 checked: Array.isArray(_vm.checkedRows)
-                                  ? _vm._i(_vm.checkedRows, user.id) > -1
+                                  ? _vm._i(_vm.checkedRows, user.absen_id) > -1
                                   : _vm.checkedRows
                               },
                               on: {
@@ -61418,7 +61421,7 @@ var render = function() {
                                     $$el = $event.target,
                                     $$c = $$el.checked ? true : false
                                   if (Array.isArray($$a)) {
-                                    var $$v = user.id,
+                                    var $$v = user.absen_id,
                                       $$i = _vm._i($$a, $$v)
                                     if ($$el.checked) {
                                       $$i < 0 &&
@@ -61447,6 +61450,14 @@ var render = function() {
                         _c("td", [_vm._v(_vm._s(user.checkout))]),
                         _vm._v(" "),
                         user.action == "masuk"
+                          ? _c("td", [
+                              _c("span", { staticClass: "label label-info" }, [
+                                _vm._v("on working")
+                              ])
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        user.action == "keluar"
                           ? _c("td", [
                               _c("i", {
                                 staticClass: "fa fa-check text-success"
@@ -61490,7 +61501,9 @@ var render = function() {
                                 [_vm._v("Tidak ada keterangan")]
                               )
                             ])
-                          : _vm._e()
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(user.alasan))])
                       ])
                     })
                   )
@@ -61612,7 +61625,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { width: "20" } }, [_vm._v("Jam Keluar")]),
         _vm._v(" "),
-        _c("th", { attrs: { width: "30" } })
+        _c("th", { attrs: { width: "30" } }, [_vm._v("Status")]),
+        _vm._v(" "),
+        _c("th", { attrs: { width: "30" } }, [_vm._v("Alasan")])
       ])
     ])
   }
