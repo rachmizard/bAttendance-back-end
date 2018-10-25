@@ -12,6 +12,9 @@ class Verifikasi extends Model
         'status', 'pin'
     ];
 
+    // protected $dateFormat = '';
+
+
     public function absen()
     {
     	return $this->hasMany(Absen::class, 'id');

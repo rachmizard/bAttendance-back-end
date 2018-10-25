@@ -18,6 +18,7 @@ class AbsenHistoryResource extends Resource
     public function toArray($request)
     {
         // return parent::toArray($request);
+        $jam = Absen::where(['karyawan_id' => $this->id, 'status' => 'masuk'])->whereDate('created_at', Carbon::now()->format('Y-m-d'))->value('created_at');
         return [
             'id' => $this->id,
             'karyawan_id' => $this->id,
@@ -25,35 +26,28 @@ class AbsenHistoryResource extends Resource
             'divisi' => $this->divisi,
             'action' => $this->status,
             // 'jam' => $this->verifikasi->created_at->format('h:i:s A'),
-            'jam' => $this->absenId(),
-            'checkin' => $this->checkInKaryawan(),
-            'checkout' => $this->checkOutKaryawan(),
+            'jam' => $jam == null ? '-' : Carbon::parse($jam)->diffForHumans(),
+            'checkin' => $this->checkInKaryawan() == null ? '-' : Carbon::parse($this->checkInKaryawan())->format('H:i:s'),
+            'checkout' => $this->checkOutKaryawan() == null ? 'Belum pulang' : Carbon::parse($this->checkOutKaryawan())->format('H:i:s'),
             // 'tanggal' => $this->verifikasi->created_at->diffForHumans(),
-            'tanggal' => $this->absenId(),
+            'tanggal' => $this->absenId() == null ? '-' : Carbon::parse($this->absenId())->diffForHumans(),
             // 'created_at' => $this->verifikasi->created_at->format('d-m-Y'),
-            'created_at' => $this->absenId(),
+            'created_at' => $this->absenId() == null ? '-' : Carbon::parse($this->absenId())->format('d-m-Y'),
             // 'telah_masuk' => $this->verifikasi->created_at->diffForHumans(),
-            'telah_masuk' => $this->absenId(),
-            'text_message' => 'Hi, saya telah masuk '
+            'telah_masuk' => $this->absenId() == null ? '-' : Carbon::parse($this->absenId())->diffForHumans(),
+            'text_message' => $this->absenId() == null ? '-' : 'Hai, saya telah masuk '. Carbon::parse($this->absenId())->diffForHumans()
         ];
     }
 
     public function absenId()
     {
-        $getAbsenId = Absen::where(['karyawan_id' => $this->id, 'created_at' => Carbon::now()->format('Y-m-d')])->pluck('verifikasi_id');
-        $this->verifikasiIn($getAbsenId);
-        return Absen::where(['karyawan_id' => $this->id, 'status' => 'masuk', 'created_at' => Carbon::now()->format('Y-m-d')])->first();
-    }
-
-    public function verifikasiIn($id)
-    {
-        return Verifikasi::findOrFail($id);
+        $getAbsenId = Absen::where(['karyawan_id' => $this->id])->whereDate('created_at', Carbon::now()->format('Y-m-d'))->value('verifikasi_id');
+        return Verifikasi::where(['id' => $getAbsenId])->value('created_at');
     }
 
     public function checkInKaryawan()
     {
-        $checkIn = Absen::where(['karyawan_id' => $this->id, 'status' => 'masuk', 'created_at' => Carbon::now()->format('Y-m-d')])->value('created_at');
-        return $checkIn;
+        return Absen::where(['karyawan_id' => $this->id, 'status' => 'masuk'])->whereDate('created_at', Carbon::now()->format('Y-m-d'))->value('created_at');
         // return response()->json(['status' => 'masuk']);
     }
 

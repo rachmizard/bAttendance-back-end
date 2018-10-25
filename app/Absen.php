@@ -14,6 +14,12 @@ class Absen extends Model
 
     // protected $dates = ['created_at', 'updated_at'];
 
+    public function getCreatedAtAttribute()
+    {
+        return \Carbon\Carbon::parse($this->attributes['created_at'])
+           ->format('H:i:s');
+    }
+
     public function karyawan()
     {
     	return $this->belongsTo(Karyawan::class, 'karyawan_id', 'id');
