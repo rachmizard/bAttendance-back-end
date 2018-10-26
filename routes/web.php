@@ -33,8 +33,8 @@ Route::get('/randomabsen', function(){
     // Check if data is already exist for presence today
     $check = \App\Absen::where('karyawan_id', request(rand(82, 110)))->where('status', 'masuk')->whereDate('created_at', $validator)->get();
     if (!count($check) > 0) {
-		$data['karyawan_id'] = rand(82, 110);
-		$data['verifikasi_id'] = rand(1, 14);
+		$data['karyawan_id'] = rand(1, 20);
+		$data['verifikasi_id'] = rand(1, 4);
 		$data['status'] = 'masuk';
 		$data['alasan'] = null;
 	    $title = 'Absen Notifikasi';
@@ -86,55 +86,60 @@ Route::get('/absentest', function(){
         event(new AbsenEvent($title, $message, $type, $image));
 });
 
-Route::get('/panel', 'HomeController@index')->name('home')->middleware('admin');
-Route::get('dashboard', 'HomeController@dashboard')->name('home.dashboard'); // DASHBOARD COUNT
 
-Route::resource('laporan', 'LaporanController');
+	Route::get('/panel', 'HomeController@index')->name('home')->middleware('admin');
+	Route::get('dashboard', 'HomeController@dashboard')->name('home.dashboard'); // DASHBOARD COUNT
 
-// Karyawan Routes
-// Json Return
-Route::get('karyawan/json', 'KaryawanController@jsonKaryawan')->name('jsonKaryawan');
-// End Json Return
+	Route::resource('laporan', 'LaporanController');
 
-Route::get('karyawan', 'KaryawanController@index')->name('karyawan'); // VIEW
-Route::get('karyawan/paginate', 'KaryawanController@paginate'); //FETCHING BY PAGINATE
-Route::post('karyawan/post', 'KaryawanController@store'); // POST
-Route::get('karyawan/{id}/edit', 'KaryawanController@edit'); // PATCH (UPDATE)
-// Route::put('karyawan/{id}/update', 'KaryawanController@update'); // PATCH (UPDATE) for VUE JS
-Route::put('karyawan/{id}/update', 'KaryawanController@updateRequest'); // PATCH (UPDATE)
-Route::post('karyawan/{id}/delete', 'KaryawanController@destroy'); // PATCH (UPDATE)
+	// Karyawan Routes
+	// Json Return
+	Route::get('karyawan/json', 'KaryawanController@jsonKaryawan')->name('jsonKaryawan');
+	// End Json Return
 
-Route::post('karyawan/import', 'KaryawanImportController@import'); // PATCH (UPDATE)
-Route::post('karyawan/exportKaryawan', 'KaryawanImportController@exportKaryawan')->name('karyawan.exportKaryawan'); // PATCH (UPDATE)
+	Route::get('karyawan', 'KaryawanController@index')->name('karyawan'); // VIEW
+	Route::get('karyawan/paginate', 'KaryawanController@paginate'); //FETCHING BY PAGINATE
+	Route::post('karyawan/post', 'KaryawanController@store'); // POST
+	Route::get('karyawan/{id}/edit', 'KaryawanController@edit'); // PATCH (UPDATE)
+	// Route::put('karyawan/{id}/update', 'KaryawanController@update'); // PATCH (UPDATE) for VUE JS
+	Route::put('karyawan/{id}/update', 'KaryawanController@updateRequest'); // PATCH (UPDATE)
+	Route::post('karyawan/{id}/delete', 'KaryawanController@destroy'); // PATCH (UPDATE)
 
-// Route::delete('karyawan/json/{id}/delete', 'KaryawanController@destroyJson'); // PATCH (UPDATE)
+	Route::post('karyawan/import', 'KaryawanImportController@import'); // PATCH (UPDATE)
+	Route::post('karyawan/exportKaryawan', 'KaryawanImportController@exportKaryawan')->name('karyawan.exportKaryawan'); // PATCH (UPDATE)
 
-Route::get('jam', 'JamController@index')->name('jam.index');
-Route::post('jam/post', 'JamController@store')->name('jam.post');
-Route::delete('jam/{id}/delete', 'JamController@destroy')->name('jam.destroy');
-Route::put('jam/{id}/aktifkan', 'JamController@aktifkan')->name('jam.aktifkan');
-Route::put('jam/{id}/matikan', 'JamController@matikan')->name('jam.matikan');
+	// Route::delete('karyawan/json/{id}/delete', 'KaryawanController@destroyJson'); // PATCH (UPDATE)
+
+	Route::get('jam', 'JamController@index')->name('jam.index');
+	Route::post('jam/post', 'JamController@store')->name('jam.post');
+	Route::delete('jam/{id}/delete', 'JamController@destroy')->name('jam.destroy');
+	Route::put('jam/{id}/aktifkan', 'JamController@aktifkan')->name('jam.aktifkan');
+	Route::put('jam/{id}/matikan', 'JamController@matikan')->name('jam.matikan');
 
 
-// History Routes
-Route::get('history', 'HistoryController@index')->name('history.index');
-Route::get('history/today', 'HistoryController@history')->name('history.history');
-Route::get('historyabsensi', 'HistoryController@indexview')->name('history.indexview');
-Route::delete('history/{id}/delete', 'HistoryController@destroy')->name('history.destroy');
-Route::post('history/deleteChecked', 'HistoryController@destroyChecked'); // PATCH (UPDATE)
+	// History Routes
+	Route::get('history', 'HistoryController@index')->name('history.index');
+	Route::get('history/today', 'HistoryController@history')->name('history.history');
+	Route::get('historyabsensi', 'HistoryController@indexview')->name('history.indexview');
+	Route::delete('history/{id}/delete', 'HistoryController@destroy')->name('history.destroy');
+	Route::post('history/deleteChecked', 'HistoryController@destroyChecked'); // PATCH (UPDATE)
 
-// Absen admin
-Route::get('absen-admin', 'AbsenAdminController@view')->name('absen-admin.view');
-Route::get('absen-admin/retrieve', 'AbsenAdminController@retrieve')->name('absen-admin.retrieve');
-Route::post('absen-admin/store', 'AbsenAdminController@store')->name('absen-admin.store');
-Route::get('absen-admin/{id}/edit', 'AbsenAdminController@edit')->name('absen-admin.edit');
-Route::post('absen-admin/{id}/update', 'AbsenAdminController@update')->name('absen-admin.update');
-Route::post('absen-admin/{id}/destroy', 'AbsenAdminController@destroy')->name('absen-admin.destroy');
-Route::post('absen-admin/destroyChecked', 'AbsenAdminController@destroyChecked')->name('absen-admin.destroyChecked');
+	// Absen admin
+	Route::get('absen-admin', 'AbsenAdminController@view')->name('absen-admin.view');
+	Route::get('absen-admin/retrieve', 'AbsenAdminController@retrieve')->name('absen-admin.retrieve');
+	Route::post('absen-admin/store', 'AbsenAdminController@store')->name('absen-admin.store');
+	Route::get('absen-admin/{id}/edit', 'AbsenAdminController@edit')->name('absen-admin.edit');
+	Route::post('absen-admin/{id}/update', 'AbsenAdminController@update')->name('absen-admin.update');
+	Route::post('absen-admin/{id}/destroy', 'AbsenAdminController@destroy')->name('absen-admin.destroy');
+	Route::post('absen-admin/destroyChecked', 'AbsenAdminController@destroyChecked')->name('absen-admin.destroyChecked');
 
-// Rekap Admin Routes
-Route::get('rekap-admin', 'RekapController@index')->name('rekap-admin.index');
-Route::get('rekap-admin/json', 'RekapController@jsonRekap');
-Route::get('rekap-admin/selectMasterRekap', 'RekapController@selectMasterRekap');
-Route::put('rekap-admin/{id}/updateMasterRekap', 'RekapController@updateMasterRekap');
-Route::get('rekap-admin/export', 'RekapController@export')->name('rekap-admin.export');
+	// Rekap Admin Routes
+	Route::get('rekap-admin', 'RekapController@index')->name('rekap-admin.index');
+	Route::get('rekap-admin/json', 'RekapController@jsonRekap');
+	Route::get('rekap-admin/selectMasterRekap', 'RekapController@selectMasterRekap');
+	Route::put('rekap-admin/{id}/updateMasterRekap', 'RekapController@updateMasterRekap');
+	Route::get('rekap-admin/export', 'RekapController@export')->name('rekap-admin.export');
+
+	// Master Filter Routes
+	Route::post('master-filter/getFilterHistory', 'MasterFilterController@update')->name('master-filter.update');
+	Route::get('master-filter/getFilterHistory', 'MasterFilterController@show')->name('master-filter.get');

@@ -61243,68 +61243,88 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
 		return {
+			errors: [],
 			checkedRows: [],
 			users: {},
+			filter: {
+				tgl_history: ''
+			},
 			current_page: '',
 			from: '',
 			last_page: '',
 			per_page: '',
 			to: '',
 			total: '',
-			alertShow: false
+			alertShow: false,
+			message: '',
+			messageError: ''
 		};
 	},
 	mounted: function mounted() {
+		var _this = this;
+
+		axios.get('master-filter/getFilterHistory').then(function (respon) {
+			_this.filter.tgl_history = respon.data.tgl_history;
+		});
 		this.fetch();
 	},
 
 	methods: {
 		paginate: function paginate() {
-			var _this = this;
+			var _this2 = this;
 
 			var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 
 			axios.get('history?page=' + page).then(function (response) {
-				_this.users = response.data;
-				_this.current_page = response.data.meta.current_page;
-				_this.from = response.data.meta.from;
-				_this.last_page = response.data.meta.last_page;
-				_this.per_page = response.data.meta.per_page;
-				_this.to = response.data.meta.to;
-				_this.total = response.data.meta.total;
+				_this2.users = response.data;
+				_this2.current_page = response.data.meta.current_page;
+				_this2.from = response.data.meta.from;
+				_this2.last_page = response.data.meta.last_page;
+				_this2.per_page = response.data.meta.per_page;
+				_this2.to = response.data.meta.to;
+				_this2.total = response.data.meta.total;
 			});
 		},
 		fetch: function fetch() {
-			var _this2 = this;
-
-			axios.get('history').then(function (respon) {
-				_this2.users = respon.data;
-				_this2.current_page = respon.data.meta.current_page;
-				_this2.from = respon.data.meta.from;
-				_this2.last_page = respon.data.meta.last_page;
-				_this2.per_page = respon.data.meta.per_page;
-				_this2.to = respon.data.meta.to;
-				_this2.total = respon.data.meta.total;
-			});
-		},
-		refresh: function refresh() {
 			var _this3 = this;
 
 			axios.get('history').then(function (respon) {
 				_this3.users = respon.data;
+				_this3.current_page = respon.data.meta.current_page;
+				_this3.from = respon.data.meta.from;
+				_this3.last_page = respon.data.meta.last_page;
+				_this3.per_page = respon.data.meta.per_page;
+				_this3.to = respon.data.meta.to;
+				_this3.total = respon.data.meta.total;
+			});
+		},
+		refresh: function refresh() {
+			var _this4 = this;
+
+			axios.get('history').then(function (respon) {
+				_this4.users = respon.data;
 			});
 			this.$root.loading = true;
 			setInterval(function () {
-				_this3.$root.loading = false;
+				_this4.$root.loading = false;
 			}, 2000);
+		},
+		filterHistory: function filterHistory() {
+			var _this5 = this;
+
+			var app = this;
+			var filterDate = app.filter;
+			axios.post('master-filter/getFilterHistory', filterDate).then(function (respon) {
+				_this5.refresh();
+			}).catch(function (error) {
+				_this5.errors = error.response.data.errors;
+				_this5.message = false;
+			});
 		},
 		deleteHistory: function deleteHistory(id) {
 			var app = this;
@@ -61315,14 +61335,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			}
 		},
 		deleteChecked: function deleteChecked() {
-			var _this4 = this;
+			var _this6 = this;
 
 			if (this.checkedRows.length == 0) {
 				alert('Silahkan ceklik karyawan yang ingn di hapus!');
 			} else {
 				if (confirm('Anda yakin untuk menghapus data yang di ceklis?')) {
 					axios.post('history/deleteChecked', { checkedId: this.checkedRows }).then(function (respon) {
-						_this4.refresh();
+						_this6.refresh();
 					});
 				}
 			}
@@ -61377,7 +61397,47 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(1)
+              _c("div", { staticClass: "col-sm-4 m-b-xs" }, [
+                _c(
+                  "div",
+                  {
+                    class: [
+                      "input-group",
+                      _vm.errors.tgl_history ? "has-error" : ""
+                    ]
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.filter.tgl_history,
+                          expression: "filter.tgl_history"
+                        }
+                      ],
+                      staticClass: "form-control input-sm",
+                      attrs: { type: "date", placeholder: "Filter by date" },
+                      domProps: { value: _vm.filter.tgl_history },
+                      on: {
+                        change: function($event) {
+                          _vm.filterHistory()
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.filter,
+                            "tgl_history",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]
+                )
+              ])
             ])
           ]),
           _vm._v(" "),
@@ -61385,7 +61445,7 @@ var render = function() {
             _c("section", { staticClass: "panel panel-default" }, [
               _c("div", { staticClass: "table-responsive" }, [
                 _c("table", { staticClass: "table table-striped m-b-none" }, [
-                  _vm._m(2),
+                  _vm._m(1),
                   _vm._v(" "),
                   _c(
                     "tbody",
@@ -61578,30 +61638,6 @@ var staticRenderFns = [
         _c("i", { staticClass: "fa fa-caret-left text-active fa-lg" })
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-4 m-b-xs" }, [
-      _c("div", { staticClass: "input-group" }, [
-        _c("input", {
-          staticClass: "input-sm form-control",
-          attrs: { type: "text", placeholder: "Search" }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "input-group-btn" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-sm btn-default",
-              attrs: { type: "button" }
-            },
-            [_vm._v("Go!")]
-          )
-        ])
-      ])
-    ])
   },
   function() {
     var _vm = this
