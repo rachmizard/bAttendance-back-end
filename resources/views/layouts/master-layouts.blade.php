@@ -66,9 +66,13 @@
       </div>
       <ul class="nav navbar-nav hidden-xs">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle dker" data-toggle="dropdown">
+          <!-- <a href="#" class="dropdown-toggle dker" data-toggle="dropdown">
             <i class="fa fa-building-o text-white"></i>
             <span class="font-bold text-white">Activity</span>
+          </a> -->
+          <a href="#nav" data-toggle="class:nav-xs" class="dker pull-right text-white">
+            <i class="fa fa-align-justify text"></i>
+            <i class="fa fa-align-left text-active text-white"></i>
           </a>
           <section class="dropdown-menu aside-xl on animated fadeInLeft no-borders lt">
             <div class="wrapper lter m-t-n-xs">
@@ -256,7 +260,7 @@
               </div>
             </section>
 
-            <footer class="footer lt hidden-xs b-t b-dark">
+            <!-- <footer class="footer lt hidden-xs b-t b-dark">
               <div id="chat" class="dropup">
                 <section class="dropdown-menu on aside-md m-l-n">
                   <section class="panel bg-white">
@@ -281,15 +285,15 @@
                   </section>
                 </section>
               </div>
-              <a href="#nav" data-toggle="class:nav-xs" class="pull-right btn btn-sm btn-dark btn-icon">
+              <a href="#nav" data-toggle="class:nav-xs" class="pull-right btn btn-sm btn-info btn-icon">
                 <i class="fa fa-angle-left text"></i>
                 <i class="fa fa-angle-right text-active"></i>
               </a>
               <div class="btn-group hidden-nav-xs">
-                <button type="button" title="Chats" class="btn btn-icon btn-sm btn-dark" data-toggle="dropdown" data-target="#chat"><i class="fa fa-comment-o"></i></button>
-                <button type="button" title="Contacts" class="btn btn-icon btn-sm btn-dark" data-toggle="dropdown" data-target="#invite"><i class="fa fa-facebook"></i></button>
+                <button type="button" title="Chats" class="btn btn-icon btn-sm btn-info" data-toggle="dropdown" data-target="#chat"><i class="fa fa-comment-o"></i></button>
+                <button type="button" title="Contacts" class="btn btn-icon btn-sm btn-info" data-toggle="dropdown" data-target="#invite"><i class="fa fa-facebook"></i></button>
               </div>
-            </footer>
+            </footer> -->
           </section>
         </aside>
         <!-- /.aside -->
