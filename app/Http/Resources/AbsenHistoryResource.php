@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
 use App\Absen;
+use App\MasterFilter;
 use App\Verifikasi;
 use Carbon\Carbon;
 
@@ -18,9 +19,9 @@ class AbsenHistoryResource extends Resource
     public function toArray($request)
     {
         // return parent::toArray($request);
-        $jam = Absen::where(['karyawan_id' => $this->id, 'status' => 'masuk'])->whereDate('created_at', Carbon::now()->format('Y-m-d'))->value('created_at');
-        $getStatus = Absen::where(['karyawan_id' => $this->id])->whereDate('created_at', Carbon::now()->format('Y-m-d'))->first();
-        $getAlasan = Absen::where(['karyawan_id' => $this->id, 'status' => 'izin'])->whereDate('created_at', Carbon::now()->format('Y-m-d'))->first();
+        $jam = Absen::where(['karyawan_id' => $this->id, 'status' => 'masuk'])->whereDate('created_at', Carbon::parse($this->filterHistory())->format('Y-m-d'))->value('created_at');
+        $getStatus = Absen::where(['karyawan_id' => $this->id])->whereDate('created_at', Carbon::parse($this->filterHistory())->format('Y-m-d'))->first();
+        $getAlasan = Absen::where(['karyawan_id' => $this->id, 'status' => 'izin'])->whereDate('created_at', Carbon::parse($this->filterHistory())->format('Y-m-d'))->first();
         return [
             'id' => $this->id,
             'absen_id' => $getStatus['id'],
@@ -43,22 +44,27 @@ class AbsenHistoryResource extends Resource
         ];
     }
 
+    public function filterHistory()
+    {
+        return MasterFilter::findOrFail(1)->value('tgl_history');
+    }
+
     public function absenId()
     {
-        $getAbsenId = Absen::where(['karyawan_id' => $this->id])->whereDate('created_at', Carbon::now()->format('Y-m-d'))->value('verifikasi_id');
+        $getAbsenId = Absen::where(['karyawan_id' => $this->id])->whereDate('created_at', Carbon::parse($this->filterHistory())->format('Y-m-d'))->value('verifikasi_id');
         return Verifikasi::where(['id' => $getAbsenId])->value('created_at');
     }
 
     public function checkInKaryawan()
     {
-        return Absen::where(['karyawan_id' => $this->id, 'status' => 'masuk'])->whereDate('created_at', Carbon::now()->format('Y-m-d'))->value('created_at');
+        return Absen::where(['karyawan_id' => $this->id, 'status' => 'masuk'])->whereDate('created_at', Carbon::parse($this->filterHistory())->format('Y-m-d'))->value('created_at');
         // return response()->json(['status' => 'masuk']);
     }
 
     public function checkOutKaryawan()
     {
         
-        return Absen::where(['karyawan_id' => $this->id, 'status' => 'keluar'])->whereDate('created_at', Carbon::now()->format('Y-m-d'))->value('created_at');
+        return Absen::where(['karyawan_id' => $this->id, 'status' => 'keluar'])->whereDate('created_at', Carbon::parse($this->filterHistory())->format('Y-m-d'))->value('created_at');
         // return response()->json(['status' => 'keluar']);
     }
 

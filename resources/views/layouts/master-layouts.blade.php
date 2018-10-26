@@ -59,7 +59,7 @@
         <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen,open" data-target="#nav,html">
           <i class="fa fa-bars"></i>
         </a>
-        <a href="#" class="navbar-brand" data-toggle="fullscreen"><img src="images/logo.png" class="m-r-sm">{{ config('app.name', 'Laravel') }}</a>
+        <a href="#" class="navbar-brand" data-toggle="fullscreen"><img src="images/logo_attendance.png" class="m-r-md">{{ config('app.name', 'Laravel') }}</a>
         <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".nav-user">
           <i class="fa fa-cog"></i>
         </a>
@@ -67,8 +67,8 @@
       <ul class="nav navbar-nav hidden-xs">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle dker" data-toggle="dropdown">
-            <i class="fa fa-building-o"></i>
-            <span class="font-bold">Activity</span>
+            <i class="fa fa-building-o text-white"></i>
+            <span class="font-bold text-white">Activity</span>
           </a>
           <section class="dropdown-menu aside-xl on animated fadeInLeft no-borders lt">
             <div class="wrapper lter m-t-n-xs">
@@ -107,8 +107,8 @@
       <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user">
         <li class="hidden-xs">
           <a href="#" class="dropdown-toggle dk" data-toggle="dropdown">
-            <i class="fa fa-bell"></i>
-            <span class="badge badge-sm up bg-danger m-l-n-sm count">2</span>
+            <i class="fa fa-bell text-white"></i>
+            <span class="badge badge-sm up bg-danger m-l-n-sm count text-white">2</span>
           </a>
           <section class="dropdown-menu aside-xl">
             <section class="panel bg-white">
@@ -139,7 +139,7 @@
             </section>
           </section>
         </li>
-        <li class="dropdown hidden-xs">
+        <!-- <li class="dropdown hidden-xs">
           <a href="#" class="dropdown-toggle dker" data-toggle="dropdown"><i class="fa fa-fw fa-search"></i></a>
           <section class="dropdown-menu aside-xl animated fadeInUp">
             <section class="panel bg-white">
@@ -155,13 +155,13 @@
               </form>
             </section>
           </section>
-        </li>
+        </li> -->
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <span class="thumb-sm avatar pull-left">
-              <img src="images/avatar.jpg">
+              <img src="images/logo_attendance.png">
             </span>
-            {{ Auth::user()->name }} <b class="caret"></b>
+            <span class="text-white">{{ Auth::user()->name }}</span><b class="caret"></b>
           </a>
           <ul class="dropdown-menu animated fadeInRight">
             <span class="arrow top"></span>
@@ -191,12 +191,12 @@
                 <!-- nav -->
                 <nav class="nav-primary hidden-xs">
                   <ul class="nav">
-                    <li  class="active">
+                    <li class="active">
                       <a href="{{ route('home') }}" class="active">
                         <i class="fa fa-dashboard icon">
                           <b class="bg-danger"></b>
                         </i>
-                        <span>Dashboard</span>
+                        <span class="text-black">Dashboard</span>
                       </a>
                     </li>
                     <li >

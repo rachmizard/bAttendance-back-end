@@ -23,11 +23,8 @@
                       </div>
                     </div>
                     <div class="col-sm-4 m-b-xs">
-                      <div class="input-group">
-                        <input type="text" class="input-sm form-control" placeholder="Search">
-                        <span class="input-group-btn">
-                          <button class="btn btn-sm btn-default" type="button">Go!</button>
-                        </span>
+                      <div :class="['input-group', errors.tgl_history ? 'has-error'  : '']">
+                        <input type="date" @change="filterHistory()" class="form-control input-sm" placeholder="Filter by date" v-model="filter.tgl_history">
                       </div>
                     </div>
                   </div>
@@ -159,18 +156,27 @@
 	export default {
 		data() {
 			return {
+				errors: [],
 				checkedRows: [],
 				users: {},
+				filter: {
+					tgl_history: ''
+				},
 				current_page: '',
 				from: '',
 				last_page: '',
 				per_page: '',
 				to: '',
 				total: '',
-				alertShow: false
+				alertShow: false,
+	            message : '',
+	            messageError: '',
 			}
 		},
 		mounted() {
+			axios.get('master-filter/getFilterHistory').then(respon => {
+				this.filter.tgl_history = respon.data.tgl_history
+			})
 			this.fetch();
 		},
 		methods: {
@@ -206,6 +212,17 @@
 				 setInterval(() => {
 					this.$root.loading = false
 				 }, 2000)
+			},
+
+			filterHistory(){
+				var app = this;
+				var filterDate = app.filter;
+				axios.post('master-filter/getFilterHistory', filterDate).then(respon => {
+					this.refresh()
+				}).catch((error) => {
+	                 this.errors = error.response.data.errors;
+	                 this.message = false;
+	            });
 			},
 
 			deleteHistory(id){
