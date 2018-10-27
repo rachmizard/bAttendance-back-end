@@ -24304,7 +24304,6 @@ Vue.component('table-absen', __webpack_require__(185));
 Vue.component('datatable-absen', __webpack_require__(188));
 Vue.component('rekap-absen', __webpack_require__(191));
 Vue.component('tgl-aktif-rekap', __webpack_require__(194));
-
 /**
 * Vue Router
 *
@@ -60106,6 +60105,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -60114,7 +60114,7 @@ $(function () {
     processing: true,
     serverSide: true,
     ajax: "karyawan/json",
-    columns: [{ data: 'id', name: 'id' }, { data: 'nik', name: 'nik' }, { data: 'nama', name: 'nama' }, { data: 'divisi', name: 'divisi' }, { data: 'jenis_kelamin', name: 'jenis_kelamin' }, { data: 'status', name: 'status' }, { data: 'action', name: 'action', orderable: false, searchable: false }]
+    columns: [{ data: 'id', name: 'id' }, { data: 'nik', name: 'nik' }, { data: 'nama', name: 'nama' }, { data: 'divisi', name: 'divisi' }, { data: 'jenis_kelamin', name: 'jenis_kelamin' }, { data: 'status', name: 'status' }, { data: 'fp', name: 'fp' }, { data: 'action', name: 'action', orderable: false, searchable: false }]
   });
   Echo.channel('draw-table-event').listen('DrawTableEvent', function (e) {
     table.draw();
@@ -60146,6 +60146,11 @@ $(document).ready(function () {
       $("#jenis_kelamin").attr('value', data.jenis_kelamin);
       $("#nik").attr('value', data.nik);
       $("#status").attr('value', data.status);
+      if (data.fp == null) {
+        $("#fp").attr('src', '/storage/images/default.png');
+      } else {
+        $("#fp").attr('src', '/storage/images/' + data.fp);
+      }
       // document.getElementById('nama').setAttribute('value', data.nama);
       // document.getElementById('divisi').setAttribute('value', data.divisi);
       // document.getElementById('jenis_kelamin').setAttribute('value', data.jenis_kelamin);
@@ -60272,6 +60277,8 @@ var staticRenderFns = [
                 ]),
                 _vm._v(" "),
                 _c("th", { attrs: { width: "10%" } }, [_vm._v("Status")]),
+                _vm._v(" "),
+                _c("th", { attrs: { width: "10%" } }, [_vm._v("Foto")]),
                 _vm._v(" "),
                 _c("th", { attrs: { width: "25%" } }, [_vm._v("Actions")])
               ])
@@ -60437,18 +60444,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             errors: [],
             // url : 'karyawan/post',
+            image: '',
             state: {
                 nama: '',
                 divisi: '',
                 jenis_kelamin: '',
                 nik: '',
-                status: ''
+                status: '',
+                fp: ''
             },
             message: '',
             messageError: '',
@@ -60460,6 +60482,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        onImageChange: function onImageChange(e) {
+            var files = e.target.files || e.dataTransfer.files;
+            console.log(e.target.files[0]);
+            if (!files.length) return;
+            this.createImage(files[0]);
+            this.image = e.target.files[0];
+        },
+        createImage: function createImage(file) {
+            var reader = new FileReader();
+            var vm = this;
+            reader.onload = function (e) {
+                vm.image = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        },
+        uploadImage: function uploadImage() {
+            axios.put('/karyawan/uploadFp', { image: this.image }).then(function (response) {
+                if (response.data.success) {
+                    alert(response.data.success);
+                }
+            });
+        },
+
         store: function store(e) {
             var _this = this;
 
@@ -60504,7 +60549,11 @@ var render = function() {
         "form",
         {
           staticClass: "form-horizontal",
-          attrs: { action: "karyawan/post", method: "post" },
+          attrs: {
+            action: "karyawan/post",
+            method: "post",
+            enctype: "multipart/form-data"
+          },
           on: {
             submit: function($event) {
               $event.preventDefault()
@@ -60513,6 +60562,23 @@ var render = function() {
           }
         },
         [
+          _c("div", { staticClass: "form-group" }, [
+            _vm.state.fp
+              ? _c(
+                  "label",
+                  { staticClass: "col-md-2 control label", attrs: { for: "" } },
+                  [_vm._v("Hasil")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-10" }, [
+              _c("img", {
+                staticClass: "img-responsive",
+                attrs: { src: _vm.state.fp, height: "70", width: "90" }
+              })
+            ])
+          ]),
+          _vm._v(" "),
           _c(
             "div",
             { class: ["form-group", _vm.errors.nama ? "has-error" : ""] },
@@ -60759,6 +60825,27 @@ var render = function() {
               ])
             ]
           ),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c(
+              "label",
+              { staticClass: "col-md-2 control-label", attrs: { for: "nama" } },
+              [_vm._v("Upload Foto")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-10" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "file",
+                  autocomplete: "off",
+                  placeholder: "File...",
+                  autofocus: ""
+                },
+                on: { change: _vm.onImageChange }
+              })
+            ])
+          ]),
           _vm._v(" "),
           _c(
             "button",
@@ -61397,12 +61484,12 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-sm-4 m-b-xs" }, [
+              _c("div", { staticClass: "col-md-4 m-b-xs" }, [
                 _c(
                   "div",
                   {
                     class: [
-                      "input-group",
+                      "form-group",
                       _vm.errors.tgl_history ? "has-error" : ""
                     ]
                   },

@@ -22,8 +22,8 @@
                         <button class="btn btn-sm btn-default" @click="deleteChecked()"><i class="fa fa-trash-o"></i></button>
                       </div>
                     </div>
-                    <div class="col-sm-4 m-b-xs">
-                      <div :class="['input-group', errors.tgl_history ? 'has-error'  : '']">
+                    <div class="col-md-4 m-b-xs">
+                      <div :class="['form-group', errors.tgl_history ? 'has-error'  : '']">
                         <input type="date" @change="filterHistory()" class="form-control input-sm" placeholder="Filter by date" v-model="filter.tgl_history">
                       </div>
                     </div>

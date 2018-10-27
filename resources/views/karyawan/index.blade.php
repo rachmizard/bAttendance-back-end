@@ -46,6 +46,19 @@
                     <form class="form-horizontal" method="POST" id="updateForm">
                       <input type="hidden" name="_token" value="{{ csrf_token() }}">
                       <input type="hidden" name="_method" value="PUT">
+                        <label for="" class="col-md-4 control-label"></label>
+                        <div class="form-group">
+                          <div class="col-md-4">
+                            <img id="fp" width="100" height="100" alt="">
+                          </div>
+                        </div>
+                        {{-- 
+                      <div class="form-group">
+                          <label for="nama" class="col-md-4 control-label">Upload Foto</label>
+                          <div class="col-md-4">
+                              <input class="form-control" type="file" autocomplete="off" placeholder="File..." v-on:change="onImageChange" @change="uploadImage()" autofocus="">
+                          </div>
+                      </div> --}}
                         <div class="form-group">
                             <label for="nama" class="col-md-4 control-label">Nama</label>
                             <div class="col-md-4">

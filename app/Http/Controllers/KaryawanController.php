@@ -8,6 +8,8 @@ use Carbon\Carbon;
 use Yajra\Datatables\Datatables;
 use App\Events\DrawTableEvent;
 use App\Http\Resources\DashboardResource;
+use Illuminate\Support\Facades\Input;
+use Storage;
 
 class KaryawanController extends Controller
 {
@@ -29,9 +31,12 @@ class KaryawanController extends Controller
         return Datatables::of(Karyawan::all())
                 ->addColumn('action', function($karyawans){
                     return '
-                            <button type="button" class="btn btn-sm btn-info" data-target="#editKaryawanModal" data-toggle="modal" data-id="'. $karyawans->id .'" data-nik="'. $karyawans->nik .'" data-nama="'. $karyawans->nama .'" data-divisi="'. $karyawans->divisi .'" data-jenis_kelamin="'. $karyawans->jenis_kelamin .'" data-status="'. $karyawans->status .'"><i class="fa fa-pencil"></i></button>
+                            <button type="button" class="btn btn-sm btn-info" data-target="#editKaryawanModal" data-toggle="modal" data-id="'. $karyawans->id .'" data-nik="'. $karyawans->nik .'" data-nama="'. $karyawans->nama .'" data-divisi="'. $karyawans->divisi .'" data-jenis_kelamin="'. $karyawans->jenis_kelamin .'" data-status="'. $karyawans->status .' data-fp='. $karyawans->fp .'"><i class="fa fa-pencil"></i></button>
                             <button class="btn btn-sm btn-danger" data-target="#deleteModal" data-toggle="modal" data-id="'. $karyawans->id .'"><i class="fa fa-trash-o"></i></button>
                             ';
+                })
+                ->addColumn('fp', function($karyawans){
+                    return $karyawans->fp == null ? '<img src="/storage/images/default.png" width="40" height="40" alt="">' : '<img width="40" height="40" src="/storage/images/'. $karyawans->fp .'" alt="">';
                 })
                 ->editColumn('status', function($karyawans){
                     if ($karyawans->status == 'unauthorized') {
@@ -40,7 +45,7 @@ class KaryawanController extends Controller
                         return '<span class="label label-success">'. $karyawans->status .'</span>';
                     }
                 })
-                ->rawColumns(['action', 'status'])
+                ->rawColumns(['action', 'fp', 'status'])
                 ->make(true);
     }
 
@@ -72,6 +77,7 @@ class KaryawanController extends Controller
             'nama'  => 'required|string|max:50',
             'jenis_kelamin'  => 'required|string|max:50',
             'divisi' => 'required|string|max:50',
+            'image' => 'required|image64:jpeg,jpg,png',
         ]);
 
         $validator = Karyawan::where('nik', $request->nik)->get();
@@ -83,12 +89,25 @@ class KaryawanController extends Controller
             return response()->json(['response' => $response]);
             // return redirect()->back()->with('message', $response['message']);
         }else{
+             $files = Input::file('fp');
+               if ($request->file('fp')) {
+                   $name = str_random(15). '.' .$files->getClientOriginalExtension();
+                   if (file_exists(public_path('storage/images/'. $name))) {
+                        Storage::delete(public_path('storage/images/'. $name));
+                           $path = public_path('storage/images/');
+                           $files->move($path, $name);
+                   }else{
+                       $path = public_path('storage/images/');
+                       $files->move($path, $name);
+                   }
+               }
             $karyawan = new Karyawan;
             $karyawan->nama = $request->nama;
             $karyawan->divisi = $request->divisi;
             $karyawan->jenis_kelamin = $request->jenis_kelamin;
             $karyawan->nik = Carbon::now()->format('y') . Carbon::now()->format('m') . Carbon::now()->format('is');
             $karyawan->status = $request->status;
+            $karyawan->fp = $name;
             $karyawan->save();
 
             $response['status'] = 'kosong';

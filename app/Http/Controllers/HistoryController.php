@@ -10,6 +10,7 @@ use App\User;
 use App\Verifikasi;
 use Carbon\Carbon;
 use App\Http\Resources\AbsenHistoryResource;
+use App\Http\Resources\HistoryDashboardResource;
 
 class HistoryController extends Controller
 {
@@ -25,7 +26,7 @@ class HistoryController extends Controller
 
     public function history()
     {
-        return AbsenHistoryResource::collection(Absen::orderBy('created_at', 'DESC')->where('status', 'masuk')->whereDate('created_at', Carbon::now()->format('Y-m-d'))->get());
+        return HistoryDashboardResource::collection(Absen::orderBy('created_at', 'DESC')->where('status', 'masuk')->whereDate('created_at', Carbon::now()->format('Y-m-d'))->get());
     }
 
     public function indexview()

@@ -16,6 +16,7 @@
                 <th width="25%">Divisi</th>
                 <th width="10%">Jenis Kelamin</th>
                 <th width="10%">Status</th>
+                <th width="10%">Foto</th>
                 <th width="25%">Actions</th>
               </tr>
             </thead>
@@ -60,6 +61,7 @@
                   { data: 'divisi', name: 'divisi' },
                   { data: 'jenis_kelamin', name: 'jenis_kelamin' },
                   { data: 'status', name: 'status' },
+                  { data: 'fp', name: 'fp' },
                   { data: 'action', name: 'action', orderable: false, searchable: false },
               ]
           });
@@ -94,6 +96,11 @@
                   $("#jenis_kelamin").attr('value', data.jenis_kelamin);
                   $("#nik").attr('value', data.nik);
                   $("#status").attr('value', data.status);
+                  if (data.fp == null) {
+                    $("#fp").attr('src', '/storage/images/default.png');
+                  }else{
+                    $("#fp").attr('src', '/storage/images/' + data.fp);
+                  }
                   // document.getElementById('nama').setAttribute('value', data.nama);
                   // document.getElementById('divisi').setAttribute('value', data.divisi);
                   // document.getElementById('jenis_kelamin').setAttribute('value', data.jenis_kelamin);

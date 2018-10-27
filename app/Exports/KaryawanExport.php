@@ -25,10 +25,10 @@ class KaryawanExport implements FromCollection, WithHeadings
     {
         return [
             'ID',
+            'Nik',
             'Nama',
             'Divisi',
             'Jenis Kelamin',
-            'Nik',
             'Status'
         ];
     }

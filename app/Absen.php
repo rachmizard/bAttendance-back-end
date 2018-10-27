@@ -13,13 +13,11 @@ class Absen extends Model
         'karyawan_id', 'verifikasi_id', 'status', 'alasan', 'created_at', 'updated_at'
     ];
 
-    // protected $dates = ['created_at', 'updated_at'];
-
-    public function getCreatedAtAttribute()
-    {
-        return \Carbon\Carbon::parse($this->attributes['created_at'])
-           ->format('H:i:s');
-    }
+    // public function getCreatedAtAttribute()
+    // {
+    //     return \Carbon\Carbon::parse($this->attributes['created_at'])
+    //        ->format('H:i:s');
+    // }
 
     public function karyawan()
     {

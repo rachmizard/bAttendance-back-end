@@ -5,7 +5,14 @@
       <i class="fa fa-info-sign text-muted" data-toggle="tooltip" data-placement="bottom" data-title="ajax to load the data."></i>
     </header>
         <div class="panel-body">
-            <form @submit.prevent="store" action="karyawan/post" class="form-horizontal" method="post">
+            <form @submit.prevent="store" action="karyawan/post" class="form-horizontal" method="post" enctype="multipart/form-data">
+
+              <div class="form-group">
+                  <label v-if="state.fp" for="" class="col-md-2 control label">Hasil</label>
+                    <div class="col-md-10">
+                        <img :src="state.fp" class="img-responsive" height="70" width="90">
+                    </div>
+              </div>
                 <div :class="['form-group', errors.nama ? 'has-error' : '']">
                     <label class="col-sm-2 control-label">Nama Lengkap</label>
                     <div class="col-sm-10">
@@ -60,6 +67,12 @@
                         <span v-if="messageError" class="label label-danger">{{ messageError }}</span>
                     </div>
                 </div>
+                  <div class="form-group">
+                      <label for="nama" class="col-md-2 control-label">Upload Foto</label>
+                      <div class="col-md-10">
+                          <input class="form-control" type="file" autocomplete="off" placeholder="File..." v-on:change="onImageChange" autofocus="">
+                      </div>
+                  </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
@@ -72,12 +85,14 @@ export default {
         return {
             errors: [],
             // url : 'karyawan/post',
+            image: '',
             state: {
                 nama: '',
                 divisi: '',
                 jenis_kelamin: '',
                 nik: '',
-                status: ''
+                status: '',
+                fp: ''
             },
             message : '',
             messageError: '',
@@ -88,23 +103,46 @@ export default {
         }
     },
     methods: {
+        onImageChange(e) {
+            let files = e.target.files || e.dataTransfer.files;
+            console.log(e.target.files[0]);
+            if (!files.length)
+                return;
+            this.createImage(files[0]);
+            this.image = e.target.files[0];
+        },
+        createImage(file) {
+            let reader = new FileReader();
+            let vm = this;
+            reader.onload = (e) => {
+                vm.image = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        },
+        uploadImage(){
+            axios.put('/karyawan/uploadFp',{image: this.image}).then(response => {
+               if (response.data.success) {
+                 alert(response.data.success);
+               }
+            });
+        },
         store: function(e) {
-            var app = this;
+            let app = this;
             var newState = app.state;
             axios.post(e.target.action, newState)
             .then(function (resp) {
-            	app.errors = [];
+                app.errors = [];
                 if (resp.data.response.status == 'exist') {
-                	app.message = false;
-                	app.messageError = resp.data.response.message; // showing result
+                    app.message = false;
+                    app.messageError = resp.data.response.message; // showing result
                 }else{
-                	app.message = resp.data.response.message;
-                	app.messageError = false; // showing result
-	                app.state.nama = ''; // clear form
-	                app.state.divisi = ''; // clear form
-	                app.state.jenis_kelamin = ''; // clear form
+                    app.message = resp.data.response.message;
+                    app.messageError = false; // showing result
+                    app.state.nama = ''; // clear form
+                    app.state.divisi = ''; // clear form
+                    app.state.jenis_kelamin = ''; // clear form
                     app.state.nik = ''; // clear form
-	                app.state.status = ''; // clear form
+                    app.state.status = ''; // clear form
                 }
                 // app.$router.replace('/'); // redirect to url "/"
             }).catch((error) => {

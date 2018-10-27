@@ -19,6 +19,8 @@ class CreateKaryawansTable extends Migration
             $table->string('divisi');
             $table->string('jenis_kelamin');
             $table->integer('nik');
+            $table->string('status')->default('unauthorized');
+            $table->string('fp');
             $table->timestamps();
         });
     }
