@@ -43,7 +43,7 @@
                   <h4 class="modal-title" id="namaTitle"></h4>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal" method="POST" id="updateForm">
+                    <form class="form-horizontal" method="POST" id="updateForm" enctype="multipart/form-data">
                       <input type="hidden" name="_token" value="{{ csrf_token() }}">
                       <input type="hidden" name="_method" value="PUT">
                         <label for="" class="col-md-4 control-label"></label>
@@ -52,13 +52,12 @@
                             <img id="fp" width="100" height="100" alt="">
                           </div>
                         </div>
-                        {{--
                       <div class="form-group">
                           <label for="nama" class="col-md-4 control-label">Upload Foto</label>
                           <div class="col-md-4">
-                              <input class="form-control" type="file" autocomplete="off" placeholder="File..." v-on:change="onImageChange" @change="uploadImage()" autofocus="">
+                              <input class="form-control" type="file" autocomplete="off" placeholder="File..." name="image" autofocus="">
                           </div>
-                      </div> --}}
+                      </div>
                         <div class="form-group">
                             <label for="nama" class="col-md-4 control-label">Nama</label>
                             <div class="col-md-4">

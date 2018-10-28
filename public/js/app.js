@@ -59857,7 +59857,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("section", { staticClass: "panel panel-default" }, [
     _c("header", { staticClass: "panel-heading" }, [
-      _vm._v("                    \n      Absen History\n    ")
+      _vm._v("\n      Absen History\n    ")
     ]),
     _vm._v(" "),
     _c(
@@ -59869,7 +59869,9 @@ var render = function() {
       [
         _vm._l(_vm.users.data, function(user, index) {
           return _c("article", { staticClass: "media" }, [
-            _vm._m(0, true),
+            _c("span", { staticClass: "pull-left thumb-sm" }, [
+              _c("img", { staticClass: "img-circle", attrs: { src: user.fp } })
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "media-body" }, [
               _c(
@@ -59908,19 +59910,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "pull-left thumb-sm" }, [
-      _c("img", {
-        staticClass: "img-circle",
-        attrs: { src: "images/avatar_default.jpg" }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -62920,6 +62910,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			filter: {
 				tgl_history: ''
 			},
+			previewFilter: '',
 			users: {},
 			current_page: '',
 			from: '',
@@ -62933,6 +62924,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	mounted: function mounted() {
 		var _this = this;
 
+		this.getFilterHistory();
 		this.fetch();
 		Echo.channel('draw-table-event').listen('DrawTableEvent', function (e) {
 			_this.paginate();
@@ -62978,6 +62970,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			axios.get('history').then(function (respon) {
 				_this4.users = respon.data;
 			});
+			this.getFilterHistory();
 			this.$root.loading = true;
 			setInterval(function () {
 				_this4.$root.loading = false;
@@ -62993,6 +62986,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			}).catch(function (error) {
 				_this5.errors = error.response.data.errors;
 				_this5.message = false;
+			});
+		},
+		getFilterHistory: function getFilterHistory() {
+			var currentHistory = this;
+			axios.get('master-filter/getFilterHistory').then(function (respon) {
+				currentHistory.filter.tgl_history = respon.data.tgl_history;
+				currentHistory.previewFilter = respon.data.previewFilter;
 			});
 		},
 		deleteHistory: function deleteHistory(id) {
@@ -63030,7 +63030,7 @@ var render = function() {
   return _c("section", { staticClass: "panel panel-default" }, [
     _c("header", { staticClass: "panel-heading" }, [
       _c("i", { staticClass: "fa fa-filter" }),
-      _vm._v(" Filter Absen\n      "),
+      _vm._v(" Filter Absen " + _vm._s(_vm.previewFilter) + "\n      "),
       _c("i", {
         staticClass: "fa fa-info-sign text-muted",
         attrs: {
@@ -63173,14 +63173,6 @@ var render = function() {
                 _c("td", [_vm._v(_vm._s(user.checkout))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(user.created_at))]),
-                _vm._v(" "),
-                user.action == "masuk"
-                  ? _c("td", [
-                      _c("span", { staticClass: "label label-info" }, [
-                        _vm._v("on working")
-                      ])
-                    ])
-                  : _vm._e(),
                 _vm._v(" "),
                 user.action == "keluar"
                   ? _c("td", [

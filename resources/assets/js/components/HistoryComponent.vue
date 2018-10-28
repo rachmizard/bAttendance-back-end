@@ -1,11 +1,11 @@
 <template>
   <section class="panel panel-default">
-    <header class="panel-heading">                    
+    <header class="panel-heading">
       Absen History
     </header>
     <section class="panel-body slim-scroll" data-height="230px">
       <article v-for="(user, index) in users.data" class="media">
-        <span class="pull-left thumb-sm"><img src="images/avatar_default.jpg" class="img-circle"></span>
+        <span class="pull-left thumb-sm"><img :src="user.fp" class="img-circle"></span>
         <div class="media-body">
           <div class="pull-right media-xs text-center text-muted">
             <strong class="h4">{{ user.jam }}</strong><br>
@@ -19,7 +19,7 @@
     </section>
   </section>
 
-<!-- 
+<!--
 	<div class="table-responsive">
 		<table class="table table-striped table-hover">
 			<thead>
@@ -39,14 +39,14 @@
 					<td>{{ user.divisi }} </td>
 					<td>{{ user.jam }} </td>
 					<td class="text-right">
-						<div class="btn btn-group">	
+						<div class="btn btn-group">
 							<button class="btn btn-danger text-danger" @click.prevent="deleteHistory(user.id)"><i class="fa fa-trash"></i></button>
 						</div>
 					</td>
 				</tr>
 			</tbody>
 		</table>
-		
+
 		<ul class="pagination">
 			<li v-if="users.prev_page_url">
 				<a @click.prevent="paginate(users.prev_page_url)" :href="users.prev_page_url">&laquo; Previous</a>
@@ -87,13 +87,13 @@
 			fetch(){
 				axios.get('history/today').then(respon => {
 					this.users = respon.data;
-				});	
+				});
 			},
 
 			refresh(){
 			 	axios.get('history/today').then(respon => {
 					this.users = respon.data;
-				});	
+				});
 				this.$root.loading = true;
 				 setInterval(() => {
 					this.$root.loading = false
@@ -102,10 +102,10 @@
 
 			deleteHistory(id){
 				var app = this;
-				if (confirm('Anda Yakin?')) {	
+				if (confirm('Anda Yakin?')) {
 					axios.delete('history/'+ id +'/delete').then(function(resp){
                 		app.fetch(); // redirect to url "/"
-					})	
+					})
 				}
 			}
 		}

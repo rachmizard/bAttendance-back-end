@@ -48,7 +48,9 @@ class MasterFilterController extends Controller
      */
     public function show(MasterFilter $masterFilter)
     {
-        return MasterFilter::findOrFail(1);
+        $filter = MasterFilter::findOrFail(1);
+        setlocale(LC_TIME, 'ID');
+        return response()->json(['tgl_history' => $filter->tgl_history->format('Y-m-d'), 'previewFilter' => Carbon::parse($filter->tgl_history)->formatLocalized('%d %B %Y')]);
     }
 
     /**

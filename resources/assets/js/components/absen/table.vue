@@ -1,7 +1,7 @@
 <template>
   <section class="panel panel-default">
     <header class="panel-heading">
-      <i class="fa fa-filter"></i> Filter Absen
+      <i class="fa fa-filter"></i> Filter Absen {{ previewFilter }}
       <i class="fa fa-info-sign text-muted" data-toggle="tooltip" data-placement="bottom" data-title="ajax to load the data."></i>
       <div :class="['form-group', errors.tgl_history ? 'has-error'  : '']">
         <input type="date" @change="filterHistory()" class="form-control input-sm" placeholder="Filter by date" v-model="filter.tgl_history">
@@ -35,7 +35,7 @@
               <td>{{ user.checkin }}</td>
               <td>{{ user.checkout }}</td>
               <td>{{ user.created_at }}</td>
-          		<td v-if="user.action == 'masuk'"><span class="label label-info">on working</span></td>
+          		<!-- <td v-if="user.action == 'masuk'"><span class="label label-info">on working</span></td> -->
           		<td v-if="user.action == 'keluar'"><i class="fa fa-check text-success"></i></td>
               <td v-if="user.action == 'alfa'"><span class="label label-danger">Alfa</span></td>
               <td v-if="user.action == 'izin'"><span class="label label-default">Izin</span></i></td>
@@ -86,6 +86,7 @@
         filter: {
           tgl_history: ''
         },
+        previewFilter : '',
 				users: {},
 				current_page: '',
 				from: '',
@@ -97,6 +98,7 @@
 			}
 		},
 		mounted() {
+      this.getFilterHistory();
 			this.fetch();
       Echo.channel('draw-table-event')
       .listen('DrawTableEvent', (e) => {
@@ -136,6 +138,7 @@
 			 	axios.get('history').then(respon => {
 					this.users = respon.data;
 				});
+        this.getFilterHistory()
 				this.$root.loading = true;
 				 setInterval(() => {
 					this.$root.loading = false
@@ -152,6 +155,14 @@
 	                 this.message = false;
 	            });
 			},
+
+      getFilterHistory(){
+        let currentHistory = this;
+        axios.get('master-filter/getFilterHistory').then(respon => {
+            currentHistory.filter.tgl_history = respon.data.tgl_history;
+            currentHistory.previewFilter = respon.data.previewFilter;
+        });
+      },
 
 			deleteHistory(id){
 				var app = this;

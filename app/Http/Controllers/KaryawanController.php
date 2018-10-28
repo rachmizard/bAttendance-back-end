@@ -10,6 +10,7 @@ use App\Events\DrawTableEvent;
 use App\Http\Resources\DashboardResource;
 use Illuminate\Support\Facades\Input;
 use Storage;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class KaryawanController extends Controller
 {
@@ -96,8 +97,11 @@ class KaryawanController extends Controller
                            $path = public_path('storage/images/');
                            $request->image->move($path, $name);
                    }else{
-                       $path = public_path('storage/images/');
-                       $request->image->move($path, $name);
+                     $setting = Image::make($request->file('image'));
+                     $setting->resize(300, 200);
+                     $setting->save(public_path('storage/images/').$name);
+                       // $path = public_path('storage/images/');
+                       // $request->image->move($path, $name);
                    }
                }
             $karyawan = new Karyawan;
@@ -107,7 +111,7 @@ class KaryawanController extends Controller
             $karyawan->jenis_kelamin = $request->jenis_kelamin;
             $karyawan->nik = Carbon::now()->format('y') . Carbon::now()->format('m') . Carbon::now()->format('i') . Carbon::now()->format('s');
             $karyawan->status = $request->status;
-            $karyawan->fp = $karyawan->fp == null ? '' : $name;
+            $karyawan->fp = $name;
             $karyawan->save();
 
             $response['status'] = 'kosong';
@@ -194,10 +198,21 @@ class KaryawanController extends Controller
             'jabatan' => 'required|string|max:50',
             'divisi' => 'required|string|max:50',
         ]);
-        // $validator = Karyawan::where('nik', $request->nik)->get();
-        // if (count($validator) > 1) {
-        //     return redirect()->back()->with('message', 'NIK Sudah terdaftar!');
-        // }else{
+              $name = Karyawan::find($id)->fp;
+            if ($request->hasFile('image')) {
+                $name = str_random(15). '.' .$request->image->getClientOriginalExtension();
+                if (file_exists(public_path('storage/images/'. $name))) {
+                     Storage::delete(public_path('storage/images/'. $name));
+                        $path = public_path('storage/images/');
+                        $request->image->move($path, $name);
+                }else{
+                  $setting = Image::make($request->file('image'));
+                  $setting->resize(300, 200);
+                  $setting->save(public_path('storage/images/').$name);
+                    // $path = public_path('storage/images/');
+                    // $request->image->move($path, $name);
+                }
+            }
             $karyawan = Karyawan::find($id);
             if ($karyawan->nik) {
                 $karyawan->nama = $request->get('nama');
@@ -206,6 +221,7 @@ class KaryawanController extends Controller
                 $karyawan->divisi = $request->get('divisi');
                 $karyawan->jenis_kelamin = $request->get('jenis_kelamin');
                 $karyawan->status = $request->get('status');
+                $karyawan->fp = $name == null ? $karyawan->fp : $name;
                 $karyawan->update();
                 event(new DrawTableEvent());
                 return redirect()->back()->with('message', 'Berhasil di update!');
