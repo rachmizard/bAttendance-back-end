@@ -76,8 +76,7 @@ class KaryawanController extends Controller
          $this->validate($request, [
             'nama'  => 'required|string|max:50',
             'jenis_kelamin'  => 'required|string|max:50',
-            'divisi' => 'required|string|max:50',
-            'image' => 'required|image64:jpeg,jpg,png',
+            'divisi' => 'required|string|max:50'
         ]);
 
         $validator = Karyawan::where('nik', $request->nik)->get();
@@ -89,16 +88,15 @@ class KaryawanController extends Controller
             return response()->json(['response' => $response]);
             // return redirect()->back()->with('message', $response['message']);
         }else{
-             $files = Input::file('fp');
-               if ($request->file('fp')) {
-                   $name = str_random(15). '.' .$files->getClientOriginalExtension();
+               if ($request->hasFile('image')) {
+                   $name = str_random(15). '.' .$request->image->getClientOriginalExtension();
                    if (file_exists(public_path('storage/images/'. $name))) {
                         Storage::delete(public_path('storage/images/'. $name));
                            $path = public_path('storage/images/');
-                           $files->move($path, $name);
+                           $request->image->move($path, $name);
                    }else{
                        $path = public_path('storage/images/');
-                       $files->move($path, $name);
+                       $request->image->move($path, $name);
                    }
                }
             $karyawan = new Karyawan;
@@ -107,7 +105,7 @@ class KaryawanController extends Controller
             $karyawan->jenis_kelamin = $request->jenis_kelamin;
             $karyawan->nik = Carbon::now()->format('y') . Carbon::now()->format('m') . Carbon::now()->format('is');
             $karyawan->status = $request->status;
-            $karyawan->fp = $name;
+            $karyawan->fp = $karyawan->fp == null ? '' : $name;
             $karyawan->save();
 
             $response['status'] = 'kosong';
@@ -115,8 +113,8 @@ class KaryawanController extends Controller
             $response['message'] = 'Berhasil di tambahkan '. $karyawan->nama;
             $response['type'] = 'success';
             event(new DrawTableEvent());
-            return response()->json(['response' => $response]);
-            // return redirect()->back()->with('message', 'Berhasil di tambahkan!');
+            // return response()->json(['response' => $response]);
+            return redirect()->back();
         }
 
     }

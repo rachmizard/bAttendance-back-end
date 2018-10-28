@@ -60463,14 +60463,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             errors: [],
             // url : 'karyawan/post',
-            image: '',
             state: {
                 nama: '',
                 divisi: '',
                 jenis_kelamin: '',
                 nik: '',
                 status: '',
-                fp: ''
+                image: ''
             },
             message: '',
             messageError: '',
@@ -60487,13 +60486,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             console.log(e.target.files[0]);
             if (!files.length) return;
             this.createImage(files[0]);
-            this.image = e.target.files[0];
+            this.state.image = e.target.files[0];
         },
         createImage: function createImage(file) {
             var reader = new FileReader();
             var vm = this;
             reader.onload = function (e) {
-                vm.image = e.target.result;
+                vm.state.image = e.target.result;
             };
             reader.readAsDataURL(file);
         },
@@ -60551,19 +60550,13 @@ var render = function() {
           staticClass: "form-horizontal",
           attrs: {
             action: "karyawan/post",
-            method: "post",
+            method: "POST",
             enctype: "multipart/form-data"
-          },
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.store($event)
-            }
           }
         },
         [
           _c("div", { staticClass: "form-group" }, [
-            _vm.state.fp
+            _vm.state.image
               ? _c(
                   "label",
                   { staticClass: "col-md-2 control label", attrs: { for: "" } },
@@ -60574,7 +60567,7 @@ var render = function() {
             _c("div", { staticClass: "col-md-10" }, [
               _c("img", {
                 staticClass: "img-responsive",
-                attrs: { src: _vm.state.fp, height: "70", width: "90" }
+                attrs: { src: _vm.state.image, height: "70", width: "90" }
               })
             ])
           ]),
@@ -60598,7 +60591,12 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control rounded",
-                  attrs: { type: "text", placeholder: "Nama Karyawan.." },
+                  attrs: {
+                    name: "nama",
+                    type: "text",
+                    placeholder: "Nama Karyawan..",
+                    required: ""
+                  },
                   domProps: { value: _vm.state.nama },
                   on: {
                     input: function($event) {
@@ -60645,8 +60643,10 @@ var render = function() {
                   ],
                   staticClass: "form-control rounded",
                   attrs: {
+                    name: "divisi",
                     type: "text",
-                    placeholder: "Jabatan/Divisi Karyawan.."
+                    placeholder: "Jabatan/Divisi Karyawan..",
+                    required: ""
                   },
                   domProps: { value: _vm.state.divisi },
                   on: {
@@ -60697,7 +60697,11 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control rounded",
-                    attrs: { settings: _vm.settings.placeholder },
+                    attrs: {
+                      name: "jenis_kelamin",
+                      settings: _vm.settings.placeholder,
+                      required: ""
+                    },
                     on: {
                       change: function($event) {
                         var $$selectedVal = Array.prototype.filter
@@ -60769,7 +60773,11 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control rounded",
-                    attrs: { settings: _vm.settings.placeholderStatus },
+                    attrs: {
+                      name: "status",
+                      settings: _vm.settings.placeholderStatus,
+                      required: ""
+                    },
                     on: {
                       change: function($event) {
                         var $$selectedVal = Array.prototype.filter
@@ -60838,6 +60846,7 @@ var render = function() {
                 staticClass: "form-control",
                 attrs: {
                   type: "file",
+                  name: "image",
                   autocomplete: "off",
                   placeholder: "File...",
                   autofocus: ""
