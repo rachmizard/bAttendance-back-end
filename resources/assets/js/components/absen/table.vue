@@ -1,40 +1,51 @@
 <template>
   <section class="panel panel-default">
-    <div class="table-responsive">
-      <table class="table table-striped m-b-none">
-        <thead>
-          <tr>
-            <th width="10">
-              <button class="btn btn-xs btn-default" @click="deleteChecked()"><i class="fa fa-trash-o"></i></button>
-              <button class="btn btn-xs btn-default" @click="paginate()"><i class="fa fa-refresh"></i></button>
-            </th>
-            <th width="40">Nama Karyawan</th>
-            <th width="20">Jam Masuk</th>
-            <th width="20">Jam Keluar</th>
-            <th width="20">Tanggal</th>
-            <th width="30"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(user, index) in users.data">
-            <td>
-              <label>
-                <input type="checkbox" v-model="checkedRows" :value="user.id">
-              </label>
-            </td>
-            <td>{{ user.nama }}</td>
-            <td>{{ user.checkin }}</td>
-            <td>{{ user.checkout }}</td>
-            <td>{{ user.created_at }}</td>
-    		<td v-if="user.action == 'masuk'"><span class="label label-info">on working</span></td>
-    		<td v-if="user.action == 'keluar'"><i class="fa fa-check text-success"></i></td>
-            <td v-if="user.action == 'alfa'"><span class="label label-danger">Alfa</span></td>
-            <td v-if="user.action == 'izin'"><span class="label label-info">Izin</span></i></td>
-            <td v-if="user.action == 'sakit'"><span class="label label-warning">Sakit</span></td>
-            <td v-if="user.action == ''"><span class="label label-default">Tidak ada keterangan</span></td>
-          </tr>
-        </tbody>
-      </table>
+    <header class="panel-heading">
+      <i class="fa fa-filter"></i> Filter Absen
+      <i class="fa fa-info-sign text-muted" data-toggle="tooltip" data-placement="bottom" data-title="ajax to load the data."></i>
+      <div :class="['form-group', errors.tgl_history ? 'has-error'  : '']">
+        <input type="date" @change="filterHistory()" class="form-control input-sm" placeholder="Filter by date" v-model="filter.tgl_history">
+      </div>
+    </header>
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped m-b-none">
+          <thead>
+            <tr>
+              <th width="10">
+                <button class="btn btn-xs btn-default" @click="deleteChecked()"><i class="fa fa-trash-o"></i></button>
+                <button class="btn btn-xs btn-default" @click="paginate()"><i class="fa fa-refresh"></i></button>
+              </th>
+              <th width="40">Nama Karyawan</th>
+              <th width="20">Jam Masuk</th>
+              <th width="20">Jam Keluar</th>
+              <th width="20">Tanggal</th>
+              <th width="30">Status</th>
+              <th width="30">Keterangan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(user, index) in users.data">
+              <td>
+                <label>
+                  <input type="checkbox" v-model="checkedRows" :value="user.absen_id">
+                </label>
+              </td>
+              <td>{{ user.nama }}</td>
+              <td>{{ user.checkin }}</td>
+              <td>{{ user.checkout }}</td>
+              <td>{{ user.created_at }}</td>
+          		<td v-if="user.action == 'masuk'"><span class="label label-info">on working</span></td>
+          		<td v-if="user.action == 'keluar'"><i class="fa fa-check text-success"></i></td>
+              <td v-if="user.action == 'alfa'"><span class="label label-danger">Alfa</span></td>
+              <td v-if="user.action == 'izin'"><span class="label label-default">Izin</span></i></td>
+              <td v-if="user.action == 'sakit'"><span class="label label-warning">Sakit</span></td>
+              <td v-if="user.action == 'dinas'"><span class="label label-info">Dinas</span></td>
+              <td>{{ user.alasan }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <footer class="footer bg-white b-t">
       <div class="row text-center-xs">
@@ -70,7 +81,11 @@
 	export default {
 		data() {
 			return {
+        errors: [],
 				checkedRows: [],
+        filter: {
+          tgl_history: ''
+        },
 				users: {},
 				current_page: '',
 				from: '',
@@ -127,6 +142,17 @@
 				 }, 2000)
 			},
 
+			filterHistory(){
+				var app = this;
+				var filterDate = app.filter;
+				axios.post('master-filter/getFilterHistory', filterDate).then(respon => {
+					this.refresh()
+				}).catch((error) => {
+	                 this.errors = error.response.data.errors;
+	                 this.message = false;
+	            });
+			},
+
 			deleteHistory(id){
 				var app = this;
 				if (confirm('Anda Yakin?')) {
@@ -137,11 +163,11 @@
 			},
 
 			deleteChecked() {
-				if (this.checkedRows.length == null) {
+				if (this.checkedRows.length == 0) {
 					alert('Silahkan ceklik karyawan yang ingn di hapus!');
 				}else{
 					if (confirm('Anda yakin untuk menghapus data yang di ceklis?')) {
-						axios.post('absen-admin/destroyChecked', { checkedId: this.checkedRows })
+						axios.post('history/deleteChecked', { checkedId: this.checkedRows })
 						.then(respon => {
 							this.paginate()
 						})

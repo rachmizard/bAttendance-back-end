@@ -41,7 +41,7 @@
                             <th width="20">Jam Masuk</th>
                             <th width="20">Jam Keluar</th>
                             <th width="30">Status</th>
-                            <th width="30">Alasan</th>
+                            <th width="30">Keterangan</th>
                           </tr>
                         </thead>
                         <tbody>

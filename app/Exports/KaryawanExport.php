@@ -17,7 +17,7 @@ class KaryawanExport implements FromCollection, WithHeadings
 
     public function collection()
     {
-        return Karyawan::select('id', 'nama', 'divisi', 'jenis_kelamin', 'nik', 'status')->get();
+        return Karyawan::select('id', 'nik', 'nama', 'jabatan', 'divisi', 'jenis_kelamin', 'status')->get();
     }
 
 
@@ -27,6 +27,7 @@ class KaryawanExport implements FromCollection, WithHeadings
             'ID',
             'Nik',
             'Nama',
+            'Jabatan',
             'Divisi',
             'Jenis Kelamin',
             'Status'

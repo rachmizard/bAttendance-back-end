@@ -21,7 +21,7 @@ class AbsenHistoryResource extends Resource
         // return parent::toArray($request);
         $jam = Absen::where(['karyawan_id' => $this->id, 'status' => 'masuk'])->whereDate('created_at', Carbon::parse($this->filterHistory())->format('Y-m-d'))->value('created_at');
         $getStatus = Absen::where(['karyawan_id' => $this->id])->whereDate('created_at', Carbon::parse($this->filterHistory())->format('Y-m-d'))->first();
-        $getAlasan = Absen::where(['karyawan_id' => $this->id, 'status' => 'izin'])->whereDate('created_at', Carbon::parse($this->filterHistory())->format('Y-m-d'))->first();
+        $getAlasan = Absen::where(['karyawan_id' => $this->id])->whereDate('created_at', Carbon::parse($this->filterHistory())->format('Y-m-d'))->first();
         return [
             'id' => $this->id,
             'absen_id' => $getStatus['id'],
@@ -63,14 +63,14 @@ class AbsenHistoryResource extends Resource
 
     public function checkOutKaryawan()
     {
-        
+
         return Absen::where(['karyawan_id' => $this->id, 'status' => 'keluar'])->whereDate('created_at', Carbon::parse($this->filterHistory())->format('Y-m-d'))->value('created_at');
         // return response()->json(['status' => 'keluar']);
     }
 
     public function countEstimation()
     {
-        
+
     $start = Carbon::parse($this->checkInKaryawan());
     $pause = Carbon::parse($this->checkOu());
 

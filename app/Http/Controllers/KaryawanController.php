@@ -76,6 +76,7 @@ class KaryawanController extends Controller
          $this->validate($request, [
             'nama'  => 'required|string|max:50',
             'jenis_kelamin'  => 'required|string|max:50',
+            'jabatan' => 'required|string|max:50',
             'divisi' => 'required|string|max:50'
         ]);
 
@@ -101,9 +102,10 @@ class KaryawanController extends Controller
                }
             $karyawan = new Karyawan;
             $karyawan->nama = $request->nama;
+            $karyawan->jabatan = $request->jabatan;
             $karyawan->divisi = $request->divisi;
             $karyawan->jenis_kelamin = $request->jenis_kelamin;
-            $karyawan->nik = Carbon::now()->format('y') . Carbon::now()->format('m') . Carbon::now()->format('is');
+            $karyawan->nik = Carbon::now()->format('y') . Carbon::now()->format('m') . Carbon::now()->format('i') . Carbon::now()->format('s');
             $karyawan->status = $request->status;
             $karyawan->fp = $karyawan->fp == null ? '' : $name;
             $karyawan->save();
@@ -189,23 +191,25 @@ class KaryawanController extends Controller
             'nama'  => 'required|string|max:50',
             'jenis_kelamin'  => 'required|string|max:50',
             'nik' => 'required',
+            'jabatan' => 'required|string|max:50',
             'divisi' => 'required|string|max:50',
         ]);
-        $validator = Karyawan::where('nik', $request->nik)->get();
-        if (count($validator) > 1) {
-            return redirect()->back()->with('message', 'NIK Sudah terdaftar!');
-        }else{
+        // $validator = Karyawan::where('nik', $request->nik)->get();
+        // if (count($validator) > 1) {
+        //     return redirect()->back()->with('message', 'NIK Sudah terdaftar!');
+        // }else{
             $karyawan = Karyawan::find($id);
             if ($karyawan->nik) {
                 $karyawan->nama = $request->get('nama');
+                $karyawan->nik = $request->get('nik');
+                $karyawan->jabatan = $request->get('jabatan');
                 $karyawan->divisi = $request->get('divisi');
                 $karyawan->jenis_kelamin = $request->get('jenis_kelamin');
-                $karyawan->nik = $request->get('nik');
                 $karyawan->status = $request->get('status');
                 $karyawan->update();
                 event(new DrawTableEvent());
                 return redirect()->back()->with('message', 'Berhasil di update!');
-            }
+            // }
         }
     }
 

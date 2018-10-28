@@ -52,7 +52,7 @@
                             <img id="fp" width="100" height="100" alt="">
                           </div>
                         </div>
-                        {{-- 
+                        {{--
                       <div class="form-group">
                           <label for="nama" class="col-md-4 control-label">Upload Foto</label>
                           <div class="col-md-4">
@@ -66,6 +66,17 @@
                                 @if($errors->has('nama'))
                                   <span class="label label-danger">
                                       {{ $errors->first('nama') }}
+                                  </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="jabatan" class="col-md-4 control-label">Jabatan</label>
+                            <div class="col-md-4">
+                                <input class="form-control" autocomplete="off" placeholder="Jabatan..." type="text" name="jabatan" id="jabatan" autofocus="">
+                                @if($errors->has('jabatan'))
+                                  <span class="label label-danger">
+                                      {{ $errors->first('jabatan') }}
                                   </span>
                                 @endif
                             </div>

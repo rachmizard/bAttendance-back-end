@@ -9,19 +9,19 @@
                         <div class="col-md-8 col-md-offset-2">
                             <ol class="breadcrumb">
                                 <li><router-link :to="{name: 'userIndex'}" >Karyawan</router-link></li>
-                                <li class="active" >Edit Karyawan</li>    
+                                <li class="active" >Edit Karyawan</li>
                             </ol>
                             <div class="panel panel-default">
                                 <div class="panel-heading">Edit Form</div>
                                 <div class="panel-body">
-                        
-                                    <form @submit.prevent="saveForm" class="form-horizontal"> 
+
+                                    <form @submit.prevent="saveForm" class="form-horizontal">
                                         <div class="form-group">
                                             <label for="nama" class="col-md-4 control-label">Nama</label>
                                             <div class="col-md-4">
                                                 <input class="form-control" autocomplete="off" placeholder="Nama..." type="text" v-model="karyawan.nama" name="nama"  autofocus="">
                                                 <span v-if="errors.nama" class="label label-danger">{{ errors.nama[0] }}</span>
-                                                
+
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -29,18 +29,18 @@
                                             <div class="col-md-4">
                                                 <input class="form-control" autocomplete="off" placeholder="Divisi..." type="text" v-model="karyawan.divisi" name="divisi" autofocus="">
                                                 <span v-if="errors.divisi" class="label label-danger">{{ errors.divisi[0] }}</span>
-                                                
+
                                             </div>
-                                        </div> 
+                                        </div>
                                         <div class="form-group">
                                             <label for="jenis_kelamin" class="col-md-4 control-label">Jenis Kelamin</label>
                                             <div class="col-md-4">
-                                                <select v-model="karyawan.jenis_kelamin" :settings="settings"> 
+                                                <select v-model="karyawan.jenis_kelamin" :settings="settings">
                                                         <option value="L"  >Laki Laki</option>
                                                         <option value="P"  >Perempuan</option>
                                                     </select>
                                                 <span v-if="errors.jenis_kelamin" class="label label-danger">{{ errors.jenis_kelamin[0] }}</span>
-                                                
+
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -51,7 +51,7 @@
                                                 <span v-if="messageError" class="label label-danger">{{ messageError }}</span>
 
                                             </div>
-                                        </div> 
+                                        </div>
                                     <div class="form-group">
                                         <div class="col-md-4 col-md-offset-2">
                                             <button class="btn btn-primary" id="btnSimpankaryawan" type="submit">Submit</button>
@@ -86,7 +86,7 @@ export default {
             messageError : '',
             settings: {
                 placeholder: 'Pilih Jenis Perusahaan'
-            } 
+            }
         }
     },
     mounted(){

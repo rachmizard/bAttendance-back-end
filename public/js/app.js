@@ -60106,6 +60106,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -60114,7 +60116,7 @@ $(function () {
     processing: true,
     serverSide: true,
     ajax: "karyawan/json",
-    columns: [{ data: 'id', name: 'id' }, { data: 'nik', name: 'nik' }, { data: 'nama', name: 'nama' }, { data: 'divisi', name: 'divisi' }, { data: 'jenis_kelamin', name: 'jenis_kelamin' }, { data: 'status', name: 'status' }, { data: 'fp', name: 'fp' }, { data: 'action', name: 'action', orderable: false, searchable: false }]
+    columns: [{ data: 'id', name: 'id' }, { data: 'nik', name: 'nik' }, { data: 'nama', name: 'nama' }, { data: 'jabatan', name: 'jabatan' }, { data: 'divisi', name: 'divisi' }, { data: 'jenis_kelamin', name: 'jenis_kelamin' }, { data: 'status', name: 'status' }, { data: 'fp', name: 'fp' }, { data: 'created_at', name: 'created_at' }, { data: 'action', name: 'action', orderable: false, searchable: false }]
   });
   Echo.channel('draw-table-event').listen('DrawTableEvent', function (e) {
     table.draw();
@@ -60142,6 +60144,7 @@ $(document).ready(function () {
     $.get('karyawan/' + id + '/edit', function (data) {
       $("#namaTitle").attr('value', data.nama);
       $("#nama").attr('value', data.nama);
+      $("#jabatan").attr('value', data.jabatan);
       $("#divisi").attr('value', data.divisi);
       $("#jenis_kelamin").attr('value', data.jenis_kelamin);
       $("#nik").attr('value', data.nik);
@@ -60222,7 +60225,7 @@ var staticRenderFns = [
     return _c("section", { staticClass: "panel panel-default" }, [
       _c("header", { staticClass: "panel-heading" }, [
         _c("i", { staticClass: "fa fa-table" }),
-        _vm._v(" Tabel Karyawan \n    "),
+        _vm._v(" Tabel Karyawan\n    "),
         _c("i", {
           staticClass: "fa fa-info-sign text-muted",
           attrs: {
@@ -60250,7 +60253,7 @@ var staticRenderFns = [
             staticClass: "btn btn-sm btn-info",
             attrs: { "data-target": "#uploadModal", "data-toggle": "modal" }
           },
-          [_c("i", { staticClass: "fa fa-upload" }), _vm._v(" Upload")]
+          [_c("i", { staticClass: "fa fa-upload" }), _vm._v(" Import")]
         )
       ]),
       _vm._v(" "),
@@ -60270,6 +60273,8 @@ var staticRenderFns = [
                 _vm._v(" "),
                 _c("th", { attrs: { width: "25%" } }, [_vm._v("Nama Lengkap")]),
                 _vm._v(" "),
+                _c("th", { attrs: { width: "25%" } }, [_vm._v("Jabatan")]),
+                _vm._v(" "),
                 _c("th", { attrs: { width: "25%" } }, [_vm._v("Divisi")]),
                 _vm._v(" "),
                 _c("th", { attrs: { width: "10%" } }, [
@@ -60279,6 +60284,8 @@ var staticRenderFns = [
                 _c("th", { attrs: { width: "10%" } }, [_vm._v("Status")]),
                 _vm._v(" "),
                 _c("th", { attrs: { width: "10%" } }, [_vm._v("Foto")]),
+                _vm._v(" "),
+                _c("th", { attrs: { width: "10%" } }, [_vm._v("Tanggal Join")]),
                 _vm._v(" "),
                 _c("th", { attrs: { width: "25%" } }, [_vm._v("Actions")])
               ])
@@ -60457,6 +60464,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -60465,6 +60479,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // url : 'karyawan/post',
             state: {
                 nama: '',
+                jabatan: '',
                 divisi: '',
                 jenis_kelamin: '',
                 nik: '',
@@ -60518,6 +60533,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     app.message = resp.data.response.message;
                     app.messageError = false; // showing result
                     app.state.nama = ''; // clear form
+                    app.state.jabatan = ''; // clear form
                     app.state.divisi = ''; // clear form
                     app.state.jenis_kelamin = ''; // clear form
                     app.state.nik = ''; // clear form
@@ -60625,6 +60641,57 @@ var render = function() {
           _vm._v(" "),
           _c(
             "div",
+            { class: ["form-group", _vm.errors.jabatan ? "has-error" : ""] },
+            [
+              _c("label", { staticClass: "col-sm-2 control-label" }, [
+                _vm._v("Jabatan")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-10" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.state.jabatan,
+                      expression: "state.jabatan"
+                    }
+                  ],
+                  staticClass: "form-control rounded",
+                  attrs: {
+                    name: "jabatan",
+                    type: "text",
+                    placeholder: "Jabatan Karyawan..",
+                    required: ""
+                  },
+                  domProps: { value: _vm.state.jabatan },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.state, "jabatan", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.message
+                  ? _c("span", { staticClass: "label label-success" }, [
+                      _c("i", { staticClass: "fa fa-check" })
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.errors.jabatan
+                  ? _c("span", { staticClass: "label label-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.jabatan[0]))
+                    ])
+                  : _vm._e()
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
             { class: ["form-group", _vm.errors.divisi ? "has-error" : ""] },
             [
               _c("label", { staticClass: "col-sm-2 control-label" }, [
@@ -60645,7 +60712,7 @@ var render = function() {
                   attrs: {
                     name: "divisi",
                     type: "text",
-                    placeholder: "Jabatan/Divisi Karyawan..",
+                    placeholder: "Divisi Karyawan..",
                     required: ""
                   },
                   domProps: { value: _vm.state.divisi },
@@ -61753,7 +61820,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { width: "30" } }, [_vm._v("Status")]),
         _vm._v(" "),
-        _c("th", { attrs: { width: "30" } }, [_vm._v("Alasan")])
+        _c("th", { attrs: { width: "30" } }, [_vm._v("Keterangan")])
       ])
     ])
   }
@@ -62198,6 +62265,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
@@ -62394,7 +62493,13 @@ var render = function() {
                       _vm._v("Sakit")
                     ]),
                     _vm._v(" "),
-                    _c("option", { attrs: { value: "alfa" } }, [_vm._v("Alfa")])
+                    _c("option", { attrs: { value: "alfa" } }, [
+                      _vm._v("Alfa")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "dinas" } }, [
+                      _vm._v("Dinas")
+                    ])
                   ]
                 ),
                 _vm._v(" "),
@@ -62442,6 +62547,161 @@ var render = function() {
                       attrs: {
                         type: "text",
                         placeholder: "Alasan Izin Karyawan [Max: 50 Karakter].."
+                      },
+                      domProps: { value: _vm.absen.alasan },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.absen, "alasan", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.message
+                      ? _c("span", { staticClass: "label label-success" }, [
+                          _c("i", { staticClass: "fa fa-check" })
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.errors.alasan
+                      ? _c("span", { staticClass: "label label-danger" }, [
+                          _vm._v(_vm._s(_vm.errors.alasan[0]))
+                        ])
+                      : _vm._e()
+                  ])
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.absen.status == "sakit"
+            ? _c(
+                "div",
+                { class: ["form-group", _vm.errors.alasan ? "has-error" : ""] },
+                [
+                  _c("label", { staticClass: "col-sm-2 control-label" }, [
+                    _vm._v("Bukti Surat Dokter")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-10" }, [
+                    _c("div", { staticClass: "radio" }, [
+                      _c("label", { staticClass: "radio-custom" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.absen.alasan,
+                              expression: "absen.alasan"
+                            }
+                          ],
+                          attrs: {
+                            type: "radio",
+                            name: "radio",
+                            checked: "checked",
+                            value: "Dilengkapi surat dokter"
+                          },
+                          domProps: {
+                            checked: _vm._q(
+                              _vm.absen.alasan,
+                              "Dilengkapi surat dokter"
+                            )
+                          },
+                          on: {
+                            change: function($event) {
+                              _vm.$set(
+                                _vm.absen,
+                                "alasan",
+                                "Dilengkapi surat dokter"
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm._v(
+                          "\n                              Ya\n                            "
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "radio" }, [
+                      _c("label", { staticClass: "radio-custom" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.absen.alasan,
+                              expression: "absen.alasan"
+                            }
+                          ],
+                          attrs: {
+                            type: "radio",
+                            name: "radio",
+                            value: "Tidak ada surat dokter"
+                          },
+                          domProps: {
+                            checked: _vm._q(
+                              _vm.absen.alasan,
+                              "Tidak ada surat dokter"
+                            )
+                          },
+                          on: {
+                            change: function($event) {
+                              _vm.$set(
+                                _vm.absen,
+                                "alasan",
+                                "Tidak ada surat dokter"
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm._v(
+                          "\n                              Tidak\n                            "
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm.message
+                      ? _c("span", { staticClass: "label label-success" }, [
+                          _c("i", { staticClass: "fa fa-check" })
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.errors.alasan
+                      ? _c("span", { staticClass: "label label-danger" }, [
+                          _vm._v(_vm._s(_vm.errors.alasan[0]))
+                        ])
+                      : _vm._e()
+                  ])
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.absen.status == "dinas"
+            ? _c(
+                "div",
+                { class: ["form-group", _vm.errors.alasan ? "has-error" : ""] },
+                [
+                  _c("label", { staticClass: "col-sm-2 control-label" }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-10" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.absen.alasan,
+                          expression: "absen.alasan"
+                        }
+                      ],
+                      staticClass: "form-control rounded",
+                      attrs: {
+                        type: "text",
+                        placeholder:
+                          "Lewat atau masukan Keterangan lebih lanjut..."
                       },
                       domProps: { value: _vm.absen.alasan },
                       on: {
@@ -62639,12 +62899,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
 		return {
+			errors: [],
 			checkedRows: [],
+			filter: {
+				tgl_history: ''
+			},
 			users: {},
 			current_page: '',
 			from: '',
@@ -62708,6 +62983,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				_this4.$root.loading = false;
 			}, 2000);
 		},
+		filterHistory: function filterHistory() {
+			var _this5 = this;
+
+			var app = this;
+			var filterDate = app.filter;
+			axios.post('master-filter/getFilterHistory', filterDate).then(function (respon) {
+				_this5.refresh();
+			}).catch(function (error) {
+				_this5.errors = error.response.data.errors;
+				_this5.message = false;
+			});
+		},
 		deleteHistory: function deleteHistory(id) {
 			var app = this;
 			if (confirm('Anda Yakin?')) {
@@ -62717,14 +63004,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			}
 		},
 		deleteChecked: function deleteChecked() {
-			var _this5 = this;
+			var _this6 = this;
 
-			if (this.checkedRows.length == null) {
+			if (this.checkedRows.length == 0) {
 				alert('Silahkan ceklik karyawan yang ingn di hapus!');
 			} else {
 				if (confirm('Anda yakin untuk menghapus data yang di ceklis?')) {
-					axios.post('absen-admin/destroyChecked', { checkedId: this.checkedRows }).then(function (respon) {
-						_this5.paginate();
+					axios.post('history/deleteChecked', { checkedId: this.checkedRows }).then(function (respon) {
+						_this6.paginate();
 					});
 				}
 			}
@@ -62741,153 +63028,203 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("section", { staticClass: "panel panel-default" }, [
-    _c("div", { staticClass: "table-responsive" }, [
-      _c("table", { staticClass: "table table-striped m-b-none" }, [
-        _c("thead", [
-          _c("tr", [
-            _c("th", { attrs: { width: "10" } }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-xs btn-default",
-                  on: {
-                    click: function($event) {
-                      _vm.deleteChecked()
-                    }
-                  }
-                },
-                [_c("i", { staticClass: "fa fa-trash-o" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-xs btn-default",
-                  on: {
-                    click: function($event) {
-                      _vm.paginate()
-                    }
-                  }
-                },
-                [_c("i", { staticClass: "fa fa-refresh" })]
-              )
-            ]),
-            _vm._v(" "),
-            _c("th", { attrs: { width: "40" } }, [_vm._v("Nama Karyawan")]),
-            _vm._v(" "),
-            _c("th", { attrs: { width: "20" } }, [_vm._v("Jam Masuk")]),
-            _vm._v(" "),
-            _c("th", { attrs: { width: "20" } }, [_vm._v("Jam Keluar")]),
-            _vm._v(" "),
-            _c("th", { attrs: { width: "20" } }, [_vm._v("Tanggal")]),
-            _vm._v(" "),
-            _c("th", { attrs: { width: "30" } })
-          ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.users.data, function(user, index) {
-            return _c("tr", [
-              _c("td", [
-                _c("label", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.checkedRows,
-                        expression: "checkedRows"
-                      }
-                    ],
-                    attrs: { type: "checkbox" },
-                    domProps: {
-                      value: user.id,
-                      checked: Array.isArray(_vm.checkedRows)
-                        ? _vm._i(_vm.checkedRows, user.id) > -1
-                        : _vm.checkedRows
-                    },
+    _c("header", { staticClass: "panel-heading" }, [
+      _c("i", { staticClass: "fa fa-filter" }),
+      _vm._v(" Filter Absen\n      "),
+      _c("i", {
+        staticClass: "fa fa-info-sign text-muted",
+        attrs: {
+          "data-toggle": "tooltip",
+          "data-placement": "bottom",
+          "data-title": "ajax to load the data."
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { class: ["form-group", _vm.errors.tgl_history ? "has-error" : ""] },
+        [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.filter.tgl_history,
+                expression: "filter.tgl_history"
+              }
+            ],
+            staticClass: "form-control input-sm",
+            attrs: { type: "date", placeholder: "Filter by date" },
+            domProps: { value: _vm.filter.tgl_history },
+            on: {
+              change: function($event) {
+                _vm.filterHistory()
+              },
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.filter, "tgl_history", $event.target.value)
+              }
+            }
+          })
+        ]
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "panel-body" }, [
+      _c("div", { staticClass: "table-responsive" }, [
+        _c("table", { staticClass: "table table-striped m-b-none" }, [
+          _c("thead", [
+            _c("tr", [
+              _c("th", { attrs: { width: "10" } }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-xs btn-default",
                     on: {
-                      change: function($event) {
-                        var $$a = _vm.checkedRows,
-                          $$el = $event.target,
-                          $$c = $$el.checked ? true : false
-                        if (Array.isArray($$a)) {
-                          var $$v = user.id,
-                            $$i = _vm._i($$a, $$v)
-                          if ($$el.checked) {
-                            $$i < 0 && (_vm.checkedRows = $$a.concat([$$v]))
-                          } else {
-                            $$i > -1 &&
-                              (_vm.checkedRows = $$a
-                                .slice(0, $$i)
-                                .concat($$a.slice($$i + 1)))
-                          }
-                        } else {
-                          _vm.checkedRows = $$c
-                        }
+                      click: function($event) {
+                        _vm.deleteChecked()
                       }
                     }
-                  })
-                ])
+                  },
+                  [_c("i", { staticClass: "fa fa-trash-o" })]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-xs btn-default",
+                    on: {
+                      click: function($event) {
+                        _vm.paginate()
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fa fa-refresh" })]
+                )
               ]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(user.nama))]),
+              _c("th", { attrs: { width: "40" } }, [_vm._v("Nama Karyawan")]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(user.checkin))]),
+              _c("th", { attrs: { width: "20" } }, [_vm._v("Jam Masuk")]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(user.checkout))]),
+              _c("th", { attrs: { width: "20" } }, [_vm._v("Jam Keluar")]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(user.created_at))]),
+              _c("th", { attrs: { width: "20" } }, [_vm._v("Tanggal")]),
               _vm._v(" "),
-              user.action == "masuk"
-                ? _c("td", [
-                    _c("span", { staticClass: "label label-info" }, [
-                      _vm._v("on working")
-                    ])
-                  ])
-                : _vm._e(),
+              _c("th", { attrs: { width: "30" } }, [_vm._v("Status")]),
               _vm._v(" "),
-              user.action == "keluar"
-                ? _c("td", [
-                    _c("i", { staticClass: "fa fa-check text-success" })
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              user.action == "alfa"
-                ? _c("td", [
-                    _c("span", { staticClass: "label label-danger" }, [
-                      _vm._v("Alfa")
-                    ])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              user.action == "izin"
-                ? _c("td", [
-                    _c("span", { staticClass: "label label-info" }, [
-                      _vm._v("Izin")
-                    ])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              user.action == "sakit"
-                ? _c("td", [
-                    _c("span", { staticClass: "label label-warning" }, [
-                      _vm._v("Sakit")
-                    ])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              user.action == ""
-                ? _c("td", [
-                    _c("span", { staticClass: "label label-default" }, [
-                      _vm._v("Tidak ada keterangan")
-                    ])
-                  ])
-                : _vm._e()
+              _c("th", { attrs: { width: "30" } }, [_vm._v("Keterangan")])
             ])
-          })
-        )
+          ]),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.users.data, function(user, index) {
+              return _c("tr", [
+                _c("td", [
+                  _c("label", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.checkedRows,
+                          expression: "checkedRows"
+                        }
+                      ],
+                      attrs: { type: "checkbox" },
+                      domProps: {
+                        value: user.absen_id,
+                        checked: Array.isArray(_vm.checkedRows)
+                          ? _vm._i(_vm.checkedRows, user.absen_id) > -1
+                          : _vm.checkedRows
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.checkedRows,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = user.absen_id,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 && (_vm.checkedRows = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.checkedRows = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.checkedRows = $$c
+                          }
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(user.nama))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(user.checkin))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(user.checkout))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(user.created_at))]),
+                _vm._v(" "),
+                user.action == "masuk"
+                  ? _c("td", [
+                      _c("span", { staticClass: "label label-info" }, [
+                        _vm._v("on working")
+                      ])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                user.action == "keluar"
+                  ? _c("td", [
+                      _c("i", { staticClass: "fa fa-check text-success" })
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                user.action == "alfa"
+                  ? _c("td", [
+                      _c("span", { staticClass: "label label-danger" }, [
+                        _vm._v("Alfa")
+                      ])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                user.action == "izin"
+                  ? _c("td", [
+                      _c("span", { staticClass: "label label-default" }, [
+                        _vm._v("Izin")
+                      ])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                user.action == "sakit"
+                  ? _c("td", [
+                      _c("span", { staticClass: "label label-warning" }, [
+                        _vm._v("Sakit")
+                      ])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                user.action == "dinas"
+                  ? _c("td", [
+                      _c("span", { staticClass: "label label-info" }, [
+                        _vm._v("Dinas")
+                      ])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(user.alasan))])
+              ])
+            })
+          )
+        ])
       ])
     ]),
     _vm._v(" "),

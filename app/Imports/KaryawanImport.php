@@ -23,36 +23,40 @@ class KaryawanImport implements ToModel, WithChunkReading, ShouldQueue
              'id' => $row[0],
              'nik'     => $row[1],
              'nama'    => $row[2],
-             'divisi' =>  $row[3],
-             'jenis_kelamin' => $row[4],
-             'status' => $row[5]
+             'jabatan'    => $row[3],
+             'divisi' =>  $row[4],
+             'jenis_kelamin' => $row[5],
+             'status' => $row[6]
           ]);
       }else if($row[0] == null){
         $validator2 = Karyawan::where([
             'nik' => $row[1],
             'nama' => $row[2],
-            'divisi' => $row[3],
-            'jenis_kelamin' => $row[4],
-            'status' => $row[5]
+            'jabatan' => $row[3],
+            'divisi' => $row[4],
+            'jenis_kelamin' => $row[5],
+            'status' => $row[6]
         ])->get();
 
         if (count($validator2)) {
             foreach ($validator2 as $replace) {
                 Karyawan::where('id', $replace->id)->update([
-                     'nik'     => Carbon::now()->format('y') . Carbon::now()->format('m') . Carbon::now()->format('is'),
+                     'nik'     => Carbon::now()->format('y') . Carbon::now()->format('m') . Carbon::now()->format('i') . Carbon::now()->format('s'),
                      'nama'    => $row[2],
-                     'divisi' =>  $row[3],
-                     'jenis_kelamin' => $row[4],
-                     'status' => $row[5]
+                     'jabatan' =>  $row[3],
+                     'divisi' =>  $row[4],
+                     'jenis_kelamin' => $row[5],
+                     'status' => $row[6]
                     ]);
             }
         }else{
             return new Karyawan([
-                 'nik'     => Carbon::now()->format('y') . Carbon::now()->format('m') . Carbon::now()->format('is'),
+                 'nik'     => Carbon::now()->format('y') . Carbon::now()->format('m') . Carbon::now()->format('i') . Carbon::now()->format('s'),,
                  'nama'    => $row[2],
-                 'divisi' =>  $row[3],
-                 'jenis_kelamin' => $row[4],
-                 'status' => $row[5]
+                 'jabatan' =>  $row[3],
+                 'divisi' =>  $row[4],
+                 'jenis_kelamin' => $row[5],
+                 'status' => $row[6]
               ]);
         }
       }

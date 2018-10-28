@@ -9,7 +9,7 @@ class Karyawan extends Model
     protected $table = 'karyawans';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'id', 'nama', 'jenis_kelamin', 'divisi', 'nik', 'pin', 'status', 'fp'
+        'id', 'nama', 'jenis_kelamin', 'jabatan', 'divisi', 'nik', 'pin', 'status', 'fp'
     ];
 
     public function absen()

@@ -21,11 +21,18 @@
                         <span v-if="errors.nama" class="label label-danger">{{ errors.nama[0] }}</span>
                     </div>
                 </div>
-
+                <div :class="['form-group', errors.jabatan ? 'has-error' : '']">
+                    <label class="col-sm-2 control-label">Jabatan</label>
+                    <div class="col-sm-10">
+                        <input name="jabatan" v-model="state.jabatan" type="text" class="form-control rounded" placeholder="Jabatan Karyawan.." required="">
+                        <span v-if="message" class="label label-success"><i class="fa fa-check"></i></span>
+                        <span v-if="errors.jabatan" class="label label-danger">{{ errors.jabatan[0] }}</span>
+                    </div>
+                </div>
                 <div :class="['form-group', errors.divisi ? 'has-error' : '']">
                     <label class="col-sm-2 control-label">Divisi</label>
                     <div class="col-sm-10">
-                        <input name="divisi" v-model="state.divisi" type="text" class="form-control rounded" placeholder="Jabatan/Divisi Karyawan.." required="">
+                        <input name="divisi" v-model="state.divisi" type="text" class="form-control rounded" placeholder="Divisi Karyawan.." required="">
                         <span v-if="message" class="label label-success"><i class="fa fa-check"></i></span>
                         <span v-if="errors.divisi" class="label label-danger">{{ errors.divisi[0] }}</span>
                     </div>
@@ -87,6 +94,7 @@ export default {
             // url : 'karyawan/post',
             state: {
                 nama: '',
+                jabatan: '',
                 divisi: '',
                 jenis_kelamin: '',
                 nik: '',
@@ -138,6 +146,7 @@ export default {
                     app.message = resp.data.response.message;
                     app.messageError = false; // showing result
                     app.state.nama = ''; // clear form
+                    app.state.jabatan = ''; // clear form
                     app.state.divisi = ''; // clear form
                     app.state.jenis_kelamin = ''; // clear form
                     app.state.nik = ''; // clear form

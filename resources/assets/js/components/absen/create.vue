@@ -25,6 +25,7 @@
                             <option value="izin">Izin</option>
                             <option value="sakit">Sakit</option>
                             <option value="alfa">Alfa</option>
+                            <option value="dinas">Dinas</option>
                         </select>
                         <span v-if="errors.status" class="label label-danger">{{ errors.status[0] }}</span>
                         <span v-if="message" class="label label-success"><i class="fa fa-check"></i></span>
@@ -36,6 +37,37 @@
                       <label class="col-sm-2 control-label">Alasan Izin</label>
                       <div class="col-sm-10">
                           <input v-model="absen.alasan" type="text" class="form-control rounded" placeholder="Alasan Izin Karyawan [Max: 50 Karakter]..">
+                          <span v-if="message" class="label label-success"><i class="fa fa-check"></i></span>
+                          <span v-if="errors.alasan" class="label label-danger">{{ errors.alasan[0] }}</span>
+                      </div>
+                  </div>
+                  <div v-if="absen.status == 'sakit'" :class="['form-group', errors.alasan ? 'has-error' : '']">
+                      <label class="col-sm-2 control-label">Bukti Surat Dokter</label>
+                      <div class="col-sm-10">
+                          <!-- <input v-model="absen.alasan" type="text" class="form-control rounded" placeholder="Surat dokter?.."> -->
+                            <!-- radio -->
+                            <div class="radio">
+                              <label class="radio-custom">
+                                <input v-model="absen.alasan" type="radio" name="radio" checked="checked" value="Dilengkapi surat dokter">
+                                <!-- <i class="fa fa-circle-o"></i> -->
+                                Ya
+                              </label>
+                            </div>
+                            <div class="radio">
+                              <label class="radio-custom">
+                                <input v-model="absen.alasan" type="radio" name="radio" value="Tidak ada surat dokter">
+                                <!-- <i class="fa fa-circle-o"></i> -->
+                                Tidak
+                              </label>
+                            </div>
+                          <span v-if="message" class="label label-success"><i class="fa fa-check"></i></span>
+                          <span v-if="errors.alasan" class="label label-danger">{{ errors.alasan[0] }}</span>
+                      </div>
+                  </div>
+                  <div v-if="absen.status == 'dinas'" :class="['form-group', errors.alasan ? 'has-error' : '']">
+                      <label class="col-sm-2 control-label"></label>
+                      <div class="col-sm-10">
+                          <input v-model="absen.alasan" type="text" class="form-control rounded" placeholder="Lewat atau masukan Keterangan lebih lanjut...">
                           <span v-if="message" class="label label-success"><i class="fa fa-check"></i></span>
                           <span v-if="errors.alasan" class="label label-danger">{{ errors.alasan[0] }}</span>
                       </div>
