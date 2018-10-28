@@ -79,16 +79,10 @@ export default {
             axios.post(e.target.action, newState)
             .then(function (resp) {
             	app.errors = [];
-                if (resp.data.response.status == 'exist') {
-                	app.message = false;
-                	app.messageError = resp.data.response.message; // showing result
-                }else{
-                	app.message = resp.data.response.message;
-                	app.messageError = false; // showing result
-	                app.absen.karyawan_id = ''; // clear form
-	                app.absen.alasan = ''; // clear form
-	                app.absen.status = ''; // clear form
-                }
+            	// app.messageError = false; // showing result
+              app.absen.karyawan_id = ''; // clear form
+              app.absen.alasan = ''; // clear form
+              app.absen.status = ''; // clear form
                 // app.$router.replace('/'); // redirect to url "/"
             }).catch((error) => {
                  this.errors = error.response.data.errors;

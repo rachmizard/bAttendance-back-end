@@ -62234,16 +62234,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var newState = app.absen;
             axios.post(e.target.action, newState).then(function (resp) {
                 app.errors = [];
-                if (resp.data.response.status == 'exist') {
-                    app.message = false;
-                    app.messageError = resp.data.response.message; // showing result
-                } else {
-                    app.message = resp.data.response.message;
-                    app.messageError = false; // showing result
-                    app.absen.karyawan_id = ''; // clear form
-                    app.absen.alasan = ''; // clear form
-                    app.absen.status = ''; // clear form
-                }
+                // app.messageError = false; // showing result
+                app.absen.karyawan_id = ''; // clear form
+                app.absen.alasan = ''; // clear form
+                app.absen.status = ''; // clear form
                 // app.$router.replace('/'); // redirect to url "/"
             }).catch(function (error) {
                 _this2.errors = error.response.data.errors;
