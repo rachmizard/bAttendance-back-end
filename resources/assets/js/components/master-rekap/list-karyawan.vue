@@ -1,5 +1,5 @@
 <template>
-  <section class="panel panel-default">
+  <section class="panel panel-info" style="margin-bottom: 100px;">
     <header class="panel-heading">
       <i class="fa fa-table"></i> Karyawan
       <i class="fa fa-info-sign text-muted" data-toggle="tooltip" data-placement="bottom" data-title="ajax to load the data."></i>
@@ -17,7 +17,7 @@
 				<tr v-for="(karyawan, index) in karyawans.data">
 					<td>{{ karyawan.nik }}</td>
 					<td>{{ karyawan.nama }}</td>
-					<td><router-link :to="{name: 'rekapKaryawan', params: { id: karyawan.id }}" class="btn btn-warning btn-sm">Rekap</router-link></td>
+					<td><router-link :to="{name: 'rekapKaryawan', params: { id: karyawan.id }}" class="btn btn-info btn-xs"><i class="fa fa-check"></i> Lihat absensi</router-link></td>
 				</tr>
             </tbody>
           </table>

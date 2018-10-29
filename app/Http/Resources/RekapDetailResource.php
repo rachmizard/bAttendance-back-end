@@ -39,42 +39,43 @@ class RekapDetailResource extends Resource
 
     public function tanggal()
     {
-        return Carbon::parse(Absen::where('karyawan_id', $this->id)->whereDate('created_at', Carbon::parse(MasterRekap::find(1)->tanggal_aktif_rekap)->format('Y-m-d'))->value('created_at'))->format('d');
+        // return Carbon::parse(Absen::where('karyawan_id', $this->id)->whereDate('created_at', Carbon::parse(MasterRekap::find(1)->tanggal_aktif_rekap)->format('Y-m-d'))->value('created_at'))->format('d');
+        return Carbon::parse($this->created_at)->format('d M Y');
     }
 
     public function hadir()
     {
         return Absen::where(['karyawan_id' => $this->karyawan->id, 'status' => 'masuk'])
-            ->whereBetween('created_at', [new Carbon(MasterRekap::find(1)->start), new Carbon(MasterRekap::find(1)->end)])->value('created_at');
+            ->whereDate('created_at', Carbon::parse($this->created_at)->format('Y-m-d'))->value('status');
     }
 
     public function sakit()
     {
         return Absen::where(['karyawan_id' => $this->karyawan->id, 'status' => 'sakit'])
-            ->whereBetween('created_at', [new Carbon(MasterRekap::find(1)->start), new Carbon(MasterRekap::find(1)->end)])->value('created_at');
+            ->whereDate('created_at', Carbon::parse($this->created_at)->format('Y-m-d'))->value('status');
     }
 
     public function izin()
     {
         return Absen::where(['karyawan_id' => $this->karyawan->id, 'status' => 'izin'])
-            ->whereBetween('created_at', [new Carbon(MasterRekap::find(1)->start), new Carbon(MasterRekap::find(1)->end)])->value('status');
+            ->whereDate('created_at', Carbon::parse($this->created_at)->format('Y-m-d'))->value('status');
     }
 
     public function alfa()
     {
         return Absen::where(['karyawan_id' => $this->karyawan->id, 'status' => 'alfa'])
-            ->whereBetween('created_at', [new Carbon(MasterRekap::find(1)->start), new Carbon(MasterRekap::find(1)->end)])->value('status');
+            ->whereDate('created_at', Carbon::parse($this->created_at)->format('Y-m-d'))->value('status');
     }
 
     public function dinas()
     {
         return Absen::where(['karyawan_id' => $this->karyawan->id, 'status' => 'dinas'])
-            ->whereBetween('created_at', [new Carbon(MasterRekap::find(1)->start), new Carbon(MasterRekap::find(1)->end)])->value('status');
+            ->whereDate('created_at', Carbon::parse($this->created_at)->format('Y-m-d'))->value('status');
     }
 
     public function keterangan()
     {
         return Absen::where(['karyawan_id' => $this->karyawan->id])
-            ->whereBetween('created_at', [new Carbon(MasterRekap::find(1)->start), new Carbon(MasterRekap::find(1)->end)])->value('alasan');
+            ->whereDate('created_at', Carbon::parse($this->created_at)->format('Y-m-d'))->value('alasan');
     }
 }

@@ -5,7 +5,7 @@
       <i class="fa fa-info-sign text-muted" data-toggle="tooltip" data-placement="bottom" data-title="ajax to load the data."></i>
     </header>
         <div class="table-responsive">
-          <table id="rekapTable" class="display table table-striped m-b-none">
+          <table id="rekapTable" class="table table-striped m-b-none">
             <thead>
               <tr>
                 <th width="5%">NIK</th>

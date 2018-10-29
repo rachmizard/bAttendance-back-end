@@ -33,7 +33,7 @@ Route::get('/randomabsen', function(){
     // Check if data is already exist for presence today
     $check = \App\Absen::where('karyawan_id', request(rand(82, 110)))->where('status', 'masuk')->whereDate('created_at', $validator)->get();
     if (!count($check) > 0) {
-		$data['karyawan_id'] = rand(82, 110);
+		$data['karyawan_id'] = rand(1, 10);
 		$data['verifikasi_id'] = rand(1, 4);
 		$data['status'] = 'masuk';
 		$data['alasan'] = null;

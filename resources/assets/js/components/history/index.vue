@@ -55,11 +55,11 @@
                         		<td>{{ user.nama }}</td>
                         		<td>{{ user.checkin }}</td>
                         		<td>{{ user.checkout }}</td>
-                        		<td v-if="user.action == 'masuk'"><span class="label label-info">on working</span></td>
+                            <td v-if="user.action == 'masuk'"><span class="label label-info">on working</span></td>
                         		<td v-if="user.action == 'keluar'"><i class="fa fa-check text-success"></i></td>
                         		<td v-if="user.action == 'alfa'"><span class="label label-danger">Alfa</span></td>
-                        		<td v-if="user.action == 'izin'"><span class="label label-info">Izin</span></i></td>
-                        		<td v-if="user.action == 'dinas'"><span class="label label-info">Dinas</span></i></td>
+                        		<td v-if="user.action == 'izin'"><span class="label label-info">Izin</span></td>
+                        		<td v-if="user.action == 'dinas'"><span class="label label-info">Dinas</span></td>
                         		<td v-if="user.action == 'sakit'"><span class="label label-warning">Sakit</span></td>
                         		<td v-if="user.action == ''"><span class="label label-default">Tidak ada keterangan</span></td>
                         		<td>{{ user.alasan }}</td>

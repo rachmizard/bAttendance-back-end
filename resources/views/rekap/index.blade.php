@@ -17,7 +17,9 @@
                   <tgl-aktif-rekap></tgl-aktif-rekap>
                   <!-- End Form Component -->
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-12">
+                </div>
+                <div class="col-md-12">
                   <!-- Create Form Component -->
                   <rekap-absen></rekap-absen>
                   <!-- End Form Component -->
