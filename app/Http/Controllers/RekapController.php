@@ -10,8 +10,10 @@ use Yajra\Datatables\Datatables;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\RekapExport;
 use App\Http\Resources\RekapResource;
+use App\Http\Resources\RekapDetailResource;
 use App\Karyawan;
 use App\MasterRekap;
+use App\MasterFilter;
 use App\Events\DrawTableEvent;
 use DB;
 
@@ -26,6 +28,7 @@ class RekapController extends Controller
     {
       $getMasterRekap = MasterRekap::find(1);
       $now = Carbon::now();
+      $data = Karyawan::where('status', 'authorized')->get();
       return Datatables::of(RekapResource::collection(Karyawan::where('status', 'authorized')->get()))
       ->rawColumns(['total_lembur'])
       ->make(true);
@@ -49,6 +52,17 @@ class RekapController extends Controller
     public function edit($id)
     {
       // code...
+    }
+
+    public function detail($id)
+    {
+      return new RekapResource(Karyawan::find($id));
+    }
+
+    public function rekapDetailKaryawan(Request $request, $id)
+    {
+      return RekapDetailResource::collection(Absen::orderBy('created_at', 'ASC')->where('karyawan_id', $id)
+            ->whereBetween('created_at', [new Carbon(MasterRekap::find(1)->start), new Carbon(MasterRekap::find(1)->end)])->get());
     }
 
     public function selectMasterRekap()

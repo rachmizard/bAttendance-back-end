@@ -20,6 +20,7 @@ class RekapResource extends Resource
     {
         // return parent::toArray($request);
         return [
+          'id' => $this->id,
           'nik' => $this->nik,
           'karyawan' => $this->nama,
           'jml_hadir' => $this->countHadir() == 0 ? '0' : $this->countHadir(),

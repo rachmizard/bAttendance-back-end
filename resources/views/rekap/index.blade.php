@@ -22,6 +22,14 @@
                   <rekap-absen></rekap-absen>
                   <!-- End Form Component -->
                 </div>
+                <div class="col-md-12">
+                  <!-- Create Form Component -->
+                  <transition name="fade">
+                    <router-view>
+                    </router-view>
+                  </transition>
+                  <!-- End Form Component -->
+                </div>
               </div>
             </section>
           </section>

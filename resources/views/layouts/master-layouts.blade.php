@@ -247,7 +247,7 @@
                       </a>
                     </li>
                     <li >
-                      <a href="{{ route('rekap-admin.index') }}"  >
+                      <a href="{{ route('rekap-admin.index') }}#/list_karyawan"  >
                         <i class="fa fa-book icon">
                           <b class="bg-info"></b>
                         </i>

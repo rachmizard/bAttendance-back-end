@@ -20,6 +20,12 @@ window.JQuery = require('jquery');
 Import Package
 */
 
+import VCalendar from 'v-calendar';
+import 'v-calendar/lib/v-calendar.min.css';
+Vue.use(VCalendar, {
+  firstDayOfWeek: 2,  // Monday
+});
+
 import alert from 'vue-strap/src/alert';
 import VueGoogleCharts from 'vue-google-charts';
 Vue.use(VueGoogleCharts);
@@ -68,6 +74,12 @@ const routes = [
 },
 {
   path: '/history', name: 'historyIndex', component: require('./components/history/index.vue'), props: { title: 'History Absensi' }
+},
+{
+  path: '/list_karyawan', name: 'lisKaryawan', component: require('./components/master-rekap/list-karyawan.vue'), props: { title: 'List Karyawan' }
+},
+{
+  path: '/rekap_karyawan/:id', name: 'rekapKaryawan', component: require('./components/master-rekap/rekap-karyawan.vue')
 }
 ]
 const router = new VueRouter({

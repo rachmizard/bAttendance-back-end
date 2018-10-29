@@ -98,7 +98,7 @@ class KaryawanController extends Controller
                            $request->image->move($path, $name);
                    }else{
                      $setting = Image::make($request->file('image'));
-                     $setting->resize(300, 200);
+                     $setting->resize(500, 500);
                      $setting->save(public_path('storage/images/').$name);
                        // $path = public_path('storage/images/');
                        // $request->image->move($path, $name);
@@ -207,7 +207,7 @@ class KaryawanController extends Controller
                         $request->image->move($path, $name);
                 }else{
                   $setting = Image::make($request->file('image'));
-                  $setting->resize(300, 200);
+                  $setting->resize(500, 500);
                   $setting->save(public_path('storage/images/').$name);
                     // $path = public_path('storage/images/');
                     // $request->image->move($path, $name);

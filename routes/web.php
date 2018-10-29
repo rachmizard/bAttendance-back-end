@@ -136,6 +136,8 @@ Route::get('/absentest', function(){
 	// Rekap Admin Routes
 	Route::get('rekap-admin', 'RekapController@index')->name('rekap-admin.index');
 	Route::get('rekap-admin/json', 'RekapController@jsonRekap');
+	Route::get('rekap-admin/{id}/detail', 'RekapController@detail')->name('rekap-admin.detail');
+	Route::get('rekap-admin/{id}/rekapDetailKaryawan', 'RekapController@rekapDetailKaryawan')->name('rekap-admin.rekapDetailKaryawan');
 	Route::get('rekap-admin/selectMasterRekap', 'RekapController@selectMasterRekap');
 	Route::put('rekap-admin/{id}/updateMasterRekap', 'RekapController@updateMasterRekap');
 	Route::get('rekap-admin/export', 'RekapController@export')->name('rekap-admin.export');
