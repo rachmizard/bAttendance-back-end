@@ -47,7 +47,7 @@ class HomeController extends Controller
         $countHadirOktober = Absen::where('karyawan_id', $request->filter)->where('status', 'masuk')->whereMonth('created_at', '10')->count();
         $countHadirNovember = Absen::where('karyawan_id', $request->filter)->where('status', 'masuk')->whereMonth('created_at', '11')->count();
         $countHadirDesember = Absen::where('karyawan_id', $request->filter)->where('status', 'masuk')->whereMonth('created_at', '12')->count();
-        
+
         $countIzinJanuary = Absen::where('karyawan_id', $request->filter)->where('status', 'izin')->whereMonth('created_at', '1')->count();
         $countIzinFebruari = Absen::where('karyawan_id', $request->filter)->where('status', 'izin')->whereMonth('created_at', '2')->count();
         $countIzinMaret = Absen::where('karyawan_id', $request->filter)->where('status', 'izin')->whereMonth('created_at', '3')->count();
@@ -84,6 +84,19 @@ class HomeController extends Controller
         $countAlfaOktober = Absen::where('karyawan_id', $request->filter)->where('status', 'alfa')->whereMonth('created_at', '10')->count();
         $countAlfaNovember = Absen::where('karyawan_id', $request->filter)->where('status', 'alfa')->whereMonth('created_at', '11')->count();
         $countAlfaDesember = Absen::where('karyawan_id', $request->filter)->where('status', 'alfa')->whereMonth('created_at', '12')->count();
+
+        $countDinasJanuary = Absen::where('karyawan_id', $request->filter)->where('status', 'dinas')->whereMonth('created_at', '1')->count();
+        $countDinasFebruari = Absen::where('karyawan_id', $request->filter)->where('status', 'dinas')->whereMonth('created_at', '2')->count();
+        $countDinasMaret = Absen::where('karyawan_id', $request->filter)->where('status', 'dinas')->whereMonth('created_at', '3')->count();
+        $countDinasApril = Absen::where('karyawan_id', $request->filter)->where('status', 'dinas')->whereMonth('created_at', '4')->count();
+        $countDinasMei = Absen::where('karyawan_id', $request->filter)->where('status', 'dinas')->whereMonth('created_at', '5')->count();
+        $countDinasJuni = Absen::where('karyawan_id', $request->filter)->where('status', 'dinas')->whereMonth('created_at', '6')->count();
+        $countDinasJuly = Absen::where('karyawan_id', $request->filter)->where('status', 'dinas')->whereMonth('created_at', '7')->count();
+        $countDinasAgustus = Absen::where('karyawan_id', $request->filter)->where('status', 'dinas')->whereMonth('created_at', '8')->count();
+        $countDinasSeptember = Absen::where('karyawan_id', $request->filter)->where('status', 'dinas')->whereMonth('created_at', '9')->count();
+        $countDinasOktober = Absen::where('karyawan_id', $request->filter)->where('status', 'dinas')->whereMonth('created_at', '10')->count();
+        $countDinasNovember = Absen::where('karyawan_id', $request->filter)->where('status', 'dinas')->whereMonth('created_at', '11')->count();
+        $countDinasDesember = Absen::where('karyawan_id', $request->filter)->where('status', 'dinas')->whereMonth('created_at', '12')->count();
         $karyawan['karyawan'] = $data;
         $response['total_hadir_januari'] = $countHadirJanuary;
         $response['total_hadir_februari'] = $countHadirFebruari;
@@ -97,6 +110,7 @@ class HomeController extends Controller
         $response['total_hadir_oktober'] = $countHadirOktober;
         $response['total_hadir_november'] = $countHadirNovember;
         $response['total_hadir_desember'] = $countHadirDesember;
+
         $response['total_izin_januari'] = $countIzinJanuary;
         $response['total_izin_februari'] = $countIzinFebruari;
         $response['total_izin_maret'] = $countIzinMaret;
@@ -109,6 +123,7 @@ class HomeController extends Controller
         $response['total_izin_oktober'] = $countIzinOktober;
         $response['total_izin_november'] = $countIzinNovember;
         $response['total_izin_desember'] = $countIzinDesember;
+
         $response['total_sakit_januari'] = $countSakitJanuary;
         $response['total_sakit_februari'] = $countSakitFebruari;
         $response['total_sakit_maret'] = $countSakitMaret;
@@ -121,6 +136,7 @@ class HomeController extends Controller
         $response['total_sakit_oktober'] = $countSakitOktober;
         $response['total_sakit_november'] = $countSakitNovember;
         $response['total_sakit_desember'] = $countSakitDesember;
+
         $response['total_alfa_januari'] = $countAlfaJanuary;
         $response['total_alfa_februari'] = $countAlfaFebruari;
         $response['total_alfa_maret'] = $countAlfaMaret;
@@ -133,6 +149,19 @@ class HomeController extends Controller
         $response['total_alfa_oktober'] = $countAlfaOktober;
         $response['total_alfa_november'] = $countAlfaNovember;
         $response['total_alfa_desember'] = $countAlfaDesember;
+
+        $response['total_dinas_januari'] = $countDinasJanuary;
+        $response['total_dinas_februari'] = $countDinasFebruari;
+        $response['total_dinas_maret'] = $countDinasMaret;
+        $response['total_dinas_april'] = $countDinasApril;
+        $response['total_dinas_mei'] = $countDinasMei;
+        $response['total_dinas_juni'] = $countDinasJuni;
+        $response['total_dinas_juli'] = $countDinasJuly;
+        $response['total_dinas_agustus'] = $countDinasAgustus;
+        $response['total_dinas_september'] = $countDinasSeptember;
+        $response['total_dinas_oktober'] = $countDinasOktober;
+        $response['total_dinas_november'] = $countDinasNovember;
+        $response['total_dinas_desember'] = $countDinasDesember;
         return response()->json(['karyawan' => $data, 'total' => $response]);
     }
 }

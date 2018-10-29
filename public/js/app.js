@@ -62497,6 +62497,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       alfaOktober: '',
       alfaNovember: '',
       alfaDesember: '',
+      dinasJanuari: '',
+      dinasFebruari: '',
+      dinasMaret: '',
+      dinasApril: '',
+      dinasMei: '',
+      dinasJuni: '',
+      dinasJuli: '',
+      dinasAgustus: '',
+      dinasSeptember: '',
+      dinasOktober: '',
+      dinasNovember: '',
+      dinasDesember: '',
       chartData: [['Bulan', 'Hadir', 'Izin', 'Sakit', 'Alfa'], ['Pilih Karyawan...', parseInt(this.hadir), parseInt(this.izin), parseInt(this.sakit), parseInt(this.alfa)]],
       chartOptions: {
         chart: {
@@ -62576,7 +62588,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this2.alfaOktober = response.data.total.total_alfa_oktober;
         _this2.alfaNovember = response.data.total.total_alfa_november;
         _this2.alfaDesember = response.data.total.total_alfa_desember;
-        _this2.chartData = [['Bulan', 'Hadir', 'Izin', 'Sakit', 'alfa'], ['Januari', parseInt(_this2.hadirJanuari), parseInt(_this2.izinJanuari), parseInt(_this2.sakitJanuari), parseInt(_this2.alfaJanuari)], ['Februari', parseInt(_this2.hadirFebruari), parseInt(_this2.izinFebruari), parseInt(_this2.sakitFebruari), parseInt(_this2.alfaFebruari)], ['Maret', parseInt(_this2.hadirMaret), parseInt(_this2.izinMaret), parseInt(_this2.sakitMaret), parseInt(_this2.alfaMaret)], ['April', parseInt(_this2.hadirApril), parseInt(_this2.izinApril), parseInt(_this2.sakitApril), parseInt(_this2.alfaApril)], ['Mei', parseInt(_this2.hadirMei), parseInt(_this2.izinMei), parseInt(_this2.sakitMei), parseInt(_this2.alfaMei)], ['Juni', parseInt(_this2.hadirJuni), parseInt(_this2.izinJuni), parseInt(_this2.sakitJuni), parseInt(_this2.alfaJuni)], ['Juli', parseInt(_this2.hadirJuli), parseInt(_this2.izinJuli), parseInt(_this2.sakitJuli), parseInt(_this2.alfaJuli)], ['Agustus', parseInt(_this2.hadirAgustus), parseInt(_this2.izinAgustus), parseInt(_this2.sakitAgustus), parseInt(_this2.alfaAgustus)], ['September', parseInt(_this2.hadirSeptember), parseInt(_this2.izinSeptember), parseInt(_this2.sakitSeptember), parseInt(_this2.alfaSeptember)], ['Oktober', parseInt(_this2.hadirOktober), parseInt(_this2.izinOktober), parseInt(_this2.sakitOktober), parseInt(_this2.alfaOktober)], ['November', parseInt(_this2.hadirNovember), parseInt(_this2.izinNovember), parseInt(_this2.sakitNovember), parseInt(_this2.alfaNovember)], ['Desember', parseInt(_this2.hadirDesember), parseInt(_this2.izinDesember), parseInt(_this2.sakitDesember), parseInt(_this2.alfaDesember)]];
+        _this2.dinasJanuari = response.data.total.total_dinas_januari;
+        _this2.dinasFebruari = response.data.total.total_dinas_februari;
+        _this2.dinasMaret = response.data.total.total_dinas_maret;
+        _this2.dinasApril = response.data.total.total_dinas_april;
+        _this2.dinasMei = response.data.total.total_dinas_mei;
+        _this2.dinasJuni = response.data.total.total_dinas_juni;
+        _this2.dinasJuli = response.data.total.total_dinas_juli;
+        _this2.dinasAgustus = response.data.total.total_dinas_agustus;
+        _this2.dinasSeptember = response.data.total.total_dinas_september;
+        _this2.dinasOktober = response.data.total.total_dinas_oktober;
+        _this2.dinasNovember = response.data.total.total_dinas_november;
+        _this2.dinasDesember = response.data.total.total_dinas_desember;
+        _this2.chartData = [['Bulan', 'Hadir', 'Izin', 'Sakit', 'Alfa', 'Dinas'], ['Januari', parseInt(_this2.hadirJanuari), parseInt(_this2.izinJanuari), parseInt(_this2.sakitJanuari), parseInt(_this2.alfaJanuari), parseInt(_this2.dinasJanuari)], ['Februari', parseInt(_this2.hadirFebruari), parseInt(_this2.izinFebruari), parseInt(_this2.sakitFebruari), parseInt(_this2.alfaFebruari), parseInt(_this2.dinasFebruari)], ['Maret', parseInt(_this2.hadirMaret), parseInt(_this2.izinMaret), parseInt(_this2.sakitMaret), parseInt(_this2.alfaMaret), parseInt(_this2.dinasMaret)], ['April', parseInt(_this2.hadirApril), parseInt(_this2.izinApril), parseInt(_this2.sakitApril), parseInt(_this2.alfaApril), parseInt(_this2.dinasApril)], ['Mei', parseInt(_this2.hadirMei), parseInt(_this2.izinMei), parseInt(_this2.sakitMei), parseInt(_this2.alfaMei), parseInt(_this2.dinasMei)], ['Juni', parseInt(_this2.hadirJuni), parseInt(_this2.izinJuni), parseInt(_this2.sakitJuni), parseInt(_this2.alfaJuni), parseInt(_this2.dinasJuni)], ['Juli', parseInt(_this2.hadirJuli), parseInt(_this2.izinJuli), parseInt(_this2.sakitJuli), parseInt(_this2.alfaJuli), parseInt(_this2.dinasJuli)], ['Agustus', parseInt(_this2.hadirAgustus), parseInt(_this2.izinAgustus), parseInt(_this2.sakitAgustus), parseInt(_this2.alfaAgustus), parseInt(_this2.dinasAgustus)], ['September', parseInt(_this2.hadirSeptember), parseInt(_this2.izinSeptember), parseInt(_this2.sakitSeptember), parseInt(_this2.alfaSeptember), parseInt(_this2.dinasSeptember)], ['Oktober', parseInt(_this2.hadirOktober), parseInt(_this2.izinOktober), parseInt(_this2.sakitOktober), parseInt(_this2.alfaOktober), parseInt(_this2.dinasOktober)], ['November', parseInt(_this2.hadirNovember), parseInt(_this2.izinNovember), parseInt(_this2.sakitNovember), parseInt(_this2.alfaNovember), parseInt(_this2.dinasNovember)], ['Desember', parseInt(_this2.hadirDesember), parseInt(_this2.izinDesember), parseInt(_this2.sakitDesember), parseInt(_this2.alfaDesember), parseInt(_this2.dinasDesember)]];
       }).then(function (resp) {
         _this2.$root.loading = true;
         setInterval(function () {
