@@ -4,8 +4,10 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\AbsenHistoryResource;
+use App\Http\Resources\ResepsionisHistoryResource;
 use App\Http\Controllers\Controller;
 use App\Karyawan;
+use App\Jam;
 use App\Absen;
 use App\Lembur;
 use App\Verifikasi;
@@ -133,6 +135,8 @@ class APIController extends Controller
         $validator = Carbon::today()->format('Y-m-d');
         // Check if data is already exist for presence today
         $check = Absen::where('karyawan_id', request('karyawan_id'))->where('status', 'masuk')->whereDate('created_at', $validator)->get();
+        // Getting master Jam
+        $jam_masuk = Jam::find(1);
         if (!count($check) > 0) {
             $masuk = new Absen();
             $masuk->karyawan_id = $request->input('karyawan_id');
@@ -140,9 +144,17 @@ class APIController extends Controller
             $masuk->status = 'masuk';
             $masuk->alasan = null;
             $masuk->save();
-            return response()->json(['message' => 'success', 'id' => $masuk->id]);
+            if (Carbon::parse($masuk->verifikasi->updated_at)->format('H:i:s') < Carbon::parse($jam_masuk->start)->format('H:i:s')) {
+                return response()->json(['message' => 'success', 'id' => $masuk->id, 'text' => 'WOW Anda semangat sekali, dengan hadir lebih awal. Selamat bekerja :)']);
+            }else if(Carbon::parse($masuk->verifikasi->updated_at)->format('H:i:s') > Carbon::parse($jam_masuk->start)->format('H:i:s')){
+                if (Carbon::parse($masuk->verifikasi->updated_at)->format('H:i:s') < Carbon::parse($jam_masuk->tolerance)->format('H:i:s')) {
+                    return response()->json(['message' => 'success', 'id' => $masuk->id, 'text' => 'Terimakasih sudah hadir tepat waktu. Selamat bekerja :)']);
+                }else{
+                    return response()->json(['message' => 'request', 'id' => $masuk->id, 'text' => 'Hati-hati, malas adalah awal dari kegagalan. Segera perbaiki di hari esok,. Selamat bekerja :)']);
+                }
+            }
         }else{
-            return response()->json(['message' => 'failed']);
+            return response()->json(['message' => 'failed', 'text' => 'Silahkan coba lagi!']);
         }
     }
 
@@ -305,7 +317,7 @@ class APIController extends Controller
      */
     public function history(Request $request)
     {
-        return AbsenHistoryResource::collection(Absen::orderBy('created_at', 'DESC')->get());
+        return ResepsionisHistoryResource::collection(Absen::orderBy('created_at', 'DESC')->where('status', 'masuk')->get());
     }
 
     /**

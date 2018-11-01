@@ -9,6 +9,6 @@ class Jam extends Model
     protected $table = 'master_jam';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'id', 'start', 'end', 'status'
+        'id', 'start', 'tolerance', 'end', 'status'
     ];
 }
