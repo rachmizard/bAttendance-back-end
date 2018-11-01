@@ -106,6 +106,14 @@ Route::delete('absen/{id}/delete', 'API\APIController@deleteAbsen');
 */
 Route::post('karyawan/post', 'API\APIController@postKaryawan'); // POST
 
+// We'll started validation's action for pulang
+/*
+	Create New Pulang Resource
+*/
+Route::get('pulang', 'API\APIController@pulang'); // POST
+
+Route::get('over', 'API\APIController@over');
+
 /*
 	In this part we're using put method for edit the new pin.
 */

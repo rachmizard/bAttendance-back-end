@@ -18,9 +18,9 @@ class ResepsionisHistoryResource extends Resource
         return [
             'id' => $this->id,
             'nama' => $this->karyawan->nama,
-            'divisi' => $this->karyawan->divisi,
+            'divisi' => $this->karyawan->divisi . ' / ' . $this->karyawan->jabatan,
             'jam' => $this->verifikasi->created_at->format('h:i:s A'),
-            'foto' => 'http://192.168.1.9:8000/storage/images/'. $this->karyawan->fp,
+            'foto' => $this->karyawan->fp != null ? 'http://192.168.1.12:8000/storage/images/'. $this->karyawan->fp : 'http://192.168.1.12:8000/images/avatar_default.jpg',
             'action' => $this->status
         ];
     }

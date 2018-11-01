@@ -135,8 +135,6 @@ class APIController extends Controller
         $validator = Carbon::today()->format('Y-m-d');
         // Check if data is already exist for presence today
         $check = Absen::where('karyawan_id', request('karyawan_id'))->where('status', 'masuk')->whereDate('created_at', $validator)->get();
-        // Getting master Jam
-        $jam_masuk = Jam::find(1);
         if (!count($check) > 0) {
             $masuk = new Absen();
             $masuk->karyawan_id = $request->input('karyawan_id');
@@ -144,15 +142,16 @@ class APIController extends Controller
             $masuk->status = 'masuk';
             $masuk->alasan = null;
             $masuk->save();
-            if (Carbon::parse($masuk->verifikasi->updated_at)->format('H:i:s') < Carbon::parse($jam_masuk->start)->format('H:i:s')) {
-                return response()->json(['message' => 'success', 'id' => $masuk->id, 'text' => 'WOW Anda semangat sekali, dengan hadir lebih awal. Selamat bekerja :)']);
-            }else if(Carbon::parse($masuk->verifikasi->updated_at)->format('H:i:s') > Carbon::parse($jam_masuk->start)->format('H:i:s')){
-                if (Carbon::parse($masuk->verifikasi->updated_at)->format('H:i:s') < Carbon::parse($jam_masuk->tolerance)->format('H:i:s')) {
-                    return response()->json(['message' => 'success', 'id' => $masuk->id, 'text' => 'Terimakasih sudah hadir tepat waktu. Selamat bekerja :)']);
-                }else{
-                    return response()->json(['message' => 'request', 'id' => $masuk->id, 'text' => 'Hati-hati, malas adalah awal dari kegagalan. Segera perbaiki di hari esok,. Selamat bekerja :)']);
-                }
-            }
+            // if (Carbon::parse($masuk->verifikasi->updated_at)->format('H:i:s') < Carbon::parse($jam_masuk->start)->format('H:i:s')) {
+            //     return response()->json(['message' => 'success', 'id' => $masuk->id, 'text' => 'WOW Anda semangat sekali, dengan hadir lebih awal. Selamat bekerja :)']);
+            // }else if(Carbon::parse($masuk->verifikasi->updated_at)->format('H:i:s') > Carbon::parse($jam_masuk->start)->format('H:i:s')){
+            //     if (Carbon::parse($masuk->verifikasi->updated_at)->format('H:i:s') < Carbon::parse($jam_masuk->tolerance)->format('H:i:s')) {
+            //         return response()->json(['message' => 'success', 'id' => $masuk->id, 'text' => 'Terimakasih sudah hadir tepat waktu. Selamat bekerja :)']);
+            //     }else{
+            //         return response()->json(['message' => 'request', 'id' => $masuk->id, 'text' => 'Hati-hati, malas adalah awal dari kegagalan. Segera perbaiki di hari esok,. Selamat bekerja :)']);
+            //     }
+            // }
+            return response()->json(['message' => 'success', 'id' => $masuk->id ]);
         }else{
             return response()->json(['message' => 'failed', 'text' => 'Silahkan coba lagi!']);
         }
@@ -242,10 +241,20 @@ class APIController extends Controller
 
     public function editAbsen($id)
     {
+        // Getting master Jam
+        $jam_masuk = Jam::where('status', 1)->first();
         $absen = Absen::find($id);
         $absen->verifikasi_id = request('verifikasi_id');
         $absen->update();
-        return response()->json(['message' => 'success', 'id' => $absen->id]);
+        if (Carbon::parse($absen->verifikasi->updated_at)->format('H:i:s') < Carbon::parse($jam_masuk['start'])->format('H:i:s')) {
+            return response()->json(['message' => 'success', 'id' => $absen->id, 'text' => 'WOW Anda semangat sekali, dengan hadir lebih awal. Selamat bekerja :)']);
+        }else if(Carbon::parse($absen->verifikasi->updated_at)->format('H:i:s') > Carbon::parse($jam_masuk['start'])->format('H:i:s')){
+            if (Carbon::parse($absen->verifikasi->updated_at)->format('H:i:s') < Carbon::parse($jam_masuk['tolerance'])->format('H:i:s')) {
+                return response()->json(['message' => 'success', 'id' => $absen->karyawan->id, 'text' => 'Terimakasih sudah hadir tepat waktu. Selamat bekerja :)']);
+            }else{
+                return response()->json(['message' => 'request', 'id' => $absen->karyawan->id, 'text' => 'Hati-hati, malas adalah awal dari kegagalan. Segera perbaiki di hari esok,. Selamat bekerja :)']);
+            }
+        }
     }
 
     public function deleteAbsen($id)
@@ -348,26 +357,6 @@ class APIController extends Controller
     // }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -410,37 +399,28 @@ class APIController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function pulang()
     {
-        //
+        $getStatus = Jam::where('status', 1)->first();
+        if (Carbon::now()->format('H:i:s') > Carbon::parse($getStatus['end'])) {
+            return response()->json(['message' => true]);
+        }else{
+            return response()->json(['message' => false]);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function over()
     {
-        //
+        $jam = Jam::where('status', 1)->first();
+        if (Carbon::now()->isWeekend()) {
+            return response()->json(['message' => true, 'text' => 'Ya ini hari libur boleh lembur']);
+        }else{
+            if (Carbon::now()->format('H:i:s') > Carbon::parse($jam['end'])) {
+                return response()->json(['message' => true, 'text' => 'Ya kamu sudah lebih dari jam '. $jam['end'] .' boleh lembur']);       
+            }else{
+                return response()->json(['message' => false, 'text' => 'Belum boleh lembur']);
+            }
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
