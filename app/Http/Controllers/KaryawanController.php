@@ -37,7 +37,7 @@ class KaryawanController extends Controller
                             ';
                 })
                 ->addColumn('fp', function($karyawans){
-                    return $karyawans->fp == null ? '<img src="/storage/images/default.png" width="40" height="40" alt="">' : '<img width="40" height="40" src="/storage/images/'. $karyawans->fp .'" alt="">';
+                    return $karyawans->fp == null ? '<img src="/public/storage/images/default.png" width="40" height="40" alt="">' : '<img width="40" height="40" src="/public/storage/images/'. $karyawans->fp .'" alt="">';
                 })
                 ->editColumn('status', function($karyawans){
                     if ($karyawans->status == 'unauthorized') {

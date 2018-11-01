@@ -112,7 +112,19 @@ Route::post('karyawan/post', 'API\APIController@postKaryawan'); // POST
 */
 Route::get('pulang', 'API\APIController@pulang'); // POST
 
+// We'll started overtime's code after pulang
+/*
+	Create Overtime Resource
+*/
 Route::get('over', 'API\APIController@over');
+
+// We'll started validation's action for pulang
+
+/*
+	In this part we're using put method for update & input an alasan
+*/
+
+Route::put('telat/{id}/alasan', 'API\APIController@telat');
 
 /*
 	In this part we're using put method for edit the new pin.

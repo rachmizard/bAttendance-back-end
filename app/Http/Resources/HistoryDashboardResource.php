@@ -18,7 +18,7 @@ class HistoryDashboardResource extends Resource
         return [
             'id' => $this->id,
             'nama' => $this->karyawan->nama,
-            'fp' => $this->karyawan->fp == null ? $this->karyawan->jenis_kelamin == 'L' ? 'http://localhost:8000/storage/images/default.jpg' : 'http://localhost:8000/storage/images/default_female.jpg' : 'http://localhost:8000/storage/images/'. $this->karyawan->fp .'',
+            'fp' => $this->karyawan->fp == null ? $this->karyawan->jenis_kelamin == 'L' ? 'http://attendance.birutekno.com/storage/images/default.jpg' : 'http://attendance.birutekno.com/storage/images/default_female.jpg' : 'http://attendance.birutekno.com/public/storage/images/'. $this->karyawan->fp .'',
             'checkin' => $this->created_at->format('Y-m-d H:i:s'),
             'text_message' => 'Hai saya '. $this->karyawan->nama .' telah checkin '. $this->created_at->diffForHumans()
         ];
