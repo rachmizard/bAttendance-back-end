@@ -15,6 +15,15 @@
                     </div>
                 </div>
 
+                <div :class="['form-group', errors.tolerance ? 'has-error' : '']">
+                    <label class="col-sm-2 control-label">Toleransi Masuk</label>
+                    <div class="col-sm-10">
+                        <input v-model="state.tolerance" type="time" class="form-control rounded" placeholder="Jam Toleransi..">
+                        <span v-if="message" class="text-success"><i class="fa fa-check"></i></span>
+                        <span v-if="errors.tolerance" class="label label-danger">{{ errors.tolerance[0] }}</span>
+                    </div>
+                </div>
+
                 <div :class="['form-group', errors.end ? 'has-error' : '']">
                     <label class="col-sm-2 control-label">Jam Keluar</label>
                     <div class="col-sm-10">
@@ -38,6 +47,7 @@ export default {
             // url : 'karyawan/post',
             state: {
                 start: '',
+                tolerance: '',
                 end: '',
             },
             message : '',
@@ -57,7 +67,8 @@ export default {
                 }else{
                 	app.message = resp.data.response.message;
                 	app.messageError = false; // showing result
-	                app.state.start = ''; // clear form
+                    app.state.start = ''; // clear form
+	                app.state.tolerance = ''; // clear form
 	                app.state.end = ''; // clear form
                     window.location.reload();
                 }

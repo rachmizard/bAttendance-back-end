@@ -15,6 +15,7 @@
                 <th width="10%">Jumlah Sakit</th>
                 <th width="10%">Jumlah Alfa</th>
                 <th width="10%">Total Lembur</th>
+                <th width="10%">Total Telat</th>
               </tr>
             </thead>
             <tbody>
@@ -39,7 +40,8 @@
                   { data: 'jml_izin', name: 'jml_izin' },
                   { data: 'jml_sakit', name: 'jml_sakit' },
                   { data: 'jml_alfa', name: 'jml_alfa' },
-                  { data: 'total_lembur', name: 'total_lembur' }
+                  { data: 'total_lembur', name: 'total_lembur' },
+                  { data: 'total_telat', name: 'total_telat' },
               ]
           });
         Echo.channel('draw-table-event')

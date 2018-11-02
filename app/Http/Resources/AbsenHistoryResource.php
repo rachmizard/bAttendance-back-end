@@ -70,10 +70,8 @@ class AbsenHistoryResource extends Resource
 
     public function countEstimation()
     {
-
-    $start = Carbon::parse($this->checkInKaryawan());
-    $pause = Carbon::parse($this->checkOu());
-
-    return $diffInSeconds = $pause->diffInHours($start);
+        $start = Carbon::parse($this->checkInKaryawan());
+        $pause = Carbon::parse($this->checkOu());
+        return $diffInSeconds = $pause->diffInHours($start);
     }
 }

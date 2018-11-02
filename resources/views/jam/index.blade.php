@@ -40,6 +40,7 @@
                       <tr>
                         <th width="15%">No</th>
                         <th width="25%">Jam Masuk</th>
+                        <th width="25%">Jam Toleransi</th>
                         <th width="25%">Jam Keluar</th>
                         <th width="10%">Status</th>
                         <th width="35%">Actions</th>
@@ -50,6 +51,7 @@
                       <tr>
                         <td>{{ $jam->id }}</td>
                         <td>{{ $jam->start }}</td>
+                        <td>{{ $jam->tolerance }}</td>
                         <td>{{ $jam->end }}</td>
                         <td>
                             @if($jam->status == null)

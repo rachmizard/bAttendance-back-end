@@ -320,7 +320,7 @@ class APIController extends Controller
      */
     public function history(Request $request)
     {
-        return ResepsionisHistoryResource::collection(Absen::orderBy('created_at', 'DESC')->where('status', 'masuk')->get());
+        return ResepsionisHistoryResource::collection(Absen::with('verifikasi')->orderBy('created_at', 'DESC')->where('status', 'masuk')->whereDate('created_at', Carbon::now()->format('Y-m-d'))->get());
     }
 
     /**
@@ -426,6 +426,13 @@ class APIController extends Controller
                 return response()->json(['message' => false, 'text' => 'Belum boleh lembur']);
             }
         }
+    }
+
+    public function lapur($id)
+    {
+        $lapur = Verifikasi::find($id);
+        $lapur->delete();
+        return response()->json(['message' => 'success']);
     }
 
 }

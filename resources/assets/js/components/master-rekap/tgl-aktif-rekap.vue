@@ -1,7 +1,7 @@
 <template>
   <section class="panel panel-default">
     <header class="panel-heading">
-      <i class="fa fa-check"></i> Set Tanggal Rekap
+      <i class="fa fa-check"></i> Filter Tanggal Rekap
       <i class="fa fa-info-sign text-muted" data-toggle="tooltip" data-placement="bottom" data-title="ajax to load the data."></i>
     </header>
         <div class="panel-body">
@@ -43,7 +43,7 @@
                       <span v-if="messageError" class="label label-danger">{{ messageError }}</span>
                   </div>
               </div>
-                <button type="submit" class="btn btn-primary col-md-offset-7"><i class="fa fa-check"></i> Set Rekap</button>
+                <button type="submit" class="btn btn-primary col-md-offset-7"><i class="fa fa-check"></i> Filter Rekap</button>
             </form>
         </div>
   </section>

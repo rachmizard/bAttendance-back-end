@@ -61555,6 +61555,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -61564,6 +61573,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // url : 'karyawan/post',
             state: {
                 start: '',
+                tolerance: '',
                 end: ''
             },
             message: '',
@@ -61586,6 +61596,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     app.message = resp.data.response.message;
                     app.messageError = false; // showing result
                     app.state.start = ''; // clear form
+                    app.state.tolerance = ''; // clear form
                     app.state.end = ''; // clear form
                     window.location.reload();
                 }
@@ -61665,6 +61676,52 @@ var render = function() {
                 _vm.errors.start
                   ? _c("span", { staticClass: "label label-danger" }, [
                       _vm._v(_vm._s(_vm.errors.start[0]))
+                    ])
+                  : _vm._e()
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { class: ["form-group", _vm.errors.tolerance ? "has-error" : ""] },
+            [
+              _c("label", { staticClass: "col-sm-2 control-label" }, [
+                _vm._v("Toleransi Masuk")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-10" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.state.tolerance,
+                      expression: "state.tolerance"
+                    }
+                  ],
+                  staticClass: "form-control rounded",
+                  attrs: { type: "time", placeholder: "Jam Toleransi.." },
+                  domProps: { value: _vm.state.tolerance },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.state, "tolerance", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.message
+                  ? _c("span", { staticClass: "text-success" }, [
+                      _c("i", { staticClass: "fa fa-check" })
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.errors.tolerance
+                  ? _c("span", { staticClass: "label label-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.tolerance[0]))
                     ])
                   : _vm._e()
               ])
@@ -62179,65 +62236,61 @@ var render = function() {
                         _vm._v(" "),
                         user.action == "masuk"
                           ? _c("td", [
-                              _c("span", { staticClass: "label label-info" }, [
-                                _vm._v("on working")
-                              ])
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        user.action == "keluar"
-                          ? _c("td", [
-                              _c("i", {
-                                staticClass: "fa fa-check text-success"
-                              })
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        user.action == "alfa"
-                          ? _c("td", [
                               _c(
                                 "span",
-                                { staticClass: "label label-danger" },
-                                [_vm._v("Alfa")]
+                                { staticClass: "label label-success" },
+                                [_vm._v("Masuk")]
                               )
                             ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        user.action == "izin"
-                          ? _c("td", [
-                              _c("span", { staticClass: "label label-info" }, [
-                                _vm._v("Izin")
+                          : user.action == "keluar"
+                            ? _c("td", [
+                                _c("i", {
+                                  staticClass: "fa fa-check text-success"
+                                })
                               ])
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        user.action == "dinas"
-                          ? _c("td", [
-                              _c("span", { staticClass: "label label-info" }, [
-                                _vm._v("Dinas")
-                              ])
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        user.action == "sakit"
-                          ? _c("td", [
-                              _c(
-                                "span",
-                                { staticClass: "label label-warning" },
-                                [_vm._v("Sakit")]
-                              )
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        user.action == ""
-                          ? _c("td", [
-                              _c(
-                                "span",
-                                { staticClass: "label label-default" },
-                                [_vm._v("Tidak ada keterangan")]
-                              )
-                            ])
-                          : _vm._e(),
+                            : user.action == "alfa"
+                              ? _c("td", [
+                                  _c(
+                                    "span",
+                                    { staticClass: "label label-danger" },
+                                    [_vm._v("Alfa")]
+                                  )
+                                ])
+                              : user.action == "izin"
+                                ? _c("td", [
+                                    _c(
+                                      "span",
+                                      { staticClass: "label label-info" },
+                                      [_vm._v("Izin")]
+                                    )
+                                  ])
+                                : user.action == "dinas"
+                                  ? _c("td", [
+                                      _c(
+                                        "span",
+                                        { staticClass: "label label-info" },
+                                        [_vm._v("Dinas")]
+                                      )
+                                    ])
+                                  : user.action == "sakit"
+                                    ? _c("td", [
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "label label-warning"
+                                          },
+                                          [_vm._v("Sakit")]
+                                        )
+                                      ])
+                                    : _c("td", [
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "label label-default"
+                                          },
+                                          [_vm._v("Belum absen")]
+                                        )
+                                      ]),
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(user.alasan))])
                       ])
@@ -63453,6 +63506,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -63727,43 +63781,43 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(user.created_at))]),
                 _vm._v(" "),
-                user.action == "keluar"
+                user.action == "masuk"
                   ? _c("td", [
-                      _c("i", { staticClass: "fa fa-check text-success" })
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                user.action == "alfa"
-                  ? _c("td", [
-                      _c("span", { staticClass: "label label-danger" }, [
-                        _vm._v("Alfa")
+                      _c("span", { staticClass: "label label-success" }, [
+                        _vm._v("Masuk")
                       ])
                     ])
-                  : _vm._e(),
-                _vm._v(" "),
-                user.action == "izin"
-                  ? _c("td", [
-                      _c("span", { staticClass: "label label-default" }, [
-                        _vm._v("Izin")
+                  : user.action == "alfa"
+                    ? _c("td", [
+                        _c("span", { staticClass: "label label-danger" }, [
+                          _vm._v("Alfa")
+                        ])
                       ])
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                user.action == "sakit"
-                  ? _c("td", [
-                      _c("span", { staticClass: "label label-warning" }, [
-                        _vm._v("Sakit")
-                      ])
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                user.action == "dinas"
-                  ? _c("td", [
-                      _c("span", { staticClass: "label label-info" }, [
-                        _vm._v("Dinas")
-                      ])
-                    ])
-                  : _vm._e(),
+                    : user.action == "izin"
+                      ? _c("td", [
+                          _c("span", { staticClass: "label label-default" }, [
+                            _vm._v("Izin")
+                          ])
+                        ])
+                      : user.action == "sakit"
+                        ? _c("td", [
+                            _c("span", { staticClass: "label label-warning" }, [
+                              _vm._v("Sakit")
+                            ])
+                          ])
+                        : user.action == "dinas"
+                          ? _c("td", [
+                              _c("span", { staticClass: "label label-info" }, [
+                                _vm._v("Dinas")
+                              ])
+                            ])
+                          : _c("td", [
+                              _c(
+                                "span",
+                                { staticClass: "label label-default" },
+                                [_vm._v("Belum absen")]
+                              )
+                            ]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(user.alasan))])
               ])
@@ -63979,6 +64033,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -63987,7 +64042,7 @@ $(function () {
 		processing: true,
 		serverSide: true,
 		ajax: "rekap-admin/json",
-		columns: [{ data: 'nik', name: 'nik' }, { data: 'karyawan', name: 'karyawan' }, { data: 'jml_hadir', name: 'jml_hadir' }, { data: 'jml_izin', name: 'jml_izin' }, { data: 'jml_sakit', name: 'jml_sakit' }, { data: 'jml_alfa', name: 'jml_alfa' }, { data: 'total_lembur', name: 'total_lembur' }]
+		columns: [{ data: 'nik', name: 'nik' }, { data: 'karyawan', name: 'karyawan' }, { data: 'jml_hadir', name: 'jml_hadir' }, { data: 'jml_izin', name: 'jml_izin' }, { data: 'jml_sakit', name: 'jml_sakit' }, { data: 'jml_alfa', name: 'jml_alfa' }, { data: 'total_lembur', name: 'total_lembur' }, { data: 'total_telat', name: 'total_telat' }]
 	});
 	Echo.channel('draw-table-event').listen('DrawTableEvent', function (e) {
 		table.draw();
@@ -64090,7 +64145,9 @@ var staticRenderFns = [
                 _vm._v(" "),
                 _c("th", { attrs: { width: "10%" } }, [_vm._v("Jumlah Alfa")]),
                 _vm._v(" "),
-                _c("th", { attrs: { width: "10%" } }, [_vm._v("Total Lembur")])
+                _c("th", { attrs: { width: "10%" } }, [_vm._v("Total Lembur")]),
+                _vm._v(" "),
+                _c("th", { attrs: { width: "10%" } }, [_vm._v("Total Telat")])
               ])
             ]),
             _vm._v(" "),
@@ -64500,7 +64557,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("header", { staticClass: "panel-heading" }, [
       _c("i", { staticClass: "fa fa-check" }),
-      _vm._v(" Set Tanggal Rekap\n    "),
+      _vm._v(" Filter Tanggal Rekap\n    "),
       _c("i", {
         staticClass: "fa fa-info-sign text-muted",
         attrs: {
@@ -64521,7 +64578,7 @@ var staticRenderFns = [
         staticClass: "btn btn-primary col-md-offset-7",
         attrs: { type: "submit" }
       },
-      [_c("i", { staticClass: "fa fa-check" }), _vm._v(" Set Rekap")]
+      [_c("i", { staticClass: "fa fa-check" }), _vm._v(" Filter Rekap")]
     )
   }
 ]
@@ -67989,31 +68046,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
-var todos = [{
-	description: 'Take Noah to basketball practice.',
-	isComplete: false,
-	dates: { weekdays: 6 }, // Every Friday
-	color: '#ff8080' // Red
-}];
 /* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['nama'],
 	data: function data() {
 		return {
 			karyawan_id: '',
 			nama: '',
-			karyawan: {},
-			todos: todos,
-			attrs: [{
-				key: 'today',
-				highlight: {
-					backgroundColor: '#ff8080'
-					// Other properties are available too, like `height` & `borderRadius`
-				},
-				dates: {
-					weekdays: [1, 7] // On the weekends
-				} }]
+			karyawan: {}
 		};
 	},
 	mounted: function mounted() {
@@ -68023,7 +68063,6 @@ var todos = [{
 		Echo.channel('draw-table-event').listen('DrawTableEvent', function (e) {
 			_this.getRekapDetailKaryawan();
 		});
-		console.log(this.karyawan_id);
 	},
 
 
@@ -68034,6 +68073,7 @@ var todos = [{
 			app.karyawan_id = id;
 			axios.get('rekap-admin/' + id + '/rekapDetailKaryawan').then(function (respon) {
 				app.karyawan = respon.data;
+				app.nama = respon.data.nama;
 			});
 		}
 	}
@@ -68066,7 +68106,7 @@ var render = function() {
             },
             [_vm._v("Kembali")]
           ),
-          _vm._v(" Detail Absen " + _vm._s(_vm.karyawan.nama) + "\n    ")
+          _vm._v(" Detail Absen\n    ")
         ],
         1
       ),
@@ -68074,7 +68114,7 @@ var render = function() {
       _vm._m(0),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-8" }, [
+        _c("div", { staticClass: "col-md-12" }, [
           _c("div", { staticClass: "table-responsive" }, [
             _c("table", { staticClass: "table table-striped b-t b-light" }, [
               _vm._m(1),
@@ -68097,7 +68137,7 @@ var render = function() {
                         return _c("tr", [
                           _c("td", [_vm._v(_vm._s(rekap.tanggal))]),
                           _vm._v(" "),
-                          rekap.hadir == "hadir"
+                          rekap.hadir == "masuk"
                             ? _c("td", [_vm._m(2, true)])
                             : _c("td", [_vm._v("-")]),
                           _vm._v(" "),
@@ -68117,7 +68157,13 @@ var render = function() {
                             ? _c("td", [_vm._m(6, true)])
                             : _c("td", [_vm._v("-")]),
                           _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(rekap.keterangan))])
+                          rekap.alasan != ""
+                            ? _c("td", [_vm._v(_vm._s(rekap.keterangan))])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          rekap.alasan === ""
+                            ? _c("td", [_vm._v("-")])
+                            : _vm._e()
                         ])
                       })
                 ],
@@ -68125,10 +68171,6 @@ var render = function() {
               )
             ])
           ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-4" }, [
-          _vm._v("\n\t\t\t\tKeternagan\n\t\t\t")
         ])
       ])
     ]

@@ -30,7 +30,7 @@ class RekapController extends Controller
       $now = Carbon::now();
       $data = Karyawan::where('status', 'authorized')->get();
       return Datatables::of(RekapResource::collection(Karyawan::where('status', 'authorized')->get()))
-      ->rawColumns(['total_lembur'])
+      ->rawColumns(['total_lembur', 'total_telat'])
       ->make(true);
     }
 
@@ -61,7 +61,7 @@ class RekapController extends Controller
 
     public function rekapDetailKaryawan(Request $request, $id)
     {
-      return RekapDetailResource::collection(Absen::orderBy('created_at', 'ASC')->where('karyawan_id', $id)
+      return RekapDetailResource::collection(Absen::orderBy('created_at', 'ASC')->where(['karyawan_id' => $id, 'status' => 'keluar'])
             ->whereBetween('created_at', [new Carbon(MasterRekap::find(1)->start), new Carbon(MasterRekap::find(1)->end)])->get());
     }
 

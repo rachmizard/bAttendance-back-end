@@ -12,6 +12,7 @@ class Absen extends Model
     protected $fillable = [
         'karyawan_id', 'verifikasi_id', 'status', 'alasan', 'created_at', 'updated_at'
     ];
+    protected $dates = ['created_at'];
 
     // public function getCreatedAtAttribute()
     // {

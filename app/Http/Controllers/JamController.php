@@ -39,11 +39,13 @@ class JamController extends Controller
     {
         $this->validate($request, [
             'start'  => 'required|string|max:50',
-            'end'  => 'required|string|max:50'
+            'end'  => 'required|string|max:50',
+            'tolerance' => 'required|string|max:50'
         ]);
         
         $jam = new Jam();
         $jam->start = $request->start;
+        $jam->tolerance = $request->tolerance;
         $jam->end = $request->end;
         if ($jam->save()) {
             $response['status'] = 'success';

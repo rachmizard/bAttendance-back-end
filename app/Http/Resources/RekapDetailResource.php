@@ -21,6 +21,7 @@ class RekapDetailResource extends Resource
         // return parent::toArray($request);
         return [
             'id' => $this->id,
+            'nama' => $this->karyawan->nama,
             'tanggal' => $this->tanggal(),
             'hadir' => $this->hadir(),
             'sakit' => $this->sakit(),

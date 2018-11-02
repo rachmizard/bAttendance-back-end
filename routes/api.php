@@ -126,6 +126,9 @@ Route::get('over', 'API\APIController@over');
 
 Route::put('telat/{id}/alasan', 'API\APIController@telat');
 
+Route::delete('lapur/{id}/delete', 'API\APIController@lapur');
+
+
 /*
 	In this part we're using put method for edit the new pin.
 */

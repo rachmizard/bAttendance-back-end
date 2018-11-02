@@ -21,7 +21,8 @@ class ResepsionisHistoryResource extends Resource
             'divisi' => $this->karyawan->divisi . ' / ' . $this->karyawan->jabatan,
             'jam' => $this->verifikasi->created_at->format('h:i:s A'),
             'foto' => $this->karyawan->fp != null ? 'http://attendance.birutekno.com/public/storage/images/'. $this->karyawan->fp : 'http://attendance.birutekno.com/public/images/avatar_default.jpg',
-            'action' => $this->status
+            'action' => $this->status,
+            'verifikasi' => array($this->verifikasi)
         ];
     }
 }
