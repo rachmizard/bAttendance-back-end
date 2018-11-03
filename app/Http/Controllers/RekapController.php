@@ -61,7 +61,8 @@ class RekapController extends Controller
 
     public function rekapDetailKaryawan(Request $request, $id)
     {
-      return RekapDetailResource::collection(Absen::orderBy('created_at', 'ASC')->where(['karyawan_id' => $id, 'status' => 'keluar'])
+      return RekapDetailResource::collection(Absen::orderBy('created_at', 'ASC')->where(['karyawan_id' => $id])
+            ->whereIn('status', ['keluar', 'izin', 'sakit', 'alfa', 'dinas'])
             ->whereBetween('created_at', [new Carbon(MasterRekap::find(1)->start), new Carbon(MasterRekap::find(1)->end)])->get());
     }
 

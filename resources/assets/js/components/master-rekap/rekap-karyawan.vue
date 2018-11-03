@@ -3,29 +3,27 @@
     <header class="panel-heading">
 			<router-link :to="{name: 'lisKaryawan'}" class="btn btn-xs btn-default">Kembali</router-link> Detail Absen
     </header>
-    <div class="row wrapper">
-      <div class="col-sm-12">
-        <div class="input-group">
-          <input type="text" class="input-sm form-control" placeholder="Search">
-          <span class="input-group-btn">
-            <button class="btn btn-sm btn-default" type="button">Go!</button>
-          </span>
-        </div>
-      </div>
-    </div>
-		<div class="row">
+		<div class="row wrapper">
 			<div class="col-md-12">
+				<div class="text-center">
+					<img src="/images/avatar_default.jpg" class="img-circle">
+					<h3>{{ jumlah.data.karyawan }}</h3>
+				</div>
+			</div>
+		</div>
+		<div class="row wrapper">
+			<div class="col-md-9">
 			    <div class="table-responsive">
-			      <table class="table table-striped b-t b-light">
+			      <table class="table table-bordered table-striped b-t b-light">
 			        <thead>
 			          <tr>
-			  			<th width="10%">Tanggal</th>
-			  			<th width="10%">Hadir</th>
-			  			<th width="10%">Sakit</th>
-			  			<th width="10%">Izin</th>
-			  			<th width="10%">Alfa</th>
-			  			<th width="10%">Dinas</th>
-			  			<th width="50%">Keterangan</th>
+					  			<th width="10%">Tanggal</th>
+					  			<th width="10%">Hadir</th>
+					  			<th width="10%">Sakit</th>
+					  			<th width="10%">Izin</th>
+					  			<th width="10%">Alfa</th>
+					  			<th width="10%">Dinas</th>
+					  			<th width="50%">Keterangan</th>
 			          </tr>
 			        </thead>
 			        <tbody>
@@ -51,17 +49,45 @@
 			      </table>
 			    </div>
 			</div>
+			<div class="col-md-3">
+				<div class="table-responsive">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th width="50%">Total Hadir</th>
+								<th width="50%"><span class="label label-info label-sm">{{ jumlah.data.jml_hadir }}</span></th>
+							</tr>
+							<tr>
+								<th width="50%">Total Izin</th>
+								<th width="50%"><span class="label label-default label-sm">{{ jumlah.data.jml_izin }}</span></th>
+							</tr>
+							<tr>
+								<th width="50%">Total Sakit</th>
+								<th width="50%"><span class="label label-warning label-sm">{{ jumlah.data.jml_sakit }}</span></th>
+							</tr>
+							<tr>
+								<th width="50%">Total Alfa</th>
+								<th width="50%"><span class="label label-danger label-sm">{{ jumlah.data.jml_alfa }}</span></th>
+							</tr>
+							<tr>
+								<th width="50%">Total Alfa</th>
+								<th width="50%"><span class="label label-danger label-sm">{{ jumlah.data.jml_dinas }}</span></th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
 		</div>
   </section>
 </template>
 <script>
 	export default{
-		props: ['nama'], 
 		data(){
 			return {
 				karyawan_id: '',
 				nama: '',
 				karyawan: {},
+				jumlah: []
 			}
 		},
 
@@ -81,6 +107,15 @@
 				axios.get('rekap-admin/'+ id +'/rekapDetailKaryawan').then(respon => {
 					app.karyawan = respon.data;
 					app.nama = respon.data.nama;
+					this.getJumlahAbsenOfKaryawan();
+				})
+			},
+
+			getJumlahAbsenOfKaryawan(){
+        let app = this;
+        let id = app.$route.params.id;
+				axios.get('rekap-admin/'+ id +'/detail').then(function(resp) {
+					app.jumlah = resp.data;
 				})
 			}
 		}

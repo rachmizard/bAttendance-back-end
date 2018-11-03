@@ -68046,14 +68046,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	props: ['nama'],
 	data: function data() {
 		return {
 			karyawan_id: '',
 			nama: '',
-			karyawan: {}
+			karyawan: {},
+			jumlah: []
 		};
 	},
 	mounted: function mounted() {
@@ -68068,12 +68094,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	methods: {
 		getRekapDetailKaryawan: function getRekapDetailKaryawan() {
+			var _this2 = this;
+
 			var app = this;
 			var id = app.$route.params.id;
 			app.karyawan_id = id;
 			axios.get('rekap-admin/' + id + '/rekapDetailKaryawan').then(function (respon) {
 				app.karyawan = respon.data;
 				app.nama = respon.data.nama;
+				_this2.getJumlahAbsenOfKaryawan();
+			});
+		},
+		getJumlahAbsenOfKaryawan: function getJumlahAbsenOfKaryawan() {
+			var app = this;
+			var id = app.$route.params.id;
+			axios.get('rekap-admin/' + id + '/detail').then(function (resp) {
+				app.jumlah = resp.data;
 			});
 		}
 	}
@@ -68111,64 +68147,145 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "row wrapper" }, [
         _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "text-center" }, [
+            _c("img", {
+              staticClass: "img-circle",
+              attrs: { src: "/images/avatar_default.jpg" }
+            }),
+            _vm._v(" "),
+            _c("h3", [_vm._v(_vm._s(_vm.jumlah.data.karyawan))])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row wrapper" }, [
+        _c("div", { staticClass: "col-md-9" }, [
           _c("div", { staticClass: "table-responsive" }, [
-            _c("table", { staticClass: "table table-striped b-t b-light" }, [
-              _vm._m(1),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                [
-                  _vm.karyawan.data.length == 0
-                    ? _c("tr", [
-                        _c(
-                          "td",
-                          {
-                            staticClass: "text-center",
-                            attrs: { colspan: "8" }
-                          },
-                          [_vm._v("Data absen masih kosong!")]
-                        )
-                      ])
-                    : _vm._l(_vm.karyawan.data, function(rekap, index) {
-                        return _c("tr", [
-                          _c("td", [_vm._v(_vm._s(rekap.tanggal))]),
-                          _vm._v(" "),
-                          rekap.hadir == "masuk"
-                            ? _c("td", [_vm._m(2, true)])
-                            : _c("td", [_vm._v("-")]),
-                          _vm._v(" "),
-                          rekap.sakit == "sakit"
-                            ? _c("td", [_vm._m(3, true)])
-                            : _c("td", [_vm._v("-")]),
-                          _vm._v(" "),
-                          rekap.izin == "izin"
-                            ? _c("td", [_vm._m(4, true)])
-                            : _c("td", [_vm._v("-")]),
-                          _vm._v(" "),
-                          rekap.alfa == "alfa"
-                            ? _c("td", [_vm._m(5, true)])
-                            : _c("td", [_vm._v("-")]),
-                          _vm._v(" "),
-                          rekap.dinas == "dinas"
-                            ? _c("td", [_vm._m(6, true)])
-                            : _c("td", [_vm._v("-")]),
-                          _vm._v(" "),
-                          rekap.alasan != ""
-                            ? _c("td", [_vm._v(_vm._s(rekap.keterangan))])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          rekap.alasan === ""
-                            ? _c("td", [_vm._v("-")])
-                            : _vm._e()
+            _c(
+              "table",
+              { staticClass: "table table-bordered table-striped b-t b-light" },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  [
+                    _vm.karyawan.data.length == 0
+                      ? _c("tr", [
+                          _c(
+                            "td",
+                            {
+                              staticClass: "text-center",
+                              attrs: { colspan: "8" }
+                            },
+                            [_vm._v("Data absen masih kosong!")]
+                          )
                         ])
-                      })
-                ],
-                2
-              )
+                      : _vm._l(_vm.karyawan.data, function(rekap, index) {
+                          return _c("tr", [
+                            _c("td", [_vm._v(_vm._s(rekap.tanggal))]),
+                            _vm._v(" "),
+                            rekap.hadir == "masuk"
+                              ? _c("td", [_vm._m(1, true)])
+                              : _c("td", [_vm._v("-")]),
+                            _vm._v(" "),
+                            rekap.sakit == "sakit"
+                              ? _c("td", [_vm._m(2, true)])
+                              : _c("td", [_vm._v("-")]),
+                            _vm._v(" "),
+                            rekap.izin == "izin"
+                              ? _c("td", [_vm._m(3, true)])
+                              : _c("td", [_vm._v("-")]),
+                            _vm._v(" "),
+                            rekap.alfa == "alfa"
+                              ? _c("td", [_vm._m(4, true)])
+                              : _c("td", [_vm._v("-")]),
+                            _vm._v(" "),
+                            rekap.dinas == "dinas"
+                              ? _c("td", [_vm._m(5, true)])
+                              : _c("td", [_vm._v("-")]),
+                            _vm._v(" "),
+                            rekap.alasan != ""
+                              ? _c("td", [_vm._v(_vm._s(rekap.keterangan))])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            rekap.alasan === ""
+                              ? _c("td", [_vm._v("-")])
+                              : _vm._e()
+                          ])
+                        })
+                  ],
+                  2
+                )
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-3" }, [
+          _c("div", { staticClass: "table-responsive" }, [
+            _c("table", { staticClass: "table table-bordered" }, [
+              _c("thead", [
+                _c("tr", [
+                  _c("th", { attrs: { width: "50%" } }, [
+                    _vm._v("Total Hadir")
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { width: "50%" } }, [
+                    _c("span", { staticClass: "label label-info label-sm" }, [
+                      _vm._v(_vm._s(_vm.jumlah.data.jml_hadir))
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", { attrs: { width: "50%" } }, [_vm._v("Total Izin")]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { width: "50%" } }, [
+                    _c(
+                      "span",
+                      { staticClass: "label label-default label-sm" },
+                      [_vm._v(_vm._s(_vm.jumlah.data.jml_izin))]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", { attrs: { width: "50%" } }, [
+                    _vm._v("Total Sakit")
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { width: "50%" } }, [
+                    _c(
+                      "span",
+                      { staticClass: "label label-warning label-sm" },
+                      [_vm._v(_vm._s(_vm.jumlah.data.jml_sakit))]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", { attrs: { width: "50%" } }, [_vm._v("Total Alfa")]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { width: "50%" } }, [
+                    _c("span", { staticClass: "label label-danger label-sm" }, [
+                      _vm._v(_vm._s(_vm.jumlah.data.jml_alfa))
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", { attrs: { width: "50%" } }, [_vm._v("Total Alfa")]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { width: "50%" } }, [
+                    _c("span", { staticClass: "label label-danger label-sm" }, [
+                      _vm._v(_vm._s(_vm.jumlah.data.jml_dinas))
+                    ])
+                  ])
+                ])
+              ])
             ])
           ])
         ])
@@ -68177,32 +68294,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row wrapper" }, [
-      _c("div", { staticClass: "col-sm-12" }, [
-        _c("div", { staticClass: "input-group" }, [
-          _c("input", {
-            staticClass: "input-sm form-control",
-            attrs: { type: "text", placeholder: "Search" }
-          }),
-          _vm._v(" "),
-          _c("span", { staticClass: "input-group-btn" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-sm btn-default",
-                attrs: { type: "button" }
-              },
-              [_vm._v("Go!")]
-            )
-          ])
-        ])
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
