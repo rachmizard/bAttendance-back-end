@@ -61974,6 +61974,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -62234,6 +62236,8 @@ var render = function() {
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(user.checkout))]),
                         _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(user.total_jam_kerja))]),
+                        _vm._v(" "),
                         user.action == "masuk"
                           ? _c("td", [
                               _c(
@@ -62389,6 +62393,8 @@ var staticRenderFns = [
         _c("th", { attrs: { width: "20" } }, [_vm._v("Jam Masuk")]),
         _vm._v(" "),
         _c("th", { attrs: { width: "20" } }, [_vm._v("Jam Keluar")]),
+        _vm._v(" "),
+        _c("th", { attrs: { width: "20" } }, [_vm._v("Total Jam Kerja")]),
         _vm._v(" "),
         _c("th", { attrs: { width: "30" } }, [_vm._v("Status")]),
         _vm._v(" "),
@@ -64042,7 +64048,7 @@ $(function () {
 		processing: true,
 		serverSide: true,
 		ajax: "rekap-admin/json",
-		columns: [{ data: 'nik', name: 'nik' }, { data: 'karyawan', name: 'karyawan' }, { data: 'jml_hadir', name: 'jml_hadir' }, { data: 'jml_izin', name: 'jml_izin' }, { data: 'jml_sakit', name: 'jml_sakit' }, { data: 'jml_alfa', name: 'jml_alfa' }, { data: 'total_lembur', name: 'total_lembur' }, { data: 'total_telat', name: 'total_telat' }]
+		columns: [{ data: 'nik', name: 'nik' }, { data: 'karyawan.nama', name: 'karyawan.nama' }, { data: 'jml_hadir', name: 'jml_hadir' }, { data: 'jml_izin', name: 'jml_izin' }, { data: 'jml_sakit', name: 'jml_sakit' }, { data: 'jml_alfa', name: 'jml_alfa' }, { data: 'total_lembur', name: 'total_lembur' }, { data: 'total_telat', name: 'total_telat' }]
 	});
 	Echo.channel('draw-table-event').listen('DrawTableEvent', function (e) {
 		table.draw();
@@ -68072,6 +68078,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
@@ -68155,7 +68163,17 @@ var render = function() {
               attrs: { src: "/images/avatar_default.jpg" }
             }),
             _vm._v(" "),
-            _c("h3", [_vm._v(_vm._s(_vm.jumlah.data.karyawan))])
+            _c("p", [_vm._v(_vm._s(_vm.jumlah.data.karyawan.nik))]),
+            _vm._v(" "),
+            _c("p", [_vm._v(_vm._s(_vm.jumlah.data.karyawan.nama))]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                _vm._s(_vm.jumlah.data.karyawan.jabatan) +
+                  " - " +
+                  _vm._s(_vm.jumlah.data.karyawan.divisi)
+              )
+            ])
           ])
         ])
       ]),
@@ -68277,10 +68295,12 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("tr", [
-                  _c("th", { attrs: { width: "50%" } }, [_vm._v("Total Alfa")]),
+                  _c("th", { attrs: { width: "50%" } }, [
+                    _vm._v("Total Dinas")
+                  ]),
                   _vm._v(" "),
                   _c("th", { attrs: { width: "50%" } }, [
-                    _c("span", { staticClass: "label label-danger label-sm" }, [
+                    _c("span", { staticClass: "label label-info label-sm" }, [
                       _vm._v(_vm._s(_vm.jumlah.data.jml_dinas))
                     ])
                   ])

@@ -23,7 +23,7 @@ class RekapResource extends Resource
         return [
           'id' => $this->id,
           'nik' => $this->nik,
-          'karyawan' => $this->nama,
+          'karyawan' => parent::toArray($request),
           'fp' => $this->fp == null ? $this->jenis_kelamin == 'L' ? 'http://attendance.birutekno.com/storage/images/default.jpg' : 'http://attendance.birutekno.com/storage/images/default_female.jpg' : 'http://attendance.birutekno.com/public/storage/images/'. $this->fp .'',
           'jml_hadir' => $this->countHadir() == 0 ? '0' : $this->countHadir(),
           'jml_izin' => $this->countIzin() == 0 ? '0' : $this->countIzin(),
@@ -81,7 +81,7 @@ class RekapResource extends Resource
     {
       $find_jam = Jam::where('status', 1)->first();
       $total_jam_telat = Absen::where(['karyawan_id' => $this->id, 'status' => 'masuk'])
-      ->whereDate('created_at', '>', Carbon::parse($find_jam['tolerance'])->format('H:i:s'))
+      ->whereTime('created_at', '>=', Carbon::parse($find_jam['tolerance'])->format('H:i:s'))
       ->whereBetween('created_at', [new Carbon(MasterRekap::find(1)->start), new Carbon(MasterRekap::find(1)->end)])->count('created_at');
       return $total_jam_telat;
     }

@@ -40,6 +40,7 @@
                             <th width="40">Nama Karyawan</th>
                             <th width="20">Jam Masuk</th>
                             <th width="20">Jam Keluar</th>
+                            <th width="20">Total Jam Kerja</th>
                             <th width="30">Status</th>
                             <th width="30">Keterangan</th>
                           </tr>
@@ -55,6 +56,7 @@
                         		<td>{{ user.nama }}</td>
                         		<td>{{ user.checkin }}</td>
                         		<td>{{ user.checkout }}</td>
+                            <td>{{ user.total_jam_kerja }}</td>
                            	 	<td v-if="user.action == 'masuk'"><span class="label label-success">Masuk</span></i></td>
                         		<td v-else-if="user.action == 'keluar'"><i class="fa fa-check text-success"></i></td>
                         		<td v-else-if="user.action == 'alfa'"><span class="label label-danger">Alfa</span></td>

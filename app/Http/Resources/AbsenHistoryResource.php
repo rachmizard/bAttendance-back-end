@@ -40,7 +40,8 @@ class AbsenHistoryResource extends Resource
             // 'telah_masuk' => $this->verifikasi->created_at->diffForHumans(),
             'telah_masuk' => $this->absenId() == null ? '-' : Carbon::parse($this->absenId())->diffForHumans(),
             'text_message' => $this->absenId() == null ? '-' : 'Hai, saya telah masuk '. Carbon::parse($this->absenId())->diffForHumans(),
-            'alasan' => $getAlasan['alasan']
+            'alasan' => $getAlasan['alasan'],
+            'total_jam_kerja' => $this->countEstimation()
         ];
     }
 
@@ -71,7 +72,11 @@ class AbsenHistoryResource extends Resource
     public function countEstimation()
     {
         $start = Carbon::parse($this->checkInKaryawan());
-        $pause = Carbon::parse($this->checkOu());
-        return $diffInSeconds = $pause->diffInHours($start);
+        $pause = $this->checkOutKaryawan() == null ? $start : $this->checkOutKaryawan();
+        // $total = $pause->diffInSeconds($start);
+        // return gmdate('%H', $total) . ' jam ' . gmdate('%I', $total) . ' menit';
+        return $total = $pause->diff($start)->format('%h') . ' jam ' . $pause->diff($start)->format('%i') . ' menit';
+
     }
+
 }

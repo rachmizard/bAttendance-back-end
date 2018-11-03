@@ -7,7 +7,9 @@
 			<div class="col-md-12">
 				<div class="text-center">
 					<img src="/images/avatar_default.jpg" class="img-circle">
-					<h3>{{ jumlah.data.karyawan }}</h3>
+					<p>{{ jumlah.data.karyawan.nik }}</p>
+					<p>{{ jumlah.data.karyawan.nama }}</p>
+					<p>{{ jumlah.data.karyawan.jabatan }} - {{ jumlah.data.karyawan.divisi }}</p>
 				</div>
 			</div>
 		</div>
@@ -70,8 +72,8 @@
 								<th width="50%"><span class="label label-danger label-sm">{{ jumlah.data.jml_alfa }}</span></th>
 							</tr>
 							<tr>
-								<th width="50%">Total Alfa</th>
-								<th width="50%"><span class="label label-danger label-sm">{{ jumlah.data.jml_dinas }}</span></th>
+								<th width="50%">Total Dinas</th>
+								<th width="50%"><span class="label label-info label-sm">{{ jumlah.data.jml_dinas }}</span></th>
 							</tr>
 						</thead>
 					</table>

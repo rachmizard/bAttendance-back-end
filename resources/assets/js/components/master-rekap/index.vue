@@ -35,7 +35,7 @@
               ajax: "rekap-admin/json",
               columns: [
                   { data: 'nik', name: 'nik' },
-                  { data: 'karyawan', name: 'karyawan' },
+                  { data: 'karyawan.nama', name: 'karyawan.nama' },
                   { data: 'jml_hadir', name: 'jml_hadir' },
                   { data: 'jml_izin', name: 'jml_izin' },
                   { data: 'jml_sakit', name: 'jml_sakit' },
