@@ -31,7 +31,8 @@ class RekapResource extends Resource
           'jml_alfa' => $this->countAlfa() == 0 ? '0' : $this->countAlfa(),
           'jml_dinas' => $this->countDinas() == 0 ? '0' : $this->countDinas(),
           'total_lembur' => $this->countLemburDuration() == 0 ? '<span class="label label-warning">Belum Lembur</span>' : $this->countLemburDuration(). ' Jam',
-          'total_telat' => $this->countTelat() . ' kali'
+          'total_telat' => $this->countTelat() . ' kali',
+          'total_jam_kerja' => $this->countWorkDuration()
         ];
     }
 
@@ -84,6 +85,25 @@ class RekapResource extends Resource
       ->whereTime('created_at', '>=', Carbon::parse($find_jam['tolerance'])->format('H:i:s'))
       ->whereBetween('created_at', [new Carbon(MasterRekap::find(1)->start), new Carbon(MasterRekap::find(1)->end)])->count('created_at');
       return $total_jam_telat;
+    }
+
+    public function countWorkDuration()
+    {
+      $model = MasterRekap::find(1);
+      $startMonth = new Carbon($model->star);
+      $endMonth = new Carbon($model->end);
+      $to = Carbon::createFromFormat('Y-m-d H:i:s', $startMonth);
+      $from = Carbon::createFromFormat('Y-m-d H:i:s', $endMonth);
+      $countWork = Absen::where('karyawan_id', $this->id)->where('status', 'masuk')
+      $diff_in_months = $to->diffIn($from);
+      return $diff_in_months; // Output: 1
+
+      // $start = Carbon::parse($this->checkInKaryawan());
+      // $pause = $this->checkOutKaryawan() == null ? $start : $this->checkOutKaryawan();
+      // $total = $pause->diffInSeconds($start);
+      // return gmdate('%H', $total) . ' jam ' . gmdate('%I', $total) . ' menit';
+      // return $total = $pause->diff($start)->format('%h') . ' jam ' . $pause->diff($start)->format('%i') . ' menit';
+
     }
 
 
