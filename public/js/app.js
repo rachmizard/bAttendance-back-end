@@ -68247,9 +68247,7 @@ var render = function() {
             _c("table", { staticClass: "table table-bordered" }, [
               _c("thead", [
                 _c("tr", [
-                  _c("th", { attrs: { width: "50%" } }, [
-                    _vm._v("Total Hadir")
-                  ]),
+                  _c("th", { attrs: { width: "50%" } }, [_vm._v("Hadir")]),
                   _vm._v(" "),
                   _c("th", { attrs: { width: "50%" } }, [
                     _c("span", { staticClass: "label label-info label-sm" }, [
@@ -68259,7 +68257,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("tr", [
-                  _c("th", { attrs: { width: "50%" } }, [_vm._v("Total Izin")]),
+                  _c("th", { attrs: { width: "50%" } }, [_vm._v("Izin")]),
                   _vm._v(" "),
                   _c("th", { attrs: { width: "50%" } }, [
                     _c(
@@ -68271,9 +68269,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("tr", [
-                  _c("th", { attrs: { width: "50%" } }, [
-                    _vm._v("Total Sakit")
-                  ]),
+                  _c("th", { attrs: { width: "50%" } }, [_vm._v("Sakit")]),
                   _vm._v(" "),
                   _c("th", { attrs: { width: "50%" } }, [
                     _c(
@@ -68285,7 +68281,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("tr", [
-                  _c("th", { attrs: { width: "50%" } }, [_vm._v("Total Alfa")]),
+                  _c("th", { attrs: { width: "50%" } }, [_vm._v("Alfa")]),
                   _vm._v(" "),
                   _c("th", { attrs: { width: "50%" } }, [
                     _c("span", { staticClass: "label label-danger label-sm" }, [
@@ -68295,9 +68291,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("tr", [
-                  _c("th", { attrs: { width: "50%" } }, [
-                    _vm._v("Total Dinas")
-                  ]),
+                  _c("th", { attrs: { width: "50%" } }, [_vm._v("Dinas")]),
                   _vm._v(" "),
                   _c("th", { attrs: { width: "50%" } }, [
                     _c("span", { staticClass: "label label-info label-sm" }, [

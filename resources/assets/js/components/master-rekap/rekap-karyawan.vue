@@ -56,23 +56,23 @@
 					<table class="table table-bordered">
 						<thead>
 							<tr>
-								<th width="50%">Total Hadir</th>
+								<th width="50%">Hadir</th>
 								<th width="50%"><span class="label label-info label-sm">{{ jumlah.data.jml_hadir }}</span></th>
 							</tr>
 							<tr>
-								<th width="50%">Total Izin</th>
+								<th width="50%">Izin</th>
 								<th width="50%"><span class="label label-default label-sm">{{ jumlah.data.jml_izin }}</span></th>
 							</tr>
 							<tr>
-								<th width="50%">Total Sakit</th>
+								<th width="50%">Sakit</th>
 								<th width="50%"><span class="label label-warning label-sm">{{ jumlah.data.jml_sakit }}</span></th>
 							</tr>
 							<tr>
-								<th width="50%">Total Alfa</th>
+								<th width="50%">Alfa</th>
 								<th width="50%"><span class="label label-danger label-sm">{{ jumlah.data.jml_alfa }}</span></th>
 							</tr>
 							<tr>
-								<th width="50%">Total Dinas</th>
+								<th width="50%">Dinas</th>
 								<th width="50%"><span class="label label-info label-sm">{{ jumlah.data.jml_dinas }}</span></th>
 							</tr>
 						</thead>
