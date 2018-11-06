@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\Resource;
 use App\Absen;
 use App\MasterRekap;
+use App\RekapDurasi;
 use App\Lembur;
 use App\Jam;
 use Carbon\Carbon;
@@ -31,9 +32,10 @@ class RekapResource extends Resource
           'jml_alfa' => $this->countAlfa() == 0 ? '0' : $this->countAlfa(),
           'jml_dinas' => $this->countDinas() == 0 ? '0' : $this->countDinas(),
           'total_lembur' => $this->countLemburDuration() == 0 ? '<span class="label label-warning">Belum Lembur</span>' : $this->countLemburDuration(). ' Jam',
-          'lembur_total' => $this->countLemburDuration() == 0 ? 'Belum Lembur' : $this->countLemburDuration(). ' Jam',
+          'lembur_total' => $this->berapaKaliDiaLembur() == 0 ? 'Belum Lembur' : $this->berapaKaliDiaLembur(). ' kali',
           'total_telat' => $this->countTelat() . ' kali',
-          'total_jam_kerja' => $this->countWorkDuration()
+          'total_jam_kerja_sebulan' => $this->countWorkDurationSelamaSebulan()
+          // 'total_jam_telat_sebulan' => $this->countWorkDurationSelamaSebulan()
         ];
     }
 
@@ -79,6 +81,13 @@ class RekapResource extends Resource
             ->sum('durasi');
     }
 
+    public function berapaKaliDiaLembur()
+    {
+      return Lembur::where(['karyawan_id' => $this->id])
+            ->whereBetween('created_at', [new Carbon(MasterRekap::find(1)->start), new Carbon(MasterRekap::find(1)->end)])
+            ->count();
+    }
+
     public function countTelat()
     {
       $find_jam = Jam::where('status', 1)->first();
@@ -88,24 +97,37 @@ class RekapResource extends Resource
       return $total_jam_telat;
     }
 
-    public function countWorkDuration()
+    public function countWorkDurationSelamaSebulan()
     {
-      // $model = MasterRekap::find(1);
-      // $startMonth = new Carbon($model->star);
-      // $endMonth = new Carbon($model->end);
-      // $to = Carbon::createFromFormat('Y-m-d H:i:s', $startMonth);
-      // $from = Carbon::createFromFormat('Y-m-d H:i:s', $endMonth);
-      // $countWork = Absen::where('karyawan_id', $this->id)->where('status', 'masuk');
-      // $diff_in_months = $to->diffIn($from);
-      // return $diff_in_months; // Output: 1
+      $ambil_data = RekapDurasi::where('karyawan_id', $this->id)->whereBetween('created_at', [new Carbon(MasterRekap::find(1)->start), new Carbon(MasterRekap::find(1)->end)])->pluck('created_at')->toArray();
+      
+      // return $ambil_data;
+      function explode_time($time) { //explode time and convert into seconds
+        $time = explode(':', $time);
+        $time = $time[0] * 3600 + $time[1] * 60;
+        return $time;
+      }
 
-      // $start = Carbon::parse($this->checkInKaryawan());
-      // $pause = $this->checkOutKaryawan() == null ? $start : $this->checkOutKaryawan();
-      // $total = $pause->diffInSeconds($start);
-      // return gmdate('%H', $total) . ' jam ' . gmdate('%I', $total) . ' menit';
-      // return $total = $pause->diff($start)->format('%h') . ' jam ' . $pause->diff($start)->format('%i') . ' menit';
+      function second_to_hhmm($time) { //convert seconds to hh:mm
+              $hour = floor($time / 3600);
+              $minute = strval(floor(($time % 3600) / 60));
+              if ($minute == 0) {
+                  $minute = "00";
+              } else {
+                  $minute = $minute;
+              }
+              $time = $hour . ":" . $minute;
+              return $time;
+      }
+      $time = 0;
+      $time_arr =  $ambil_data;
+       foreach ($time_arr as $time_val) {
+          $time +=explode_time($time_val); // this fucntion will convert all hh:mm to seconds
+      }
 
+      return second_to_hhmm($time); // this function will  convert all seconds to HH:MM.
     }
+
 
 
 }

@@ -68313,6 +68313,16 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("tr", [
+                  _c("th", { attrs: { width: "50%" } }, [_vm._v("Dinas")]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { width: "50%" } }, [
+                    _c("span", { staticClass: "label label-info label-sm" }, [
+                      _vm._v(_vm._s(_vm.jumlah.data.jml_dinas))
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
                   _c("th", { attrs: { width: "50%" } }, [
                     _vm._v("Total Lembur")
                   ]),
@@ -68323,18 +68333,20 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("tr", [
-                  _c("th", { attrs: { width: "50%" } }, [_vm._v("Dinas")]),
+                  _c("th", { attrs: { width: "50%" } }, [
+                    _vm._v("Total Jam Kerja")
+                  ]),
                   _vm._v(" "),
                   _c("th", { attrs: { width: "50%" } }, [
-                    _c("span", { staticClass: "label label-info label-sm" }, [
-                      _vm._v(_vm._s(_vm.jumlah.data.jml_dinas))
-                    ])
+                    _c(
+                      "span",
+                      { staticClass: "label label-default label-sm" },
+                      [_vm._v(_vm._s(_vm.jumlah.data.total_jam_kerja_sebulan))]
+                    )
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(6),
-                _vm._v(" "),
-                _vm._m(7)
+                _vm._m(6)
               ])
             ])
           ])
@@ -68395,18 +68407,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", [_c("i", { staticClass: "fa fa-check text-info" })])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("th", { attrs: { width: "50%" } }, [_vm._v("Total Jam Kerja")]),
-      _vm._v(" "),
-      _c("th", { attrs: { width: "50%" } }, [
-        _c("span", { staticClass: "label label-default label-sm" })
-      ])
-    ])
   },
   function() {
     var _vm = this

@@ -51,7 +51,7 @@ class KaryawanImport implements ToModel, WithChunkReading, ShouldQueue
             }
         }else{
             return new Karyawan([
-                 'nik'     => Carbon::now()->format('y') . Carbon::now()->format('m') . Carbon::now()->format('i') . Carbon::now()->format('s'),,
+                 'nik'     => Carbon::now()->format('y') . Carbon::now()->format('m') . Carbon::now()->format('i') . Carbon::now()->format('s'),
                  'nama'    => $row[2],
                  'jabatan' =>  $row[3],
                  'divisi' =>  $row[4],

@@ -72,16 +72,16 @@
 								<th width="50%"><span class="label label-danger label-sm">{{ jumlah.data.jml_alfa }}</span></th>
 							</tr>
 							<tr>
-								<th width="50%">Total Lembur</th>
-								<th width="50%">{{ jumlah.data.lembur_total }}</th>
-							</tr>
-							<tr>
 								<th width="50%">Dinas</th>
 								<th width="50%"><span class="label label-info label-sm">{{ jumlah.data.jml_dinas }}</span></th>
 							</tr>
 							<tr>
+								<th width="50%">Total Lembur</th>
+								<th width="50%">{{ jumlah.data.lembur_total }}</th>
+							</tr>
+							<tr>
 								<th width="50%">Total Jam Kerja</th>
-								<th width="50%"><span class="label label-default label-sm"></span></th>
+								<th width="50%"><span class="label label-default label-sm">{{ jumlah.data.total_jam_kerja_sebulan }}</span></th>
 							</tr>
 							<tr>
 								<th width="50%">Total Jam Telat</th>
