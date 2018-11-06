@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 28 Okt 2018 pada 17.19
--- Versi Server: 10.1.13-MariaDB
+-- Generation Time: Nov 06, 2018 at 12:26 PM
+-- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -23,7 +23,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `absen`
+-- Table structure for table `absen`
 --
 
 CREATE TABLE `absen` (
@@ -32,34 +32,29 @@ CREATE TABLE `absen` (
   `verifikasi_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `alasan` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `work_duration` time DEFAULT NULL,
+  `late_duration` time DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `absen`
+-- Dumping data for table `absen`
 --
 
-INSERT INTO `absen` (`id`, `karyawan_id`, `verifikasi_id`, `status`, `alasan`, `created_at`, `updated_at`) VALUES
-(1, 3, '1', 'izin', 'Ke bekasi sama keluarga', '2018-10-28 06:20:23', '2018-10-28 06:20:23'),
-(2, 4, '2', 'izin', 'CHECKUP KE RS', '2018-10-28 06:24:29', '2018-10-28 06:24:29'),
-(6, 11, '6', 'izin', 'Buat SIM', '2018-10-28 13:32:39', '2018-10-28 13:32:39'),
-(8, 6, '8', 'sakit', 'Dilengkapi surat dokter', '2018-10-28 13:41:46', '2018-10-28 13:41:46'),
-(9, 12, '9', 'dinas', 'Meeting Aiwa ke jakarta', '2018-10-28 13:49:21', '2018-10-28 13:49:21'),
-(10, 8, '10', 'dinas', 'Meeting DAPENBI SA INVESTASI ke jakarta', '2018-10-28 13:53:35', '2018-10-28 13:53:35'),
-(11, 9, '11', 'dinas', 'Meeting mockupers se-dunia di jakarta', '2018-10-28 14:48:45', '2018-10-28 14:48:45'),
-(12, 5, '12', 'sakit', 'Dilengkapi surat dokter', '2018-10-28 14:49:14', '2018-10-28 14:49:14'),
-(13, 10, '13', 'masuk', NULL, '2018-10-28 00:49:14', '2018-10-28 00:49:14'),
-(14, 10, '13', 'keluar', NULL, '2018-10-28 10:49:14', '2018-10-28 10:49:11');
+INSERT INTO `absen` (`id`, `karyawan_id`, `verifikasi_id`, `status`, `alasan`, `work_duration`, `late_duration`, `created_at`, `updated_at`) VALUES
+(1, 7, '1', 'masuk', NULL, NULL, NULL, '2018-11-06 06:47:22', '2018-11-06 06:47:22'),
+(2, 7, '2', 'keluar', NULL, NULL, NULL, '2018-11-06 08:55:15', '2018-11-06 08:55:15');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `karyawans`
+-- Table structure for table `karyawans`
 --
 
 CREATE TABLE `karyawans` (
   `id` int(10) UNSIGNED NOT NULL,
+  `pin` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `nama` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `jabatan` varchar(90) COLLATE utf8mb4_unicode_ci NOT NULL,
   `divisi` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -67,28 +62,29 @@ CREATE TABLE `karyawans` (
   `nik` int(11) NOT NULL,
   `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'unauthorized',
   `fp` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `device_token` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `karyawans`
+-- Dumping data for table `karyawans`
 --
 
-INSERT INTO `karyawans` (`id`, `nama`, `jabatan`, `divisi`, `jenis_kelamin`, `nik`, `status`, `fp`, `created_at`, `updated_at`) VALUES
-(5, 'Ismail Azhafir Rohaga', 'Android Developer', 'Teknisi', 'L', 18105452, 'authorized', NULL, '2018-10-28 12:54:52', '2018-10-28 15:53:46'),
-(6, 'Rachmizard', 'Web Developer', 'Back-End Service', 'L', 18100630, 'authorized', 'uJp2DQN62d7H7gT.png', '2018-10-28 13:06:30', '2018-10-28 16:06:52'),
-(7, 'Muhammad Ikhsan', 'Web Developer', 'Front-End Service', 'L', 18100630, 'authorized', NULL, '2018-10-28 13:06:30', '2018-10-28 13:21:37'),
-(8, 'Dinda Amelia Ol''i', 'Admin', 'Administrasi Perkantoran', 'P', 18100631, 'authorized', NULL, '2018-10-28 13:06:31', '2018-10-28 13:06:31'),
-(9, 'Dede Hery', 'Designer Graphic', 'Mockup & Design', 'L', 18100631, 'authorized', NULL, '2018-10-28 13:06:31', '2018-10-28 13:06:31'),
-(10, 'Faldy', 'System Tester', 'Bug Fixing Analyst', 'L', 18100631, 'authorized', NULL, '2018-10-28 13:06:31', '2018-10-28 16:05:16'),
-(11, 'Aldiansyah', 'General Affair', '-', 'L', 18100631, 'authorized', NULL, '2018-10-28 13:06:31', '2018-10-28 13:06:31'),
-(12, 'Ryan Ujang Bedil', 'Project Manager', 'System Analyst', 'L', 18100631, 'authorized', NULL, '2018-10-28 13:06:31', '2018-10-28 16:03:05');
+INSERT INTO `karyawans` (`id`, `pin`, `nama`, `jabatan`, `divisi`, `jenis_kelamin`, `nik`, `status`, `fp`, `device_token`, `created_at`, `updated_at`) VALUES
+(5, NULL, 'Ismail Azhafir Rohaga', 'Android Developer', 'Programmer', 'L', 1805007, 'authorized', 'Ytg74HoOp1A00XD.jpg', NULL, '2018-10-28 12:54:52', '2018-11-06 08:33:54'),
+(6, NULL, 'Rachmizard', 'Web Developer', 'Programmer', 'L', 1805009, 'authorized', 'Nynu1aAQV0GxGuT.jpg', NULL, '2018-10-28 13:06:30', '2018-11-06 08:33:54'),
+(7, NULL, 'Muhammad Ikhsan', 'Web Developer', 'Programmer', 'L', 1805008, 'authorized', 'GfwNwlqO2sibPsH.jpg', NULL, '2018-10-28 13:06:30', '2018-11-06 08:33:54'),
+(8, NULL, 'Dinda Amelia Ol''i', 'Admin', 'Administrasi Perkantoran', 'P', 1805010, 'authorized', NULL, NULL, '2018-10-28 13:06:31', '2018-11-06 08:33:54'),
+(9, NULL, 'Dede Hery', 'Designer Graphic', 'UI/UX', 'L', 1601003, 'authorized', NULL, NULL, '2018-10-28 13:06:31', '2018-11-06 08:33:54'),
+(10, NULL, 'Faldy', 'System Tester', 'Bug Fixing Analyst', 'L', 1809011, 'authorized', 'tbYN0G2MFD78Npj.jpg', NULL, '2018-10-28 13:06:31', '2018-11-06 08:33:54'),
+(11, NULL, 'Aldiansyah', 'General Affair', '-', 'L', 1809012, 'authorized', NULL, NULL, '2018-10-28 13:06:31', '2018-11-06 08:33:54'),
+(12, NULL, 'Ryan Permana G', 'Project Manager', 'System Analyst', 'L', 1604004, 'authorized', 'NF7UdXaH25yLitY.jpeg', NULL, '2018-10-28 13:06:31', '2018-11-06 08:33:54');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `lemburs`
+-- Table structure for table `lemburs`
 --
 
 CREATE TABLE `lemburs` (
@@ -103,7 +99,7 @@ CREATE TABLE `lemburs` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `master_filters`
+-- Table structure for table `master_filters`
 --
 
 CREATE TABLE `master_filters` (
@@ -114,38 +110,39 @@ CREATE TABLE `master_filters` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `master_filters`
+-- Dumping data for table `master_filters`
 --
 
 INSERT INTO `master_filters` (`id`, `tgl_history`, `created_at`, `updated_at`) VALUES
-(1, '2018-10-28', '2018-10-26 00:22:22', '2018-10-28 14:51:43');
+(1, '2018-11-06', '2018-10-26 00:22:22', '2018-11-06 05:58:41');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `master_jam`
+-- Table structure for table `master_jam`
 --
 
 CREATE TABLE `master_jam` (
   `id` int(10) UNSIGNED NOT NULL,
-  `start` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `end` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `start` time NOT NULL,
+  `tolerance` time DEFAULT NULL,
+  `end` time NOT NULL,
   `status` varchar(90) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `master_jam`
+-- Dumping data for table `master_jam`
 --
 
-INSERT INTO `master_jam` (`id`, `start`, `end`, `status`, `created_at`, `updated_at`) VALUES
-(1, '08:00', '17:00', '1', '2018-10-27 16:25:27', '2018-10-27 16:26:50');
+INSERT INTO `master_jam` (`id`, `start`, `tolerance`, `end`, `status`, `created_at`, `updated_at`) VALUES
+(1, '08:00:00', '08:15:00', '17:00:00', '1', '2018-10-27 16:25:27', '2018-10-27 16:26:50');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `master_rekap`
+-- Table structure for table `master_rekap`
 --
 
 CREATE TABLE `master_rekap` (
@@ -158,16 +155,16 @@ CREATE TABLE `master_rekap` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `master_rekap`
+-- Dumping data for table `master_rekap`
 --
 
 INSERT INTO `master_rekap` (`id`, `tanggal_aktif_rekap`, `start`, `end`, `created_at`, `updated_at`) VALUES
-(1, 'October', 'first day of October 2018', 'last day of October 2018', '2018-10-20 17:00:00', '2018-10-25 18:20:24');
+(1, 'November', 'first day of November 2018', 'last day of November 2018', '2018-10-20 17:00:00', '2018-11-05 08:28:45');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `migrations`
+-- Table structure for table `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -177,7 +174,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `migrations`
+-- Dumping data for table `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -192,7 +189,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `password_resets`
+-- Table structure for table `password_resets`
 --
 
 CREATE TABLE `password_resets` (
@@ -204,7 +201,7 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `rekap`
+-- Table structure for table `rekap`
 --
 
 CREATE TABLE `rekap` (
@@ -222,7 +219,29 @@ CREATE TABLE `rekap` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users`
+-- Table structure for table `rekap_durasi`
+--
+
+CREATE TABLE `rekap_durasi` (
+  `id` int(11) NOT NULL,
+  `durasi_kerja` time NOT NULL,
+  `durasi_telat` time NOT NULL,
+  `karyawan_id` varchar(90) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `rekap_durasi`
+--
+
+INSERT INTO `rekap_durasi` (`id`, `durasi_kerja`, `durasi_telat`, `karyawan_id`, `created_at`, `updated_at`) VALUES
+(1, '02:08:29', '05:31:46', '7', '2018-11-06 08:55:15', '2018-11-06 08:55:15');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -236,16 +255,16 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin@admin.com', '$2y$10$yZ8AvYbPBdHe3QV1ZVhnD.F.W1fgQ1Upwh.mEn7jDoIlny7ZxO4.O', NULL, '2018-10-26 23:57:01', '2018-10-26 23:57:01');
+(1, 'admin', 'admin@admin.com', '$2y$10$yZ8AvYbPBdHe3QV1ZVhnD.F.W1fgQ1Upwh.mEn7jDoIlny7ZxO4.O', 'WJJW7Aq841jutXgNAWPE14ohapKbkcK17PEP7g1hqpvHG1f74HPaLQdBRf6b', '2018-10-26 23:57:01', '2018-10-26 23:57:01');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `verifikasis`
+-- Table structure for table `verifikasis`
 --
 
 CREATE TABLE `verifikasis` (
@@ -257,23 +276,12 @@ CREATE TABLE `verifikasis` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `verifikasis`
+-- Dumping data for table `verifikasis`
 --
 
 INSERT INTO `verifikasis` (`id`, `status`, `pin`, `created_at`, `updated_at`) VALUES
-(1, '2', '4230', '2018-10-28 06:20:23', '2018-10-28 06:20:23'),
-(2, '2', '8094', '2018-10-28 06:24:29', '2018-10-28 06:24:29'),
-(3, '2', '3665', '2018-10-28 13:25:16', '2018-10-28 13:25:16'),
-(4, '2', '6288', '2018-10-28 13:28:38', '2018-10-28 13:28:38'),
-(5, '2', '2220', '2018-10-28 13:30:02', '2018-10-28 13:30:02'),
-(6, '2', '7392', '2018-10-28 13:32:39', '2018-10-28 13:32:39'),
-(7, '2', '5590', '2018-10-28 13:40:29', '2018-10-28 13:40:29'),
-(8, '2', '6061', '2018-10-28 13:41:46', '2018-10-28 13:41:46'),
-(9, '2', '2219', '2018-10-28 13:49:21', '2018-10-28 13:49:21'),
-(10, '2', '2553', '2018-10-28 13:53:35', '2018-10-28 13:53:35'),
-(11, '2', '9958', '2018-10-28 14:48:45', '2018-10-28 14:48:45'),
-(12, '2', '4849', '2018-10-28 14:49:14', '2018-10-28 14:49:14'),
-(13, '2', '4652', '2018-10-28 00:49:14', '2018-10-28 14:49:14');
+(1, '0', '5466', '2018-11-06 06:46:46', '2018-11-06 06:46:46'),
+(2, '2', '4255', '2018-11-06 08:55:15', '2018-11-06 08:55:15');
 
 --
 -- Indexes for dumped tables
@@ -328,6 +336,12 @@ ALTER TABLE `rekap`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `rekap_durasi`
+--
+ALTER TABLE `rekap_durasi`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -347,12 +361,12 @@ ALTER TABLE `verifikasis`
 -- AUTO_INCREMENT for table `absen`
 --
 ALTER TABLE `absen`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `karyawans`
 --
 ALTER TABLE `karyawans`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `lemburs`
 --
@@ -384,6 +398,11 @@ ALTER TABLE `migrations`
 ALTER TABLE `rekap`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `rekap_durasi`
+--
+ALTER TABLE `rekap_durasi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
@@ -392,7 +411,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `verifikasis`
 --
 ALTER TABLE `verifikasis`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
