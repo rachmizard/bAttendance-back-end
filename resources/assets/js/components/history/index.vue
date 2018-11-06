@@ -57,13 +57,13 @@
                         		<td>{{ user.checkin }}</td>
                         		<td>{{ user.checkout }}</td>
                             <td>{{ user.total_jam_kerja }}</td>
-                           	 	<td v-if="user.action == 'masuk'"><span class="label label-success">Masuk</span></i></td>
-                        		<td v-else-if="user.action == 'keluar'"><i class="fa fa-check text-success"></i></td>
+                           	<td v-if="user.action == 'masuk' && user.checkout == '-'"><span class="label label-success">On Working..</span></i></td>
+                        		<td v-else-if="user.action == 'keluar' || user.checkout != '-'"><i class="fa fa-check text-success"></i></td>
                         		<td v-else-if="user.action == 'alfa'"><span class="label label-danger">Alfa</span></td>
                         		<td v-else-if="user.action == 'izin'"><span class="label label-info">Izin</span></td>
                         		<td v-else-if="user.action == 'dinas'"><span class="label label-info">Dinas</span></td>
                         		<td v-else-if="user.action == 'sakit'"><span class="label label-warning">Sakit</span></td>
-                        		<td v-else="user.action == ''"><span class="label label-default">Belum absen</span></td>
+                        		<td v-else>-</td>
                         		<td>{{ user.alasan }}</td>
                         	</tr>
                         </tbody>
@@ -206,7 +206,7 @@
 					this.last_page = respon.data.meta.last_page
 					this.per_page = respon.data.meta.per_page
 					this.to = respon.data.meta.to
-					this.total = respon.data.meta.total 
+					this.total = respon.data.meta.total
 				})
 			},
 

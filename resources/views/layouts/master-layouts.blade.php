@@ -112,7 +112,7 @@
         <li class="hidden-xs">
           <a href="#" class="dropdown-toggle dk" data-toggle="dropdown">
             <i class="fa fa-bell text-white"></i>
-            <span class="badge badge-sm up bg-danger m-l-n-sm count text-white"></span>
+            <span class="badge badge-sm up bg-danger m-l-n-sm count text-white">70</span>
           </a>
           <section class="dropdown-menu aside-xl">
             <section class="panel bg-white">

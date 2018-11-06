@@ -5,6 +5,11 @@
       <i class="fa fa-info-sign text-muted" data-toggle="tooltip" data-placement="bottom" data-title="ajax to load the data."></i>
     </header>
         <div class="table-responsive">
+          <div class="row wrapper">
+            <div class="col-md-4">
+              <a href="rekap-admin/export" class="btn btn-sm btn-info"><i class="fa fa-download"></i> Download Rekapan</a>
+            </div>
+          </div>
           <table id="rekapTable" class="table table-striped m-b-none">
             <thead>
               <tr>

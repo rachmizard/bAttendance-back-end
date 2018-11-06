@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 use App\Karyawan;
-use App\Http\Resources\RekapResource;
+use App\Http\Resources\ExportAllRekapResource;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
@@ -13,7 +13,7 @@ class RekapExport implements FromCollection, WithHeadings
     */
     public function collection()
     {
-        return RekapResource::collection(Karyawan::all());
+        return ExportAllRekapResource::collection(Karyawan::all());
     }
 
     public function headings(): array
@@ -25,7 +25,12 @@ class RekapExport implements FromCollection, WithHeadings
             'Jumlah Izin',
             'Jumlah Sakit',
             'Jumlah Alfa',
+            'Jumlah Dinas',
+            'Total Jam Lembur',
             'Total Lembur',
+            'Total Telat',
+            'Total Jam Telat',
+            'Total Jam Kerja'
         ];
     }
 }

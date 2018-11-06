@@ -10,7 +10,7 @@ use App\Lembur;
 use App\Jam;
 use Carbon\Carbon;
 
-class RekapResource extends Resource
+class ExportAllRekapResource extends Resource
 {
     /**
      * Transform the resource into an array.
@@ -22,20 +22,18 @@ class RekapResource extends Resource
     {
         // return parent::toArray($request);
         return [
-          'id' => $this->id,
           'nik' => $this->nik,
-          'karyawan' => parent::toArray($request),
-          'fp' => $this->fp == null ? $this->jenis_kelamin == 'L' ? 'http://attendance.birutekno.com/storage/images/default.jpg' : 'http://attendance.birutekno.com/storage/images/default_female.jpg' : 'http://attendance.birutekno.com/public/storage/images/'. $this->fp .'',
+          'karyawan' => $this->nama,
           'jml_hadir' => $this->countHadir() == 0 ? '0' : $this->countHadir(),
           'jml_izin' => $this->countIzin() == 0 ? '0' : $this->countIzin(),
           'jml_sakit' => $this->countSakit() == 0 ? '0' : $this->countSakit(),
           'jml_alfa' => $this->countAlfa() == 0 ? '0' : $this->countAlfa(),
           'jml_dinas' => $this->countDinas() == 0 ? '0' : $this->countDinas(),
-          'total_lembur' => $this->countLemburDuration() == 0 ? '<span class="label label-warning">Belum Lembur</span>' : $this->countLemburDuration(). ' Jam',
+          'total_lembur' => $this->countLemburDuration() == 0 ? 'Belum lembur' : $this->countLemburDuration(). ' Jam',
           'lembur_total' => $this->berapaKaliDiaLembur() == 0 ? 'Belum Lembur' : $this->berapaKaliDiaLembur(). ' kali',
           'total_telat' => $this->countTelat() . ' kali',
-          'total_jam_kerja_sebulan' => $this->countWorkDurationSelamaSebulan(),
-          'total_jam_telat_sebulan' => $this->countTelatDurationSelamaSebulan()
+          'total_jam_telat_sebulan' => $this->countTelatDurationSelamaSebulan(),
+          'total_jam_kerja_sebulan' => $this->countWorkDurationSelamaSebulan()
         ];
     }
 
@@ -105,7 +103,11 @@ class RekapResource extends Resource
       $minutes = floor(($init / 60) % 60);
       $seconds = $init % 60;
       // return gmdate('H:i:s', $ambil_data);
-      return "$hours jam $minutes menit $seconds detik";
+      if ($init === null) {
+        return 'Belum melakukan absen';
+      }else{
+        return "$hours jam $minutes menit $seconds detik";
+      }
     }
 
     public function countTelatDurationSelamaSebulan()
@@ -116,7 +118,11 @@ class RekapResource extends Resource
       $minutes = floor(($init / 60) % 60);
       $seconds = $init % 60;
       // return gmdate('H:i:s', $ambil_data);
-      return "$hours jam $minutes menit $seconds detik";
+      if ($init === null) {
+        return 'Tidak ada telat';
+      }else{
+        return "$hours jam $minutes menit $seconds detik";
+      }
     }
 
 }

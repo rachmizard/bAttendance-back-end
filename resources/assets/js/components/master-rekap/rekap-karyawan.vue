@@ -29,20 +29,20 @@
 			          </tr>
 			        </thead>
 			        <tbody>
-						<tr v-if="karyawan.data == 0">
+						<tr v-if="karyawan.data.length == 0">
 							<td colspan="8" class="text-center">Data absen masih kosong!</td>
 						</tr>
 						<tr v-else v-for="(rekap, index) in karyawan.data">
-			  				<td>{{ rekap.tanggal }}</td>
+			  			<td>{{ rekap.tanggal }}</td>
 							<td v-if="rekap.hadir == 'masuk'"><span><i class="fa fa-check text-info"></i></span></td>
 			  				<td v-else>-</td>
-			  				<td v-if="rekap.sakit == 'sakit'"><span><i class="fa fa-check text-warning"></i></span></td>
-							<td v-else>-</td>
-			  				<td v-if="rekap.izin == 'izin'"><span><i class="fa fa-check text-default"></i></span></td>
-							<td v-else>-</td>
-			  				<td v-if="rekap.alfa == 'alfa'"><span><i class="fa fa-check text-danger"></i></span></td>
-							<td v-else>-</td>
-			  				<td v-if="rekap.dinas == 'dinas'"><span><i class="fa fa-check text-info"></i></span></td>
+			  			<td v-if="rekap.sakit == 'sakit'"><span><i class="fa fa-check text-warning"></i></span></td>
+								<td v-else>-</td>
+			  			<td v-if="rekap.izin == 'izin'"><span><i class="fa fa-check text-default"></i></span></td>
+								<td v-else>-</td>
+			  			<td v-if="rekap.alfa == 'alfa'"><span><i class="fa fa-check text-danger"></i></span></td>
+								<td v-else>-</td>
+			  			<td v-if="rekap.dinas == 'dinas'"><span><i class="fa fa-check text-info"></i></span></td>
 							<td v-else>-</td>
 			  				<td v-if="rekap.alasan != ''">{{ rekap.keterangan }}</td>
 			  				<td v-if="rekap.alasan === ''">-</td>
@@ -81,11 +81,11 @@
 							</tr>
 							<tr>
 								<th width="50%">Total Jam Kerja</th>
-								<th width="50%"><span class="label label-default label-sm">{{ jumlah.data.total_jam_kerja_sebulan }}</span></th>
+								<th width="50%">{{ jumlah.data.total_jam_kerja_sebulan }}</th>
 							</tr>
 							<tr>
 								<th width="50%">Total Jam Telat</th>
-								<th width="50%"><span class="label label-default label-sm"></span></th>
+								<th width="50%">{{ jumlah.data.total_jam_telat_sebulan }}</th>
 							</tr>
 						</thead>
 					</table>
@@ -135,4 +135,3 @@
 		}
 	}
 </script>
-

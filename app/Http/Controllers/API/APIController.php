@@ -196,11 +196,11 @@ class APIController extends Controller
                 $total_it_to_rekap->karyawan_id = $keluar->karyawan_id;
                 $parse_master_tolerance = Carbon::parse($get_master_tolerance['tolerance']);
                 if (Carbon::parse($parse_your_checkin)->format('H:i:s') > Carbon::parse($get_master_tolerance['tolerance'])->format('H:i:s')) {
-                    $total_it_to_rekap->durasi_telat = $parse_master_tolerance->diff($parse_your_checkin)->format('%H:%I:%S');
+                    $total_it_to_rekap->durasi_telat = $parse_master_tolerance->diffInSeconds($parse_your_checkin);
                 }else{
                     $total_it_to_rekap->durasi_kerja = Carbon::parse('00:00:00')->format('H:i:s');
                 }
-                $total_it_to_rekap->durasi_kerja = $parse_your_checkout->diff($parse_your_checkin)->format('%H:%I:%S');
+                $total_it_to_rekap->durasi_kerja = $parse_your_checkout->diffInSeconds($parse_your_checkin);
                 $total_it_to_rekap->save();
             }
             return response()->json(['message' => 'success', 'id' => $keluar->id]);
@@ -526,7 +526,7 @@ class APIController extends Controller
             return response()->json(['message' => true, 'text' => 'Ya ini hari libur boleh lembur']);
         }else{
             if (Carbon::now()->format('H:i:s') > Carbon::parse($jam['end'])->format('H:i:s')) {
-                return response()->json(['message' => true, 'text' => 'Ya kamu sudah lebih dari jam '. $jam['end'] .' boleh lembur']);       
+                return response()->json(['message' => true, 'text' => 'Ya kamu sudah lebih dari jam '. $jam['end'] .' boleh lembur']);
             }else{
                 return response()->json(['message' => false, 'text' => 'Belum boleh lembur']);
             }

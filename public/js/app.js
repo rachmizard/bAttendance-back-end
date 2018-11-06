@@ -62248,15 +62248,15 @@ var render = function() {
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(user.total_jam_kerja))]),
                         _vm._v(" "),
-                        user.action == "masuk"
+                        user.action == "masuk" && user.checkout == "-"
                           ? _c("td", [
                               _c(
                                 "span",
                                 { staticClass: "label label-success" },
-                                [_vm._v("Masuk")]
+                                [_vm._v("On Working..")]
                               )
                             ])
-                          : user.action == "keluar"
+                          : user.action == "keluar" || user.checkout != "-"
                             ? _c("td", [
                                 _c("i", {
                                   staticClass: "fa fa-check text-success"
@@ -62296,15 +62296,7 @@ var render = function() {
                                           [_vm._v("Sakit")]
                                         )
                                       ])
-                                    : _c("td", [
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "label label-default"
-                                          },
-                                          [_vm._v("Belum absen")]
-                                        )
-                                      ]),
+                                    : _c("td", [_vm._v("-")]),
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(user.alasan))])
                       ])
@@ -63523,6 +63515,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -63797,28 +63790,26 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(user.created_at))]),
                 _vm._v(" "),
-                user.action == "masuk"
+                user.action == "masuk" && user.checkout == "-"
                   ? _c("td", [
                       _c("span", { staticClass: "label label-success" }, [
-                        _vm._v("Masuk")
+                        _vm._v("On Working..")
                       ])
                     ])
-                  : user.action == "alfa"
+                  : user.action == "keluar" || user.checkout != "-"
                     ? _c("td", [
-                        _c("span", { staticClass: "label label-danger" }, [
-                          _vm._v("Alfa")
-                        ])
+                        _c("i", { staticClass: "fa fa-check text-success" })
                       ])
-                    : user.action == "izin"
+                    : user.action == "alfa"
                       ? _c("td", [
-                          _c("span", { staticClass: "label label-default" }, [
-                            _vm._v("Izin")
+                          _c("span", { staticClass: "label label-danger" }, [
+                            _vm._v("Alfa")
                           ])
                         ])
-                      : user.action == "sakit"
+                      : user.action == "izin"
                         ? _c("td", [
-                            _c("span", { staticClass: "label label-warning" }, [
-                              _vm._v("Sakit")
+                            _c("span", { staticClass: "label label-info" }, [
+                              _vm._v("Izin")
                             ])
                           ])
                         : user.action == "dinas"
@@ -63827,13 +63818,15 @@ var render = function() {
                                 _vm._v("Dinas")
                               ])
                             ])
-                          : _c("td", [
-                              _c(
-                                "span",
-                                { staticClass: "label label-default" },
-                                [_vm._v("Belum absen")]
-                              )
-                            ]),
+                          : user.action == "sakit"
+                            ? _c("td", [
+                                _c(
+                                  "span",
+                                  { staticClass: "label label-warning" },
+                                  [_vm._v("Sakit")]
+                                )
+                              ])
+                            : _c("td", [_vm._v("-")]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(user.alasan))])
               ])
@@ -64050,6 +64043,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -64138,6 +64136,22 @@ var staticRenderFns = [
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "table-responsive" }, [
+        _c("div", { staticClass: "row wrapper" }, [
+          _c("div", { staticClass: "col-md-4" }, [
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-sm btn-info",
+                attrs: { href: "rekap-admin/export" }
+              },
+              [
+                _c("i", { staticClass: "fa fa-download" }),
+                _vm._v(" Download Rekapan")
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
         _c(
           "table",
           {
@@ -68212,7 +68226,7 @@ var render = function() {
                 _c(
                   "tbody",
                   [
-                    _vm.karyawan.data == 0
+                    _vm.karyawan.data.length == 0
                       ? _c("tr", [
                           _c(
                             "td",
@@ -68338,15 +68352,19 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("th", { attrs: { width: "50%" } }, [
-                    _c(
-                      "span",
-                      { staticClass: "label label-default label-sm" },
-                      [_vm._v(_vm._s(_vm.jumlah.data.total_jam_kerja_sebulan))]
-                    )
+                    _vm._v(_vm._s(_vm.jumlah.data.total_jam_kerja_sebulan))
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(6)
+                _c("tr", [
+                  _c("th", { attrs: { width: "50%" } }, [
+                    _vm._v("Total Jam Telat")
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { width: "50%" } }, [
+                    _vm._v(_vm._s(_vm.jumlah.data.total_jam_telat_sebulan))
+                  ])
+                ])
               ])
             ])
           ])
@@ -68407,18 +68425,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", [_c("i", { staticClass: "fa fa-check text-info" })])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("th", { attrs: { width: "50%" } }, [_vm._v("Total Jam Telat")]),
-      _vm._v(" "),
-      _c("th", { attrs: { width: "50%" } }, [
-        _c("span", { staticClass: "label label-default label-sm" })
-      ])
-    ])
   }
 ]
 render._withStripped = true
