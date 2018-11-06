@@ -31,6 +31,7 @@ class RekapResource extends Resource
           'jml_alfa' => $this->countAlfa() == 0 ? '0' : $this->countAlfa(),
           'jml_dinas' => $this->countDinas() == 0 ? '0' : $this->countDinas(),
           'total_lembur' => $this->countLemburDuration() == 0 ? '<span class="label label-warning">Belum Lembur</span>' : $this->countLemburDuration(). ' Jam',
+          'lembur_total' => $this->countLemburDuration() == 0 ? 'Belum Lembur' : $this->countLemburDuration(). ' Jam',
           'total_telat' => $this->countTelat() . ' kali',
           'total_jam_kerja' => $this->countWorkDuration()
         ];
@@ -89,14 +90,14 @@ class RekapResource extends Resource
 
     public function countWorkDuration()
     {
-      $model = MasterRekap::find(1);
-      $startMonth = new Carbon($model->star);
-      $endMonth = new Carbon($model->end);
-      $to = Carbon::createFromFormat('Y-m-d H:i:s', $startMonth);
-      $from = Carbon::createFromFormat('Y-m-d H:i:s', $endMonth);
-      $countWork = Absen::where('karyawan_id', $this->id)->where('status', 'masuk')
-      $diff_in_months = $to->diffIn($from);
-      return $diff_in_months; // Output: 1
+      // $model = MasterRekap::find(1);
+      // $startMonth = new Carbon($model->star);
+      // $endMonth = new Carbon($model->end);
+      // $to = Carbon::createFromFormat('Y-m-d H:i:s', $startMonth);
+      // $from = Carbon::createFromFormat('Y-m-d H:i:s', $endMonth);
+      // $countWork = Absen::where('karyawan_id', $this->id)->where('status', 'masuk');
+      // $diff_in_months = $to->diffIn($from);
+      // return $diff_in_months; // Output: 1
 
       // $start = Carbon::parse($this->checkInKaryawan());
       // $pause = $this->checkOutKaryawan() == null ? $start : $this->checkOutKaryawan();

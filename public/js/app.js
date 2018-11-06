@@ -62005,6 +62005,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			_this.filter.tgl_history = respon.data.tgl_history;
 		});
 		this.fetch();
+		setInterval(function () {
+			_this.realtime();
+		}, 15000);
 	},
 
 	methods: {
@@ -62036,27 +62039,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				_this3.total = respon.data.meta.total;
 			});
 		},
-		refresh: function refresh() {
+		realtime: function realtime() {
 			var _this4 = this;
 
 			axios.get('history').then(function (respon) {
 				_this4.users = respon.data;
 			});
+		},
+		refresh: function refresh() {
+			var _this5 = this;
+
+			axios.get('history').then(function (respon) {
+				_this5.users = respon.data;
+			});
 			this.$root.loading = true;
 			setInterval(function () {
-				_this4.$root.loading = false;
+				_this5.$root.loading = false;
 			}, 2000);
 		},
 		filterHistory: function filterHistory() {
-			var _this5 = this;
+			var _this6 = this;
 
 			var app = this;
 			var filterDate = app.filter;
 			axios.post('master-filter/getFilterHistory', filterDate).then(function (respon) {
-				_this5.refresh();
+				_this6.refresh();
 			}).catch(function (error) {
-				_this5.errors = error.response.data.errors;
-				_this5.message = false;
+				_this6.errors = error.response.data.errors;
+				_this6.message = false;
 			});
 		},
 		deleteHistory: function deleteHistory(id) {
@@ -62068,14 +62078,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			}
 		},
 		deleteChecked: function deleteChecked() {
-			var _this6 = this;
+			var _this7 = this;
 
 			if (this.checkedRows.length == 0) {
 				alert('Silahkan ceklik karyawan yang ingn di hapus!');
 			} else {
 				if (confirm('Anda yakin untuk menghapus data yang di ceklis?')) {
 					axios.post('history/deleteChecked', { checkedId: this.checkedRows }).then(function (respon) {
-						_this6.refresh();
+						_this7.refresh();
 					});
 				}
 			}
@@ -68080,6 +68090,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
@@ -68160,7 +68182,7 @@ var render = function() {
           _c("div", { staticClass: "text-center" }, [
             _c("img", {
               staticClass: "img-circle",
-              attrs: { src: "/images/avatar_default.jpg" }
+              attrs: { src: _vm.jumlah.data.karyawan.fp }
             }),
             _vm._v(" "),
             _c("p", [_vm._v(_vm._s(_vm.jumlah.data.karyawan.nik))]),
@@ -68190,7 +68212,7 @@ var render = function() {
                 _c(
                   "tbody",
                   [
-                    _vm.karyawan.data.length == 0
+                    _vm.karyawan.data == 0
                       ? _c("tr", [
                           _c(
                             "td",
@@ -68291,6 +68313,16 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("tr", [
+                  _c("th", { attrs: { width: "50%" } }, [
+                    _vm._v("Total Lembur")
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { width: "50%" } }, [
+                    _vm._v(_vm._s(_vm.jumlah.data.lembur_total))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
                   _c("th", { attrs: { width: "50%" } }, [_vm._v("Dinas")]),
                   _vm._v(" "),
                   _c("th", { attrs: { width: "50%" } }, [
@@ -68298,7 +68330,11 @@ var render = function() {
                       _vm._v(_vm._s(_vm.jumlah.data.jml_dinas))
                     ])
                   ])
-                ])
+                ]),
+                _vm._v(" "),
+                _vm._m(6),
+                _vm._v(" "),
+                _vm._m(7)
               ])
             ])
           ])
@@ -68359,6 +68395,30 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", [_c("i", { staticClass: "fa fa-check text-info" })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", { attrs: { width: "50%" } }, [_vm._v("Total Jam Kerja")]),
+      _vm._v(" "),
+      _c("th", { attrs: { width: "50%" } }, [
+        _c("span", { staticClass: "label label-default label-sm" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", { attrs: { width: "50%" } }, [_vm._v("Total Jam Telat")]),
+      _vm._v(" "),
+      _c("th", { attrs: { width: "50%" } }, [
+        _c("span", { staticClass: "label label-default label-sm" })
+      ])
+    ])
   }
 ]
 render._withStripped = true

@@ -6,7 +6,7 @@
 		<div class="row wrapper">
 			<div class="col-md-12">
 				<div class="text-center">
-					<img src="/images/avatar_default.jpg" class="img-circle">
+					<img :src="jumlah.data.karyawan.fp" class="img-circle">
 					<p>{{ jumlah.data.karyawan.nik }}</p>
 					<p>{{ jumlah.data.karyawan.nama }}</p>
 					<p>{{ jumlah.data.karyawan.jabatan }} - {{ jumlah.data.karyawan.divisi }}</p>
@@ -29,7 +29,7 @@
 			          </tr>
 			        </thead>
 			        <tbody>
-						<tr v-if="karyawan.data.length == 0">
+						<tr v-if="karyawan.data == 0">
 							<td colspan="8" class="text-center">Data absen masih kosong!</td>
 						</tr>
 						<tr v-else v-for="(rekap, index) in karyawan.data">
@@ -72,8 +72,20 @@
 								<th width="50%"><span class="label label-danger label-sm">{{ jumlah.data.jml_alfa }}</span></th>
 							</tr>
 							<tr>
+								<th width="50%">Total Lembur</th>
+								<th width="50%">{{ jumlah.data.lembur_total }}</th>
+							</tr>
+							<tr>
 								<th width="50%">Dinas</th>
 								<th width="50%"><span class="label label-info label-sm">{{ jumlah.data.jml_dinas }}</span></th>
+							</tr>
+							<tr>
+								<th width="50%">Total Jam Kerja</th>
+								<th width="50%"><span class="label label-default label-sm"></span></th>
+							</tr>
+							<tr>
+								<th width="50%">Total Jam Telat</th>
+								<th width="50%"><span class="label label-default label-sm"></span></th>
 							</tr>
 						</thead>
 					</table>
@@ -114,8 +126,8 @@
 			},
 
 			getJumlahAbsenOfKaryawan(){
-        let app = this;
-        let id = app.$route.params.id;
+		        let app = this;
+		        let id = app.$route.params.id;
 				axios.get('rekap-admin/'+ id +'/detail').then(function(resp) {
 					app.jumlah = resp.data;
 				})
@@ -123,3 +135,4 @@
 		}
 	}
 </script>
+

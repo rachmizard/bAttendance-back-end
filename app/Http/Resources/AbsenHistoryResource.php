@@ -71,11 +71,13 @@ class AbsenHistoryResource extends Resource
 
     public function countEstimation()
     {
-        $start = Carbon::parse($this->checkInKaryawan());
-        $pause = $this->checkOutKaryawan() == null ? $start : $this->checkOutKaryawan();
+        $get_absen_checkin = Absen::where(['karyawan_id' => $this->id, 'status' => 'masuk'])->whereDate('created_at', Carbon::parse($this->filterHistory())->format('Y-m-d'))->first();
+        $get_absen_checkout = Absen::where(['karyawan_id' => $this->id, 'status' => 'keluar'])->whereDate('created_at', Carbon::parse($this->filterHistory())->format('Y-m-d'))->first();
+        $start = Carbon::parse($get_absen_checkin['verifikasi']['updated_at']);
+        $pause = Carbon::parse($get_absen_checkout['verifikasi']['created_at']) == null ? $start : Carbon::parse($get_absen_checkout['verifikasi']['created_at']);
         // $total = $pause->diffInSeconds($start);
         // return gmdate('%H', $total) . ' jam ' . gmdate('%I', $total) . ' menit';
-        return $total = $pause->diff($start)->format('%h') . ' jam ' . $pause->diff($start)->format('%i') . ' menit';
+        return $total = $pause->diff($start)->format('%h') . ' jam ' . $pause->diff($start)->format('%i') . ' menit '. $pause->diff($start)->format('%s') .' detik';
 
     }
 

@@ -181,6 +181,9 @@
 				this.filter.tgl_history = respon.data.tgl_history
 			})
 			this.fetch();
+			setInterval(() => {
+				this.realtime()
+			}, 15000)
 		},
 		methods: {
 			paginate(page = 1) {
@@ -203,9 +206,15 @@
 					this.last_page = respon.data.meta.last_page
 					this.per_page = respon.data.meta.per_page
 					this.to = respon.data.meta.to
-					this.total = respon.data.meta.total
-				});
+					this.total = respon.data.meta.total 
+				})
 			},
+
+			realtime(){
+			 	axios.get('history').then(respon => {
+					this.users = respon.data;
+				});
+			 },
 
 			refresh(){
 			 	axios.get('history').then(respon => {
