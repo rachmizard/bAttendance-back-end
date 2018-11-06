@@ -34,7 +34,7 @@
 						</tr>
 						<tr v-else v-for="(rekap, index) in karyawan.data">
 			  			<td>{{ rekap.tanggal }}</td>
-							<td v-if="rekap.hadir == 'masuk'"><span><i class="fa fa-check text-info"></i></span></td>
+							<td v-if="rekap.hadir == 'masuk'"><span><i class="fa fa-check text-success"></i></span></td>
 			  				<td v-else>-</td>
 			  			<td v-if="rekap.sakit == 'sakit'"><span><i class="fa fa-check text-warning"></i></span></td>
 								<td v-else>-</td>
@@ -56,24 +56,30 @@
 					<table class="table table-bordered">
 						<thead>
 							<tr>
-								<th width="50%">Hadir</th>
-								<th width="50%"><span class="label label-info label-sm">{{ jumlah.data.jml_hadir }}</span></th>
+								<th width="50%" colspan="9" class="text-center">Keterangan Lanjut</th>
 							</tr>
 							<tr>
-								<th width="50%">Izin</th>
+								<th width="50%" class="text-success">Hadir</th>
+								<th width="50%"><span class="label label-success label-sm">{{ jumlah.data.jml_hadir }}</span></th>
+							</tr>
+							<tr>
+								<th width="50%" class="text-default">Izin</th>
 								<th width="50%"><span class="label label-default label-sm">{{ jumlah.data.jml_izin }}</span></th>
 							</tr>
 							<tr>
-								<th width="50%">Sakit</th>
+								<th width="50%" class="text-warning">Sakit</th>
 								<th width="50%"><span class="label label-warning label-sm">{{ jumlah.data.jml_sakit }}</span></th>
 							</tr>
 							<tr>
-								<th width="50%">Alfa</th>
+								<th width="50%" class="text-danger">Alfa</th>
 								<th width="50%"><span class="label label-danger label-sm">{{ jumlah.data.jml_alfa }}</span></th>
 							</tr>
 							<tr>
-								<th width="50%">Dinas</th>
+								<th width="50%" class="text-info">Dinas</th>
 								<th width="50%"><span class="label label-info label-sm">{{ jumlah.data.jml_dinas }}</span></th>
+							</tr>
+							<tr>
+								<th width="50%" colspan="9" class="text-center">Potensi Absen</th>
 							</tr>
 							<tr>
 								<th width="50%">Total Lembur</th>
@@ -82,6 +88,10 @@
 							<tr>
 								<th width="50%">Total Jam Kerja</th>
 								<th width="50%">{{ jumlah.data.total_jam_kerja_sebulan }}</th>
+							</tr>
+							<tr>
+								<th width="50%">Total Telat</th>
+								<th width="50%">{{ jumlah.data.total_telat }}</th>
 							</tr>
 							<tr>
 								<th width="50%">Total Jam Telat</th>

@@ -62274,7 +62274,7 @@ var render = function() {
                                 ? _c("td", [
                                     _c(
                                       "span",
-                                      { staticClass: "label label-info" },
+                                      { staticClass: "label label-default" },
                                       [_vm._v("Izin")]
                                     )
                                   ])
@@ -68116,6 +68116,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
@@ -68282,18 +68292,30 @@ var render = function() {
           _c("div", { staticClass: "table-responsive" }, [
             _c("table", { staticClass: "table table-bordered" }, [
               _c("thead", [
+                _vm._m(6),
+                _vm._v(" "),
                 _c("tr", [
-                  _c("th", { attrs: { width: "50%" } }, [_vm._v("Hadir")]),
+                  _c(
+                    "th",
+                    { staticClass: "text-success", attrs: { width: "50%" } },
+                    [_vm._v("Hadir")]
+                  ),
                   _vm._v(" "),
                   _c("th", { attrs: { width: "50%" } }, [
-                    _c("span", { staticClass: "label label-info label-sm" }, [
-                      _vm._v(_vm._s(_vm.jumlah.data.jml_hadir))
-                    ])
+                    _c(
+                      "span",
+                      { staticClass: "label label-success label-sm" },
+                      [_vm._v(_vm._s(_vm.jumlah.data.jml_hadir))]
+                    )
                   ])
                 ]),
                 _vm._v(" "),
                 _c("tr", [
-                  _c("th", { attrs: { width: "50%" } }, [_vm._v("Izin")]),
+                  _c(
+                    "th",
+                    { staticClass: "text-default", attrs: { width: "50%" } },
+                    [_vm._v("Izin")]
+                  ),
                   _vm._v(" "),
                   _c("th", { attrs: { width: "50%" } }, [
                     _c(
@@ -68305,7 +68327,11 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("tr", [
-                  _c("th", { attrs: { width: "50%" } }, [_vm._v("Sakit")]),
+                  _c(
+                    "th",
+                    { staticClass: "text-warning", attrs: { width: "50%" } },
+                    [_vm._v("Sakit")]
+                  ),
                   _vm._v(" "),
                   _c("th", { attrs: { width: "50%" } }, [
                     _c(
@@ -68317,7 +68343,11 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("tr", [
-                  _c("th", { attrs: { width: "50%" } }, [_vm._v("Alfa")]),
+                  _c(
+                    "th",
+                    { staticClass: "text-danger", attrs: { width: "50%" } },
+                    [_vm._v("Alfa")]
+                  ),
                   _vm._v(" "),
                   _c("th", { attrs: { width: "50%" } }, [
                     _c("span", { staticClass: "label label-danger label-sm" }, [
@@ -68327,7 +68357,11 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("tr", [
-                  _c("th", { attrs: { width: "50%" } }, [_vm._v("Dinas")]),
+                  _c(
+                    "th",
+                    { staticClass: "text-info", attrs: { width: "50%" } },
+                    [_vm._v("Dinas")]
+                  ),
                   _vm._v(" "),
                   _c("th", { attrs: { width: "50%" } }, [
                     _c("span", { staticClass: "label label-info label-sm" }, [
@@ -68335,6 +68369,8 @@ var render = function() {
                     ])
                   ])
                 ]),
+                _vm._v(" "),
+                _vm._m(7),
                 _vm._v(" "),
                 _c("tr", [
                   _c("th", { attrs: { width: "50%" } }, [
@@ -68353,6 +68389,16 @@ var render = function() {
                   _vm._v(" "),
                   _c("th", { attrs: { width: "50%" } }, [
                     _vm._v(_vm._s(_vm.jumlah.data.total_jam_kerja_sebulan))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", { attrs: { width: "50%" } }, [
+                    _vm._v("Total Telat")
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { width: "50%" } }, [
+                    _vm._v(_vm._s(_vm.jumlah.data.total_telat))
                   ])
                 ]),
                 _vm._v(" "),
@@ -68400,7 +68446,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", [_c("i", { staticClass: "fa fa-check text-info" })])
+    return _c("span", [_c("i", { staticClass: "fa fa-check text-success" })])
   },
   function() {
     var _vm = this
@@ -68425,6 +68471,30 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", [_c("i", { staticClass: "fa fa-check text-info" })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c(
+        "th",
+        { staticClass: "text-center", attrs: { width: "50%", colspan: "9" } },
+        [_vm._v("Keterangan Lanjut")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c(
+        "th",
+        { staticClass: "text-center", attrs: { width: "50%", colspan: "9" } },
+        [_vm._v("Potensi Absen")]
+      )
+    ])
   }
 ]
 render._withStripped = true

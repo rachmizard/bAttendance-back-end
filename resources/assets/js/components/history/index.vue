@@ -60,7 +60,7 @@
                            	<td v-if="user.action == 'masuk' && user.checkout == '-'"><span class="label label-success">On Working..</span></i></td>
                         		<td v-else-if="user.action == 'keluar' || user.checkout != '-'"><i class="fa fa-check text-success"></i></td>
                         		<td v-else-if="user.action == 'alfa'"><span class="label label-danger">Alfa</span></td>
-                        		<td v-else-if="user.action == 'izin'"><span class="label label-info">Izin</span></td>
+                        		<td v-else-if="user.action == 'izin'"><span class="label label-default">Izin</span></td>
                         		<td v-else-if="user.action == 'dinas'"><span class="label label-info">Dinas</span></td>
                         		<td v-else-if="user.action == 'sakit'"><span class="label label-warning">Sakit</span></td>
                         		<td v-else>-</td>
