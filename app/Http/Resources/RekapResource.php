@@ -31,7 +31,7 @@ class RekapResource extends Resource
           'jml_sakit' => $this->countSakit() == 0 ? '0' : $this->countSakit(),
           'jml_alfa' => $this->countAlfa() == 0 ? '0' : $this->countAlfa(),
           'jml_dinas' => $this->countDinas() == 0 ? '0' : $this->countDinas(),
-          'total_lembur' => $this->countLemburDuration() == 0 ? '<span class="label label-warning">Belum Lembur</span>' : $this->countLemburDuration(). ' Jam',
+          'total_lembur' => $this->countLemburDuration() == 0 ? 'Belum Lembur' : $this->countLemburDuration(). ' Jam',
           'lembur_total' => $this->berapaKaliDiaLembur() == 0 ? 'Belum Lembur' : $this->berapaKaliDiaLembur(). ' kali',
           'total_telat' => $this->countTelat() . ' kali',
           'total_jam_kerja_sebulan' => $this->countWorkDurationSelamaSebulan(),
@@ -76,14 +76,14 @@ class RekapResource extends Resource
 
     public function countLemburDuration()
     {
-      return Lembur::where(['karyawan_id' => $this->id])
+      return Lembur::where(['karyawan_id' => $this->id])->where('status', 'true')
             ->whereBetween('created_at', [new Carbon(MasterRekap::find(1)->start), new Carbon(MasterRekap::find(1)->end)])
             ->sum('durasi');
     }
 
     public function berapaKaliDiaLembur()
     {
-      return Lembur::where(['karyawan_id' => $this->id])
+      return Lembur::where(['karyawan_id' => $this->id])->where('status', 'true')
             ->whereBetween('created_at', [new Carbon(MasterRekap::find(1)->start), new Carbon(MasterRekap::find(1)->end)])
             ->count();
     }

@@ -41,6 +41,6 @@ class LemburController extends Controller
 
   	public function hapusLembur($id)
   	{
-  		return Lembur::find($id)->delete();
+  		return response()->json(Lembur::find($id)->delete());
   	}
 }

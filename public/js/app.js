@@ -24315,6 +24315,7 @@ Vue.component('table-absen', __webpack_require__(193));
 Vue.component('datatable-absen', __webpack_require__(196));
 Vue.component('rekap-absen', __webpack_require__(199));
 Vue.component('tgl-aktif-rekap', __webpack_require__(202));
+Vue.component('count-approval', __webpack_require__(223));
 /**
 * Vue Router
 *
@@ -69090,6 +69091,126 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(224)
+/* template */
+var __vue_template__ = __webpack_require__(225)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/CountApprovalComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-79e72a22", Component.options)
+  } else {
+    hotAPI.reload("data-v-79e72a22", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 224 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	data: function data() {
+		return {
+			users: {}
+		};
+	},
+	mounted: function mounted() {
+		this.countApproval();
+	},
+
+
+	methods: {
+		countApproval: function countApproval() {
+			var _this = this;
+
+			axios.get('lembur/karyawan').then(function (respon) {
+				_this.users = respon.data;
+			});
+		}
+	},
+
+	computed: {
+		resultCount: function resultCount() {
+			return Object.keys(this.users).length;
+		}
+	}
+});
+
+/***/ }),
+/* 225 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "span",
+    { staticClass: "badge badge-sm up bg-danger m-l-n-sm count text-white" },
+    [_vm._v("\n\t\t" + _vm._s(_vm.users.data.length) + "\n\t")]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-79e72a22", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

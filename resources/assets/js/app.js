@@ -54,6 +54,7 @@ Vue.component('table-absen', require('./components/absen/table.vue'));
 Vue.component('datatable-absen', require('./components/absen/datatable.vue'));
 Vue.component('rekap-absen', require('./components/master-rekap/index.vue'));
 Vue.component('tgl-aktif-rekap', require('./components/master-rekap/tgl-aktif-rekap.vue'));
+Vue.component('count-approval', require('./components/CountApprovalComponent.vue'))
 /**
 * Vue Router
 *

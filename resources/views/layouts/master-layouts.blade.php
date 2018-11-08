@@ -236,6 +236,7 @@
                           <b class="bg-primary dker"></b>
                         </i>
                         <span>Approval Lembur</span>
+                        <!-- <count-approval></count-approval> -->
                       </a>
                     </li>
                     <li>
