@@ -47,6 +47,7 @@ Vue.component('create-karyawan', require('./components/karyawan/create.vue'));
 Vue.component('create-jam', require('./components/jam/create.vue'));
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('history-page', require('./components/history/index.vue'), require('laravel-vue-pagination'));
+Vue.component('approval-lembur-page', require('./components/lembur/index.vue'), require('laravel-vue-pagination'));
 Vue.component('g-chart', require('./components/dashboard/GChartComponent.vue'));
 Vue.component('create-absen', require('./components/absen/create.vue'));
 Vue.component('table-absen', require('./components/absen/table.vue'));

@@ -9,7 +9,7 @@ class Lembur extends Model
     protected $table = 'lemburs';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'id', 'karyawan_id', 'durasi', 'alasan'
+        'id', 'karyawan_id', 'durasi', 'alasan', 'status'
     ];
 
     public function karyawan()

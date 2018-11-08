@@ -116,6 +116,13 @@ Route::get('/absentest', function(){
 	Route::put('jam/{id}/aktifkan', 'JamController@aktifkan')->name('jam.aktifkan');
 	Route::put('jam/{id}/matikan', 'JamController@matikan')->name('jam.matikan');
 
+	Route::get('lembur', function(){
+		return view('lembur.approval-lembur');
+	})->name('approval-lembur.index');
+	Route::get('lembur/karyawan', 'LemburController@lembur')->name('approval-lembur.lembur');
+	Route::put('lembur/{id}/approveLembur', 'LemburController@approveLembur')->name('approval-lembur.approveLembur');
+	Route::put('lembur/{id}/batalLembur', 'LemburController@batalLembur')->name('approval-lembur.batalLembur');
+	Route::delete('lembur/{id}/hapusLembur', 'LemburController@hapusLembur')->name('approval-lembur.hapusLembur');
 
 	// History Routes
 	Route::get('history', 'HistoryController@index')->name('history.index');

@@ -229,7 +229,16 @@
                         </li>
                       </ul>
                     </li>
-                    <li >
+                    <li>
+                      <a href="{{route('approval-lembur.index')}}"  >
+                        <!-- <b class="badge bg-danger pull-right">3</b> -->
+                        <i class="fa fa-check">
+                          <b class="bg-primary dker"></b>
+                        </i>
+                        <span>Approval Lembur</span>
+                      </a>
+                    </li>
+                    <li>
                       <a href="{{route('history.indexview')}}"  >
                         <!-- <b class="badge bg-danger pull-right">3</b> -->
                         <i class="fa fa-clock-o icon">

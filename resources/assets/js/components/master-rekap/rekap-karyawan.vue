@@ -86,6 +86,10 @@
 								<th width="50%">{{ jumlah.data.lembur_total }}</th>
 							</tr>
 							<tr>
+								<th width="50%">Total Jam Lembur</th>
+								<th width="50%">{{ jumlah.data.total_lembur }}</th>
+							</tr>
+							<tr>
 								<th width="50%">Total Jam Kerja</th>
 								<th width="50%">{{ jumlah.data.total_jam_kerja_sebulan }}</th>
 							</tr>

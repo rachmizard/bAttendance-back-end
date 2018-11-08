@@ -45,7 +45,7 @@
                   { data: 'jml_izin', name: 'jml_izin' },
                   { data: 'jml_sakit', name: 'jml_sakit' },
                   { data: 'jml_alfa', name: 'jml_alfa' },
-                  { data: 'total_lembur', name: 'total_lembur' },
+                  { data: 'lembur_total', name: 'lembur_total' },
                   { data: 'total_telat', name: 'total_telat' },
               ]
           });
