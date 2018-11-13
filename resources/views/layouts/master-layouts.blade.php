@@ -47,6 +47,33 @@
   </script>
 </head>
 <body>
+  <div id="resetPasswordModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="namaTitle"><i class="fa fa-key"></i> Reset Password</h4>
+        </div>
+          <form action="{{ route('resetpassword.resetpassword') }}" method="post">
+            {{ csrf_field() }}
+            <div class="modal-body" style="margin-bottom: 50px;">
+              <div class="form-group">
+                <label class="col-md-2 control-label" for="file_name"><i class="fa fa-key"></i> Password Baru</label>
+                <div class="col-md-10">
+                  <input type="password" name="password" class="form-control" required>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <div class="btn-group">
+                <button class="btn btn-md btn-default" data-dismiss="modal">Tutup</button>
+                <button class="btn btn-md btn-info"><i class="fa fa-check"></i> Reset Password</button>
+              </div>
+            </div>
+          </form>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
   <section class="vbox" id="app">
     <alert-box v-if="$root.expired" :title="title" :message="message" :type="type"></alert-box>
     <transition name="fade">
@@ -170,6 +197,8 @@
           <ul class="dropdown-menu animated fadeInRight">
             <span class="arrow top"></span>
             <li>
+              <a href="{{ route('profile.index') }}"><i class="fa fa-user"></i> Profile</a>
+              <a data-toggle="modal" data-target="#resetPasswordModal"><i class="fa fa-key"></i> Reset Password</a>
               <a href="{{ route('logout') }}"
                   onclick="event.preventDefault();
                            document.getElementById('logout-form').submit();" data-toggle="ajaxModal">

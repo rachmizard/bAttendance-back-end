@@ -88,6 +88,10 @@ Route::get('/absentest', function(){
 
 
 	Route::get('/panel', 'HomeController@index')->name('home');
+	Route::get('resetpassword', 'LupaPasswordController@index')->name('resetpassword.index');
+	Route::post('resetpassword', 'LupaPasswordController@resetpassword')->name('resetpassword.resetpassword');
+	Route::get('profile', 'ProfileController@index')->name('profile.index');
+	Route::post('profile', 'ProfileController@profile')->name('profile.profile');
 	Route::get('dashboard', 'HomeController@dashboard')->name('home.dashboard'); // DASHBOARD COUNT
 
 	Route::resource('laporan', 'LaporanController');
