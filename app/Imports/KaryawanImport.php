@@ -41,7 +41,7 @@ class KaryawanImport implements ToModel, WithChunkReading, ShouldQueue
         if (count($validator2)) {
             foreach ($validator2 as $replace) {
                 Karyawan::where('id', $replace->id)->update([
-                     'nik'     => Carbon::now()->format('y') . Carbon::now()->format('m') . Carbon::now()->format('i') . Carbon::now()->format('s'),
+                     'nik'     => $row[1] == null ? Carbon::now()->format('y') . Carbon::now()->format('m') . Carbon::now()->format('i') . Carbon::now()->format('s') : $row[1],
                      'nama'    => $row[2],
                      'jabatan' =>  $row[3],
                      'divisi' =>  $row[4],
@@ -51,7 +51,7 @@ class KaryawanImport implements ToModel, WithChunkReading, ShouldQueue
             }
         }else{
             return new Karyawan([
-                 'nik'     => Carbon::now()->format('y') . Carbon::now()->format('m') . Carbon::now()->format('i') . Carbon::now()->format('s'),
+                 'nik'     => $row[1] == null ? Carbon::now()->format('y') . Carbon::now()->format('m') . Carbon::now()->format('i') . Carbon::now()->format('s') : $row[1],
                  'nama'    => $row[2],
                  'jabatan' =>  $row[3],
                  'divisi' =>  $row[4],

@@ -17,10 +17,10 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (!Auth::check()) {
-            return redirect('/login');
-            $message = "Your session was expired, login and get your session back.";
-            event(new ExpiredSession($message));
+        if (Auth::user()->role == 'pm' || Auth::user()->role == 'ga') {
+                return redirect('/panel');
+                // $message = "Your session was expired, login and get your session back.";
+                // event(new ExpiredSession($message));
         }else{
             return $next($request);
         }

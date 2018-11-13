@@ -17,7 +17,7 @@ class KaryawanController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('admin');
     }
 
     /**
@@ -90,6 +90,7 @@ class KaryawanController extends Controller
             return response()->json(['response' => $response]);
             // return redirect()->back()->with('message', $response['message']);
         }else{
+            $name = null;
                if ($request->hasFile('image')) {
                    $name = str_random(15). '.' .$request->image->getClientOriginalExtension();
                    if (file_exists(public_path('storage/images/'. $name))) {

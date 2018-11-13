@@ -12,10 +12,10 @@ use App\Http\Resources\LemburResource;
 
 class LemburController extends Controller
 {
-   // 	public function __construct()
-  	// {
-  	// 	$this->middleware('auth');
-  	// }
+   	public function __construct()
+  	{
+  		$this->middleware('pm');
+  	}
 
   	public function lembur()
   	{

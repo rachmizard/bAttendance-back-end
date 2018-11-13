@@ -203,6 +203,7 @@
                         <span class="text-black">Dashboard</span>
                       </a>
                     </li>
+                    @if(Auth::user()->role == 'admin')
                     <li >
                       <a href="#layout"  >
                         <i class="fa fa-columns icon">
@@ -229,6 +230,8 @@
                         </li>
                       </ul>
                     </li>
+                    @endif
+                    @if(Auth::user()->role == 'pm')
                     <li>
                       <a href="{{route('approval-lembur.index')}}"  >
                         <!-- <b class="badge bg-danger pull-right">3</b> -->
@@ -239,6 +242,8 @@
                         <!-- <count-approval></count-approval> -->
                       </a>
                     </li>
+                    @endif
+                    @if(Auth::user()->role == 'admin')
                     <li>
                       <a href="{{route('history.indexview')}}"  >
                         <!-- <b class="badge bg-danger pull-right">3</b> -->
@@ -248,6 +253,8 @@
                         <span>History Absensi</span>
                       </a>
                     </li>
+                    @endif
+                    @if(Auth::user()->role == 'admin' || Auth::user()->role == 'pm' || Auth::user()->role == 'ga')
                     <li >
                       <a href="{{ route('absen-admin.view') }}"  >
                         <i class="fa fa-user icon">
@@ -256,6 +263,8 @@
                         <span>Absen Admin</span>
                       </a>
                     </li>
+                    @endif
+                    @if(Auth::user()->role == 'admin')
                     <li >
                       <a href="{{ route('rekap-admin.index') }}#/list_karyawan"  >
                         <i class="fa fa-book icon">
@@ -264,6 +273,7 @@
                         <span>Rekapan Absensi</span>
                       </a>
                     </li>
+                    @endif
                   </ul>
                 </nav>
                 <!-- / nav -->

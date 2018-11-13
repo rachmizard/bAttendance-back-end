@@ -135,6 +135,8 @@ class APIController extends Controller
      */
     public function masuk(Request $request)
     {
+        $get_master_jam = Jam::where('status', 1)->first();
+
         $getDate = Carbon::now();
         // Get date now
         $validator = Carbon::today()->format('Y-m-d');
@@ -146,8 +148,43 @@ class APIController extends Controller
             $masuk->verifikasi_id = $request->input('verifikasi_id');
             $masuk->status = 'masuk';
             $masuk->alasan = null;
-            $masuk->save();
-            return response()->json(['message' => 'success', 'id' => $masuk->id ]);
+            $masuk->save(); 
+            if (Carbon::parse($getDate)->format('H:i:s') > Carbon::parse($get_master_jam['end'])->format('H:i:s')) {
+                Absen::find($masuk->id)->delete();
+                $fcmUrl = 'https://fcm.googleapis.com/fcm/send';
+                $token = $masuk->karyawan->device_token;
+                $notification = [
+                    'title' => 'PERINGATAN! ',
+                    'body' => 'Anda tidak bisa masuk kantor saat kantor sudah bubaran 😀😬',
+                    'priority' => 'high',
+                    'sound' => true,
+                ];
+
+                // Trigger Push Notif
+                $extraNotificationData = ["message" => $notification,"moredata" =>'dd'];
+                $fcmNotification = [
+                    // 'registration_ids' => $token, //multple token array
+                    'to'        => $token, //single token
+                    'notification' => $notification,
+                    'data' => $extraNotificationData
+                ];
+                $headers = [
+                    'Authorization: key=AIzaSyApVpA0N2kN6WpFS6vytCCTPCj4L3xBefg',
+                    'Content-Type: application/json'
+                ];
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL,$fcmUrl);
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fcmNotification));
+                $result = curl_exec($ch);
+                curl_close($ch);
+                return response()->json(['message' => 'ngapainmasuk', 'text' => 'Silahkan coba lagi!']);
+            }else{  
+                return response()->json(['message' => 'success', 'id' => $masuk->id ]);   
+            }
         }else{
             return response()->json(['message' => 'failed', 'text' => 'Silahkan coba lagi!']);
         }
@@ -163,47 +200,50 @@ class APIController extends Controller
         $getDate = Carbon::now();
         // Get date now
         $validator = Carbon::today()->format('Y-m-d');
+        $check_apakah_dia_masuk_atau_tidak = Absen::where('karyawan_id', request('karyawan_id'))->where('status', 'masuk')->whereDate('created_at', $validator)->get();
         // Check if data is already exist for out today
         $check = Absen::where('karyawan_id', request('karyawan_id'))->where('status', 'keluar')->whereDate('created_at', $validator)->get();
         if (!count($check) > 0) {
-            // Generate random PIN
-            $date = Carbon::now();
-            $parse = Carbon::parse($date);
-            $verifikasi = new Verifikasi;
-            // Generate Pin
-            $pin = 0;
-            $i = '';
-            while ($i < 3) {
-                $pin .= mt_rand(0, 9);
-                $i++;
-            }
-            if ($verifikasi) {
-                $verifikasi->status = '2';
-                $verifikasi->pin = substr($pin, -2).substr($parse->second, -1).substr($parse->minute, -1);
-                $verifikasi->save();
-            }
-            $keluar = new Absen();
-            $keluar->karyawan_id = $request->input('karyawan_id');
-            $keluar->verifikasi_id = $verifikasi->id;
-            $keluar->status = 'keluar';
-            $keluar->alasan = $request->input('alasan');
-            if ($keluar->save()) {
-                $get_master_tolerance = Jam::where('status', 1)->first();
-                $getting_your_checkin = Absen::where('karyawan_id', $request->input('karyawan_id'))->where('status', 'masuk')->whereDate('created_at', Carbon::today()->format('Y-m-d'))->first();
-                $parse_your_checkin = $getting_your_checkin->verifikasi->updated_at;
-                $parse_your_checkout = Carbon::parse($verifikasi->created_at);
-                $total_it_to_rekap = new RekapDurasi();
-                $total_it_to_rekap->karyawan_id = $keluar->karyawan_id;
-                $parse_master_tolerance = Carbon::parse($get_master_tolerance['tolerance']);
-                if (Carbon::parse($parse_your_checkin)->format('H:i:s') > Carbon::parse($get_master_tolerance['tolerance'])->format('H:i:s')) {
-                    $total_it_to_rekap->durasi_telat = $parse_master_tolerance->diffInSeconds($parse_your_checkin);
-                }else{
-                    $total_it_to_rekap->durasi_kerja = Carbon::parse('00:00:00')->format('H:i:s');
+            if (count($check_apakah_dia_masuk_atau_tidak) > 0) {
+                // Generate random PIN
+                $date = Carbon::now();
+                $parse = Carbon::parse($date);
+                $verifikasi = new Verifikasi;
+                // Generate Pin
+                $pin = 0;
+                $i = '';
+                while ($i < 3) {
+                    $pin .= mt_rand(0, 9);
+                    $i++;
                 }
-                $total_it_to_rekap->durasi_kerja = $parse_your_checkout->diffInSeconds($parse_your_checkin);
-                $total_it_to_rekap->save();
+                if ($verifikasi) {
+                    $verifikasi->status = '2';
+                    $verifikasi->pin = substr($pin, -2).substr($parse->second, -1).substr($parse->minute, -1);
+                    $verifikasi->save();
+                }
+                $keluar = new Absen();
+                $keluar->karyawan_id = $request->input('karyawan_id');
+                $keluar->verifikasi_id = $verifikasi->id;
+                $keluar->status = 'keluar';
+                $keluar->alasan = $request->input('alasan');
+                if ($keluar->save()) {
+                    $get_master_tolerance = Jam::where('status', 1)->first();
+                    $getting_your_checkin = Absen::where('karyawan_id', $request->input('karyawan_id'))->where('status', 'masuk')->whereDate('created_at', Carbon::today()->format('Y-m-d'))->first();
+                    $parse_your_checkin = $getting_your_checkin->verifikasi->updated_at;
+                    $parse_your_checkout = Carbon::parse($verifikasi->created_at);
+                    $total_it_to_rekap = new RekapDurasi();
+                    $total_it_to_rekap->karyawan_id = $keluar->karyawan_id;
+                    $parse_master_tolerance = Carbon::parse($get_master_tolerance['tolerance']);
+                    if (Carbon::parse($parse_your_checkin)->format('H:i:s') > Carbon::parse($get_master_tolerance['tolerance'])->format('H:i:s')) {
+                        $total_it_to_rekap->durasi_telat = $parse_master_tolerance->diffInSeconds($parse_your_checkin);
+                    }else{
+                        $total_it_to_rekap->durasi_kerja = Carbon::parse('00:00:00')->format('H:i:s');
+                    }
+                    $total_it_to_rekap->durasi_kerja = $parse_your_checkout->diffInSeconds($parse_your_checkin);
+                    $total_it_to_rekap->save();
+                }
+                return response()->json(['message' => 'success', 'id' => $keluar->id]);   
             }
-            return response()->json(['message' => 'success', 'id' => $keluar->id]);
         }else{
             return response()->json(['message' => 'failed']);
         }
@@ -215,36 +255,56 @@ class APIController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function mabal(Request $request)
-    {
+    {   
         $getDate = Carbon::now();
         // Get date now
         $validator = Carbon::today()->format('Y-m-d');
         // Check if data is already exist for out today
+
+        $check_apakah_dia_masuk_atau_tidak = Absen::where('karyawan_id', request('karyawan_id'))->where('status', 'masuk')->whereDate('created_at', $validator)->get();
+
         $check = Absen::where('karyawan_id', request('karyawan_id'))->where('status', 'keluar')->whereDate('created_at', $validator)->get();
         if (!count($check) > 0) {
-            // Generate random PIN
-            $date = Carbon::now();
-            $parse = Carbon::parse($date);
-            $verifikasi = new Verifikasi;
-            // Generate Pin
-            $pin = 0;
-            $i = '';
-            while ($i < 3) {
-                $pin .= mt_rand(0, 9);
-                $i++;
+            if (count($check_apakah_dia_masuk_atau_tidak) > 0) {
+                // Generate random PIN
+                $date = Carbon::now();
+                $parse = Carbon::parse($date);
+                $verifikasi = new Verifikasi;
+                // Generate Pin
+                $pin = 0;
+                $i = '';
+                while ($i < 3) {
+                    $pin .= mt_rand(0, 9);
+                    $i++;
+                }
+                if ($verifikasi) {
+                    $verifikasi->status = '2';
+                    $verifikasi->pin = substr($pin, -2).substr($parse->second, -1).substr($parse->minute, -1);
+                    $verifikasi->save();
+                }
+                $keluar = new Absen();
+                $keluar->karyawan_id = $request->input('karyawan_id');
+                $keluar->verifikasi_id = $verifikasi->id;
+                $keluar->status = 'keluar';
+                $keluar->alasan = $request->input('alasan');
+                if ($keluar->save()) {
+                    $get_master_tolerance = Jam::where('status', 1)->first();
+                    $getting_your_checkin = Absen::where('karyawan_id', $request->input('karyawan_id'))->where('status', 'masuk')->whereDate('created_at', Carbon::today()->format('Y-m-d'))->first();
+                    $parse_your_checkin = $getting_your_checkin->verifikasi->updated_at;
+                    $parse_your_checkout = Carbon::parse($verifikasi->created_at);
+                    $total_it_to_rekap = new RekapDurasi();
+                    $total_it_to_rekap->karyawan_id = $keluar->karyawan_id;
+                    $parse_master_tolerance = Carbon::parse($get_master_tolerance['tolerance']);
+                    if (Carbon::parse($parse_your_checkin)->format('H:i:s') > Carbon::parse($get_master_tolerance['tolerance'])->format('H:i:s')) {
+                        $total_it_to_rekap->durasi_telat = $parse_master_tolerance->diffInSeconds($parse_your_checkin);
+                    }else{
+                        $total_it_to_rekap->durasi_kerja = Carbon::parse('00:00:00')->format('H:i:s');
+                    }
+                    $total_it_to_rekap->durasi_kerja = $parse_your_checkout->diffInSeconds($parse_your_checkin);
+                    $total_it_to_rekap->save();
+                }
+                return response()->json(['message' => 'success', 'id' => $keluar->id]);
             }
-            if ($verifikasi) {
-                $verifikasi->status = '2';
-                $verifikasi->pin = substr($pin, -2).substr($parse->second, -1).substr($parse->minute, -1);
-                $verifikasi->save();
-            }
-            $keluar = new Absen();
-            $keluar->karyawan_id = $request->input('karyawan_id');
-            $keluar->verifikasi_id = $verifikasi->id;
-            $keluar->status = 'keluar';
-            $keluar->alasan = $request->input('alasan');
-            $keluar->save();
-            return response()->json(['message' => 'success', 'id' => $keluar->id]);
         }else{
             return response()->json(['message' => 'failed']);
         }
