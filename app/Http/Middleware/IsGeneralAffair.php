@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
-
+use Auth;
 use Closure;
 
 class IsGeneralAffair
@@ -15,7 +15,7 @@ class IsGeneralAffair
      */
     public function handle($request, Closure $next)
     {
-        if (!Auth::user()->role == 'ga' || Auth::user()->role == 'admin') {
+        if (!Auth::user()->role == 'ga' || !Auth::user()->role == 'admin') {
             return redirect('/login');
         }
         return $next($request);

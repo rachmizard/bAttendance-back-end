@@ -200,8 +200,10 @@ class APIController extends Controller
         $getDate = Carbon::now();
         // Get date now
         $validator = Carbon::today()->format('Y-m-d');
-        $check_apakah_dia_masuk_atau_tidak = Absen::where('karyawan_id', request('karyawan_id'))->where('status', 'masuk')->whereDate('created_at', $validator)->get();
         // Check if data is already exist for out today
+
+        $check_apakah_dia_masuk_atau_tidak = Absen::where('karyawan_id', request('karyawan_id'))->where('status', 'masuk')->whereDate('created_at', $validator)->get();
+
         $check = Absen::where('karyawan_id', request('karyawan_id'))->where('status', 'keluar')->whereDate('created_at', $validator)->get();
         if (!count($check) > 0) {
             if (count($check_apakah_dia_masuk_atau_tidak) > 0) {
@@ -237,12 +239,12 @@ class APIController extends Controller
                     if (Carbon::parse($parse_your_checkin)->format('H:i:s') > Carbon::parse($get_master_tolerance['tolerance'])->format('H:i:s')) {
                         $total_it_to_rekap->durasi_telat = $parse_master_tolerance->diffInSeconds($parse_your_checkin);
                     }else{
-                        $total_it_to_rekap->durasi_kerja = Carbon::parse('00:00:00')->format('H:i:s');
+                        $total_it_to_rekap->durasi_telat = 0;
                     }
                     $total_it_to_rekap->durasi_kerja = $parse_your_checkout->diffInSeconds($parse_your_checkin);
                     $total_it_to_rekap->save();
                 }
-                return response()->json(['message' => 'success', 'id' => $keluar->id]);   
+                return response()->json(['message' => 'success', 'id' => $keluar->id]);
             }
         }else{
             return response()->json(['message' => 'failed']);
@@ -255,7 +257,7 @@ class APIController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function mabal(Request $request)
-    {   
+    { 
         $getDate = Carbon::now();
         // Get date now
         $validator = Carbon::today()->format('Y-m-d');
@@ -298,7 +300,7 @@ class APIController extends Controller
                     if (Carbon::parse($parse_your_checkin)->format('H:i:s') > Carbon::parse($get_master_tolerance['tolerance'])->format('H:i:s')) {
                         $total_it_to_rekap->durasi_telat = $parse_master_tolerance->diffInSeconds($parse_your_checkin);
                     }else{
-                        $total_it_to_rekap->durasi_kerja = Carbon::parse('00:00:00')->format('H:i:s');
+                        $total_it_to_rekap->durasi_telat = 0;
                     }
                     $total_it_to_rekap->durasi_kerja = $parse_your_checkout->diffInSeconds($parse_your_checkin);
                     $total_it_to_rekap->save();

@@ -156,3 +156,56 @@ Route::get('/absentest', function(){
 	// Master Filter Routes
 	Route::post('master-filter/getFilterHistory', 'MasterFilterController@update')->name('master-filter.update');
 	Route::get('master-filter/getFilterHistory', 'MasterFilterController@show')->name('master-filter.get');
+
+	// CRON JOB
+
+	Route::get('autocheckout', function(){
+		$data = App\Absen::where('status', 'keluar')->whereDate('created_at', Carbon::now()->format('Y-m-d'));
+		$checkIn = App\Absen::where('status', 'masuk')->whereDate('created_at', Carbon::now()->format('Y-m-d'));
+		if ($checkIn->count() > 0) {
+			$check = App\Absen::where('status', 'masuk')->whereDate('created_at', Carbon::now()->format('Y-m-d'))->get();
+			foreach ($check as $value) {
+				$check_lagi = App\Absen::where('karyawan_id', $value->karyawan_id)->where('status', 'keluar')->whereDate('created_at', Carbon::now()->format('Y-m-d'))->count();
+				if ($check_lagi == 0) {		
+	                $date = Carbon::now();
+	                $parse = Carbon::parse($date);
+	                $get_master_jam = App\Jam::where('status', 1)->first();
+	                $verifikasi = new App\Verifikasi;
+	                $verifikasi->pin = 'LUPA CHECKOUT';
+	                $verifikasi->status = '2';
+	                $verifikasi->created_at =  Carbon::create($date->year, $date->month, $date->day, Carbon::parse($get_master_jam['end'])->format('H'), Carbon::parse($get_master_jam['end'])->format('i'), Carbon::parse($get_master_jam['end'])->format('s'))->toDateTimeString();
+	                $verifikasi->updated_at =  Carbon::create($date->year, $date->month, $date->day, Carbon::parse($get_master_jam['end'])->format('H'), Carbon::parse($get_master_jam['end'])->format('i'), Carbon::parse($get_master_jam['end'])->format('s'))->toDateTimeString();
+	                $verifikasi->save();
+	                // INSERT TO DATABASE!
+	                $newAbsen = new App\Absen;
+	                $newAbsen->verifikasi_id = $verifikasi->id;
+	                $newAbsen->karyawan_id = $value->karyawan_id;
+	                $newAbsen->status = 'keluar';
+	                $newAbsen->alasan = null;
+	                $newAbsen->save();
+				}
+			}
+		}else{
+           if (!$checkIn->count() > 0) {
+           	foreach ($checkIn->get() as $alfa) {
+               	$date = Carbon::now();
+                $parse = Carbon::parse($date);
+                $get_master_jam = App\Jam::where('status', 1)->first();
+                $verifikasi = new App\Verifikasi;
+                $verifikasi->pin = 'ALFA';
+                $verifikasi->status = '2';
+                $verifikasi->created_at =  Carbon::create($date->year, $date->month, $date->day, Carbon::parse($get_master_jam['end'])->format('H'), Carbon::parse($get_master_jam['end'])->format('i'), Carbon::parse($get_master_jam['end'])->format('s'))->toDateTimeString();
+                $verifikasi->updated_at =  Carbon::create($date->year, $date->month, $date->day, Carbon::parse($get_master_jam['end'])->format('H'), Carbon::parse($get_master_jam['end'])->format('i'), Carbon::parse($get_master_jam['end'])->format('s'))->toDateTimeString();
+                $verifikasi->save();
+                // INSERT TO DATABASE!
+                $newAbsen = new App\Absen;
+                $newAbsen->verifikasi_id = $verifikasi->id;
+                $newAbsen->karyawan_id = $alfa->karyawan_id;
+                $newAbsen->status = 'alfa';
+                $newAbsen->alasan = null;
+                $newAbsen->save();
+           	}
+           }
+		}
+		return response()->json(['message' => 'success']);
+	});

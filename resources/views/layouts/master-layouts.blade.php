@@ -260,7 +260,7 @@
                       </ul>
                     </li>
                     @endif
-                    @if(Auth::user()->role == 'pm')
+                    @if(Auth::user()->role == 'pm' || Auth::user()->role == 'admin')
                     <li>
                       <a href="{{route('approval-lembur.index')}}"  >
                         <!-- <b class="badge bg-danger pull-right">3</b> -->

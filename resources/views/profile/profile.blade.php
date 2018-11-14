@@ -47,7 +47,7 @@
                           <div class="form-group">
                               <label for="role" class="col-md-4 control-label">Hak Akses</label>
                               <div class="col-md-4">
-                                  <input class="form-control" autocomplete="off" type="text" disabled="" value="{{ Auth::user()->role == 'pm' ? 'Project Manager' : 'General Affair' }}" id="role" autofocus="">
+                                  <input class="form-control" autocomplete="off" type="text" disabled="" value="{{ Auth::user()->role == 'pm' ? 'Project Manager' : Auth::user()->role == 'ga' ? 'General Affair' : 'Admin' }}" id="role" autofocus="">
                                   @if($errors->has('role'))
                                     <span class="label label-danger">
                                         {{ $errors->first('role') }}
