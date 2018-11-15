@@ -222,3 +222,10 @@ Route::get('/absentest', function(){
 		}
 		return response()->json(['message' => 'success']);
 	});
+
+	Route::get('autofilter', function(){
+		$master_filter = App\MasterFilter::find(1);
+		$master_filter->tgl_history = Carbon::today()->format('Y-m-d');
+		$master_filter->update();
+		return response()->json(['message' => 'Auto filter has been resetted!']);
+	});
