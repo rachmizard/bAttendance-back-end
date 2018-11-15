@@ -183,6 +183,19 @@ Route::get('/absentest', function(){
 	                $newAbsen->status = 'keluar';
 	                $newAbsen->alasan = null;
 	                $newAbsen->save();
+
+                	$parse_checkin = $value->verifikasi->updated_at;
+                	$parse_checkout = $newAbsen->verifikasi->created_at;
+                	$parse_jam_tolerance = Carbon::parse($get_master_jam['tolerance']);
+                	$newRekap = new App\RekapDurasi;
+                	$newRekap->durasi_kerja = 32400;
+                	if ($parse_checkin->format('H:i:s') > Carbon::parse($get_master_jam['tolerance'])->format('H:i:s')) {
+                		$newRekap->durasi_telat = $parse_jam_tolerance->diffInSeconds($parse_checkin);
+                	}else{
+                		$newRekap->durasi_telat = 0;
+                	}
+                	$newRekap->karyawan_id = $value->karyawan_id; 
+                	$newRekap->save();
 				}
 			}
 		}else{
