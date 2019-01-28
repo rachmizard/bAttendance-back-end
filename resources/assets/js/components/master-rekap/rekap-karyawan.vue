@@ -15,6 +15,13 @@
 		</div>
 		<div class="row wrapper">
 			<div class="col-md-9">
+				<form action="/rekap-admin/export/detail" method="POST">
+					<input type="hidden" name="_token" :value="csrf_token">
+					<input type="hidden" name="start_date" :value="start_date">
+					<input type="hidden" name="end_date" :value="end_date">
+					<input type="hidden" name="karyawan_id" :value="karyawan_id">
+					<button class="btn btn-sm btn-primary"><i class="fa fa-file"></i> Export Hasil Rekapan</button>
+				</form>
 			    <div class="table-responsive">
 			      <table class="table table-bordered table-striped b-t b-light">
 			        <thead>
@@ -112,7 +119,10 @@
 	export default{
 		data(){
 			return {
+				csrf_token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
 				karyawan_id: '',
+				start_date: '',
+				end_date: '',
 				nama: '',
 				karyawan: {},
 				jumlah: []
@@ -120,10 +130,12 @@
 		},
 
 		mounted(){
-			this.getRekapDetailKaryawan()
+			this.getTanggalAktifRekap();
+			this.getRekapDetailKaryawan();
 			Echo.channel('draw-table-event')
 			.listen('DrawTableEvent', (e) => {
 				this.getRekapDetailKaryawan()
+				this.getTanggalAktifRekap();
 			});
 		},
 
@@ -137,6 +149,13 @@
 					app.nama = respon.data.nama;
 					this.getJumlahAbsenOfKaryawan();
 				})
+			},
+
+			getTanggalAktifRekap(){
+				axios.get('rekap-admin/selectMasterRekap').then(respon => {
+					this.start_date = respon.data.start;
+					this.end_date = respon.data.end;
+				});
 			},
 
 			getJumlahAbsenOfKaryawan(){

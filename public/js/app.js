@@ -24243,7 +24243,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(23);
-module.exports = __webpack_require__(215);
+module.exports = __webpack_require__(218);
 
 
 /***/ }),
@@ -24259,7 +24259,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_strap_src_alert__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_strap_src_alert___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_strap_src_alert__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_google_charts__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_router__ = __webpack_require__(205);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_router__ = __webpack_require__(208);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -24315,7 +24315,7 @@ Vue.component('table-absen', __webpack_require__(193));
 Vue.component('datatable-absen', __webpack_require__(196));
 Vue.component('rekap-absen', __webpack_require__(199));
 Vue.component('tgl-aktif-rekap', __webpack_require__(202));
-Vue.component('count-approval', __webpack_require__(223));
+Vue.component('count-approval', __webpack_require__(205));
 /**
 * Vue Router
 *
@@ -24330,13 +24330,13 @@ var routes = [{
 }, {
   path: '/create', name: 'userCreate', component: __webpack_require__(20), props: { title: 'Tambah Karyawan' }
 }, {
-  path: '/edit', name: 'userEdit', component: __webpack_require__(206), props: { title: 'Edit Karyawan' }
+  path: '/edit', name: 'userEdit', component: __webpack_require__(209), props: { title: 'Edit Karyawan' }
 }, {
   path: '/history', name: 'historyIndex', component: __webpack_require__(21), props: { title: 'History Absensi' }
 }, {
-  path: '/list_karyawan', name: 'lisKaryawan', component: __webpack_require__(209), props: { title: 'List Karyawan' }
+  path: '/list_karyawan', name: 'lisKaryawan', component: __webpack_require__(212), props: { title: 'List Karyawan' }
 }, {
-  path: '/rekap_karyawan/:id', name: 'rekapKaryawan', component: __webpack_require__(212)
+  path: '/rekap_karyawan/:id', name: 'rekapKaryawan', component: __webpack_require__(215)
 }];
 var router = new __WEBPACK_IMPORTED_MODULE_4_vue_router__["a" /* default */]({
   routes: routes
@@ -65189,6 +65189,119 @@ if (false) {
 
 /***/ }),
 /* 205 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(206)
+/* template */
+var __vue_template__ = __webpack_require__(207)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/CountApprovalComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-79e72a22", Component.options)
+  } else {
+    hotAPI.reload("data-v-79e72a22", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 206 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	data: function data() {
+		return {
+			users: {}
+		};
+	},
+	mounted: function mounted() {
+		this.countApproval();
+	},
+
+
+	methods: {
+		countApproval: function countApproval() {
+			var _this = this;
+
+			axios.get('lembur/karyawan').then(function (respon) {
+				_this.users = respon.data;
+			});
+		}
+	},
+
+	computed: {
+		resultCount: function resultCount() {
+			return Object.keys(this.users).length;
+		}
+	}
+});
+
+/***/ }),
+/* 207 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "span",
+    { staticClass: "badge badge-sm up bg-danger m-l-n-sm count text-white" },
+    [_vm._v("\n\t\t" + _vm._s(_vm.users.data.length) + "\n\t")]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-79e72a22", module.exports)
+  }
+}
+
+/***/ }),
+/* 208 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -67818,15 +67931,15 @@ if (inBrowser && window.Vue) {
 
 
 /***/ }),
-/* 206 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(207)
+var __vue_script__ = __webpack_require__(210)
 /* template */
-var __vue_template__ = __webpack_require__(208)
+var __vue_template__ = __webpack_require__(211)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -67865,7 +67978,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 207 */
+/* 210 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -68004,7 +68117,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 208 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -68331,15 +68444,15 @@ if (false) {
 }
 
 /***/ }),
-/* 209 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(210)
+var __vue_script__ = __webpack_require__(213)
 /* template */
-var __vue_template__ = __webpack_require__(211)
+var __vue_template__ = __webpack_require__(214)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -68378,7 +68491,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 210 */
+/* 213 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -68433,7 +68546,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 211 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -68534,15 +68647,15 @@ if (false) {
 }
 
 /***/ }),
-/* 212 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(213)
+var __vue_script__ = __webpack_require__(216)
 /* template */
-var __vue_template__ = __webpack_require__(214)
+var __vue_template__ = __webpack_require__(217)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -68581,7 +68694,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 213 */
+/* 216 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -68696,11 +68809,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
 		return {
+			csrf_token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
 			karyawan_id: '',
+			start_date: '',
+			end_date: '',
 			nama: '',
 			karyawan: {},
 			jumlah: []
@@ -68709,9 +68832,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	mounted: function mounted() {
 		var _this = this;
 
+		this.getTanggalAktifRekap();
 		this.getRekapDetailKaryawan();
 		Echo.channel('draw-table-event').listen('DrawTableEvent', function (e) {
 			_this.getRekapDetailKaryawan();
+			_this.getTanggalAktifRekap();
 		});
 	},
 
@@ -68729,6 +68854,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				_this2.getJumlahAbsenOfKaryawan();
 			});
 		},
+		getTanggalAktifRekap: function getTanggalAktifRekap() {
+			var _this3 = this;
+
+			axios.get('rekap-admin/selectMasterRekap').then(function (respon) {
+				_this3.start_date = respon.data.start;
+				_this3.end_date = respon.data.end;
+			});
+		},
 		getJumlahAbsenOfKaryawan: function getJumlahAbsenOfKaryawan() {
 			var app = this;
 			var id = app.$route.params.id;
@@ -68740,7 +68873,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 214 */
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -68796,12 +68929,40 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "row wrapper" }, [
         _c("div", { staticClass: "col-md-9" }, [
+          _c(
+            "form",
+            { attrs: { action: "/rekap-admin/export/detail", method: "POST" } },
+            [
+              _c("input", {
+                attrs: { type: "hidden", name: "_token" },
+                domProps: { value: _vm.csrf_token }
+              }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: { type: "hidden", name: "start_date" },
+                domProps: { value: _vm.start_date }
+              }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: { type: "hidden", name: "end_date" },
+                domProps: { value: _vm.end_date }
+              }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: { type: "hidden", name: "karyawan_id" },
+                domProps: { value: _vm.karyawan_id }
+              }),
+              _vm._v(" "),
+              _vm._m(0)
+            ]
+          ),
+          _vm._v(" "),
           _c("div", { staticClass: "table-responsive" }, [
             _c(
               "table",
               { staticClass: "table table-bordered table-striped b-t b-light" },
               [
-                _vm._m(0),
+                _vm._m(1),
                 _vm._v(" "),
                 _c(
                   "tbody",
@@ -68822,23 +68983,23 @@ var render = function() {
                             _c("td", [_vm._v(_vm._s(rekap.tanggal))]),
                             _vm._v(" "),
                             rekap.hadir == "masuk"
-                              ? _c("td", [_vm._m(1, true)])
-                              : _c("td", [_vm._v("-")]),
-                            _vm._v(" "),
-                            rekap.sakit == "sakit"
                               ? _c("td", [_vm._m(2, true)])
                               : _c("td", [_vm._v("-")]),
                             _vm._v(" "),
-                            rekap.izin == "izin"
+                            rekap.sakit == "sakit"
                               ? _c("td", [_vm._m(3, true)])
                               : _c("td", [_vm._v("-")]),
                             _vm._v(" "),
-                            rekap.alfa == "alfa"
+                            rekap.izin == "izin"
                               ? _c("td", [_vm._m(4, true)])
                               : _c("td", [_vm._v("-")]),
                             _vm._v(" "),
-                            rekap.dinas == "dinas"
+                            rekap.alfa == "alfa"
                               ? _c("td", [_vm._m(5, true)])
+                              : _c("td", [_vm._v("-")]),
+                            _vm._v(" "),
+                            rekap.dinas == "dinas"
+                              ? _c("td", [_vm._m(6, true)])
                               : _c("td", [_vm._v("-")]),
                             _vm._v(" "),
                             rekap.alasan != ""
@@ -68862,7 +69023,7 @@ var render = function() {
           _c("div", { staticClass: "table-responsive" }, [
             _c("table", { staticClass: "table table-bordered" }, [
               _c("thead", [
-                _vm._m(6),
+                _vm._m(7),
                 _vm._v(" "),
                 _c("tr", [
                   _c(
@@ -68940,7 +69101,7 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(7),
+                _vm._m(8),
                 _vm._v(" "),
                 _c("tr", [
                   _c("th", { attrs: { width: "50%" } }, [
@@ -69000,6 +69161,15 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn btn-sm btn-primary" }, [
+      _c("i", { staticClass: "fa fa-file" }),
+      _vm._v(" Export Hasil Rekapan")
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -69087,130 +69257,10 @@ if (false) {
 }
 
 /***/ }),
-/* 215 */
+/* 218 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 216 */,
-/* 217 */,
-/* 218 */,
-/* 219 */,
-/* 220 */,
-/* 221 */,
-/* 222 */,
-/* 223 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(0)
-/* script */
-var __vue_script__ = __webpack_require__(224)
-/* template */
-var __vue_template__ = __webpack_require__(225)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/CountApprovalComponent.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-79e72a22", Component.options)
-  } else {
-    hotAPI.reload("data-v-79e72a22", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 224 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-	data: function data() {
-		return {
-			users: {}
-		};
-	},
-	mounted: function mounted() {
-		this.countApproval();
-	},
-
-
-	methods: {
-		countApproval: function countApproval() {
-			var _this = this;
-
-			axios.get('lembur/karyawan').then(function (respon) {
-				_this.users = respon.data;
-			});
-		}
-	},
-
-	computed: {
-		resultCount: function resultCount() {
-			return Object.keys(this.users).length;
-		}
-	}
-});
-
-/***/ }),
-/* 225 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "span",
-    { staticClass: "badge badge-sm up bg-danger m-l-n-sm count text-white" },
-    [_vm._v("\n\t\t" + _vm._s(_vm.users.data.length) + "\n\t")]
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-79e72a22", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);

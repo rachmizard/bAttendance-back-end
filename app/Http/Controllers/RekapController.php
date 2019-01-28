@@ -9,6 +9,7 @@ use App\Rekap;
 use Yajra\Datatables\Datatables;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\RekapExport;
+use App\Exports\RekapDetailKaryawanExport;
 use App\Http\Resources\RekapResource;
 use App\Http\Resources\RekapDetailResource;
 use App\Karyawan;
@@ -45,19 +46,22 @@ class RekapController extends Controller
       return Excel::download(new RekapExport ,'hasil_rekapan_'. MasterRekap::find(1)->tanggal_aktif_rekap .'_'. Carbon::now()->format('Y') .'.xlsx');
     }
 
-    public function store(Request $request)
+    public function exportDetail(Request $request)
     {
-      // code...
-    }
+      $requestAll = $request->all();
 
-    public function show($id)
-    {
-      // code...
-    }
+      $karyawanIdentity = Karyawan::find($requestAll['karyawan_id']);
 
-    public function edit($id)
-    {
-      // code...
+      // parsing date
+      $start_date = Carbon::parse($requestAll['start_date'])->format('Y-m-d');
+
+      $end_date = Carbon::parse($requestAll['end_date'])->format('Y-m-d');
+
+      $karyawanId = $karyawanIdentity->id;
+
+      $file_name = $karyawanIdentity->nama . '_laporan_absen_' . $start_date . '_' . $end_date . '.xlsx';
+
+      return Excel::download(new RekapDetailKaryawanExport($start_date, $end_date, $karyawanId), $file_name);
     }
 
     public function detail($id)
@@ -68,7 +72,7 @@ class RekapController extends Controller
     public function rekapDetailKaryawan(Request $request, $id)
     {
       return RekapDetailResource::collection(Absen::orderBy('created_at', 'ASC')->where(['karyawan_id' => $id])
-            ->whereIn('status', ['keluar', 'izin', 'sakit', 'alfa', 'dinas'])
+            ->whereIn('status', ['masuk', 'izin', 'sakit', 'alfa', 'dinas'])
             ->whereBetween('created_at', [new Carbon(MasterRekap::find(1)->start), new Carbon(MasterRekap::find(1)->end)])->get());
     }
 

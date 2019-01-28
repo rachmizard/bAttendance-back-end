@@ -18,7 +18,7 @@ class MyHistoryResource extends Resource
         return [
             'id' => $this->id,
             'action' => $this->status,
-            'jam' => $this->created_at->diffForHumans(),
+            'jam' => $this->created_at->format('d F Y H:i:s A'),
             'nama' => $this->karyawan->nama,
             'tanggal' => $this->created_at->format('D, d M Y'),
             'karyawan_id' => $this->karyawan->id,

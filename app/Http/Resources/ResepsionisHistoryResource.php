@@ -17,10 +17,10 @@ class ResepsionisHistoryResource extends Resource
         // return parent::toArray($request);
         return [
             'id' => $this->id,
-            'nama' => $this->karyawan->nama,
-            'divisi' => $this->karyawan->divisi . ' / ' . $this->karyawan->jabatan,
-            'jam' => $this->verifikasi->created_at->format('h:i:s A'),
-            'foto' => $this->karyawan->fp != null ? 'http://attendance.birutekno.com/public/storage/images/'. $this->karyawan->fp : 'http://attendance.birutekno.com/public/images/avatar_default.jpg',
+            'nama' => $this->karyawan['nama'],
+            'divisi' => $this->karyawan['divisi'] . ' / ' . $this->karyawan->jabatan,
+            'jam' => date('h:i:s A', strtotime($this->verifikasi['created_at'])),
+            'foto' => $this->karyawan['fp'] != null ? 'http://attendance.birutekno.com/public/storage/images/'. $this->karyawan['fp'] : 'http://attendance.birutekno.com/public/images/avatar_default.jpg',
             'action' => $this->status,
             'verifikasi' => array($this->verifikasi)
         ];

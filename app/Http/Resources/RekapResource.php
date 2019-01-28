@@ -41,7 +41,7 @@ class RekapResource extends Resource
 
     public function countHadir()
     {
-      return Absen::where(['karyawan_id' => $this->id, 'status' => 'keluar'])
+      return Absen::where(['karyawan_id' => $this->id, 'status' => 'masuk'])
             ->whereBetween('created_at', [new Carbon(MasterRekap::find(1)->start), new Carbon(MasterRekap::find(1)->end)])
             ->count();
     }
