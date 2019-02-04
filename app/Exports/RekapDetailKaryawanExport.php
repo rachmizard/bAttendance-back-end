@@ -32,7 +32,7 @@ class RekapDetailKaryawanExport implements FromView
     public function view(): View
     {
 
-    	$karyawan = DB::table('karyawans')->find($this->karyawan)->nama;
+    	$karyawan = DB::table('karyawans')->where('id', $this->karyawan)->first()->nama;
 
     	$parseStartDate = Carbon::parse($this->start_date)->format('Y-m-d');
 
@@ -84,7 +84,7 @@ class RekapDetailKaryawanExport implements FromView
 
 			$rekapans['dinas'] = $yang_dinas ? 'true' : false;
 
-			$rekapans['keterangan'] = $yang_masuk ? $yang_masuk['alasan'] : 'Lupa Absen';
+			$rekapans['keterangan'] = $yang_masuk ? $yang_masuk['alasan'] : 'Tidak Melakukan Absen';
 
     		array_push($items, $rekapans);
 

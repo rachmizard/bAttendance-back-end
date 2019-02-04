@@ -49,7 +49,13 @@
 					<td>{{ $month['sakit'] }}</td>
 					<td>{{ $month['alfa'] }}</td>
 					<td>{{ $month['dinas'] }}</td>
-					<td>{{ $month['keterangan'] }}</td>
+					<td>
+						@if($month['jam_masuk'] == null)
+							Belum Dilakukan Absen/Tidak Melakukan Absen
+						@else
+							{{ $month['keterangan'] }}
+						@endif
+					</td>
 				</tr>
 				@endif
 			@endforeach
